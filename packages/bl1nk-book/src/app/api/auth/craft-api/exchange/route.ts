@@ -66,45 +66,45 @@ export async function POST(request: NextRequest) {
 			return response;
 		}
 
-  let session: {
-      codeVerifier: string;
-      clientId: string;
-      redirectUri: string;
-      state: string;
-  };
+		let session: {
+			codeVerifier: string;
+			clientId: string;
+			redirectUri: string;
+			state: string;
+		};
 
-  try {
-      const parsed = JSON.parse(sessionCookie.value) as Partial<{
-          codeVerifier: string;
-          clientId: string;
-          redirectUri: string;
-          state: string;
-      }>;
+		try {
+			const parsed = JSON.parse(sessionCookie.value) as Partial<{
+				codeVerifier: string;
+				clientId: string;
+				redirectUri: string;
+				state: string;
+			}>;
 
-      if (
-          typeof parsed.codeVerifier !== "string" ||
-          typeof parsed.clientId !== "string" ||
-          typeof parsed.redirectUri !== "string" ||
-          typeof parsed.state !== "string"
-      ) {
-          throw new Error("Invalid session shape");
-      }
+			if (
+				typeof parsed.codeVerifier !== "string" ||
+				typeof parsed.clientId !== "string" ||
+				typeof parsed.redirectUri !== "string" ||
+				typeof parsed.state !== "string"
+			) {
+				throw new Error("Invalid session shape");
+			}
 
-      session = {
-          codeVerifier: parsed.codeVerifier,
-          clientId: parsed.clientId,
-          redirectUri: parsed.redirectUri,
-          state: parsed.state,
-      };
-  } catch {
-      const response = NextResponse.json(
-          { error: "Invalid OAuth session" },
-          { status: 400 },
-      );
-      clearOAuthSessionCookie(response);
-      applyNoStoreHeaders(response.headers);
-      return response;
-  }
+			session = {
+				codeVerifier: parsed.codeVerifier,
+				clientId: parsed.clientId,
+				redirectUri: parsed.redirectUri,
+				state: parsed.state,
+			};
+		} catch {
+			const response = NextResponse.json(
+				{ error: "Invalid OAuth session" },
+				{ status: 400 },
+			);
+			clearOAuthSessionCookie(response);
+			applyNoStoreHeaders(response.headers);
+			return response;
+		}
 
 		if (session.state !== state) {
 			const response = NextResponse.json(
@@ -144,20 +144,16 @@ export async function POST(request: NextRequest) {
 			access_token: tokens.access_token,
 			expires_in: tokens.expires_in,
 		});
-		response.cookies.set(
-			REFRESH_COOKIE,
-			JSON.stringify({
-				refreshToken: tokens.refresh_token,
-				clientId: session.clientId,
-			}),
-			{
-				httpOnly: true,
-				secure: process.env.NODE_ENV === "production",
-				sameSite: "strict",
-				path: "/api/auth/craft-api",
-				maxAge: 30 * 24 * 60 * 60,
-			},
-		);
+		response.cookies.set(REFRESH_COOKIE, JSON.stringify({
+			refreshToken: tokens.refresh_token,
+			clientId: session.clientId,
+		}), {
+			httpOnly: true,
+			secure: process.env.NODE_ENV === "production",
+			sameSite: "strict",
+			path: "/api/auth/craft-api",
+			maxAge: 30 * 24 * 60 * 60,
+		});
 		clearOAuthSessionCookie(response);
 		applyNoStoreHeaders(response.headers);
 		return response;
