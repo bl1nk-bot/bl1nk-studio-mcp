@@ -56,6 +56,7 @@ function BlockNode({
 					onBlur={handleSave}
 					onKeyDown={(e) => {
 						if (e.key === "Enter" && !e.shiftKey) {
+							if (e.nativeEvent.isComposing) return;
 							e.preventDefault();
 							// Blur triggers a single onBlur → handleSave (avoids duplicate onUpdate)
 							e.currentTarget.blur();
