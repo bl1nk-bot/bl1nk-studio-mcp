@@ -43,12 +43,19 @@ async function fetchRootBlockWithRetry(
 		}
 	}
 
-	if (
-		lastError instanceof CraftApiError &&
-		(lastError.status === 0 ||
-			lastError.status === 404 ||
-			lastError.status === 429)
-	) {
+	if (lastError instanceof CraftApiError && lastError.status === 404) {
+		throw lastError;
+	}
+
+	if (lastError instanceof CraftApiError && lastError.status === 429) {
+		console.warn(
+			"[fetchBlocks] Block lookup hit rate limit; returning an empty block list for now.",
+			lastError,
+		);
+		return null;
+	}
+
+	if (lastError instanceof TypeError) {
 		console.warn(
 			"[fetchBlocks] Block lookup failed to fetch; returning an empty block list for now.",
 			lastError,
