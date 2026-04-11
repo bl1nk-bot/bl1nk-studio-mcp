@@ -12,7 +12,7 @@
  * This is a SEARCH tool - it finds and catalogs entities, not analyzes story quality.
  */
 
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import Handlebars from "handlebars";
@@ -23,28 +23,168 @@ import { STORY_PATTERNS } from "../core/parser.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Lazy-loaded compiled Handlebars templates.
+// Lazy-loaded compiled templates.
+// Supports both Handlebars and Nunjucks templates.
 // Avoids blocking the event loop with synchronous file I/O at module load time.
 let _templateCache: {
-	character: ReturnType<typeof Handlebars.compile>;
-	scene: ReturnType<typeof Handlebars.compile>;
-	location: ReturnType<typeof Handlebars.compile>;
+	character: (data: any) => string;
+	scene: (data: any) => string;
+	location: (data: any) => string;
 } | null = null;
+
+function loadConfig() {
+	try {
+		const configPath = join(process.cwd(), "bl1nk-config.json");
+		if (!existsSync(configPath)) {
+			console.warn(
+				"[WARN] Config file not found, using legacy template detection",
+			);
+			return null;
+		}
+		return JSON.parse(readFileSync(configPath, "utf8"));
+	} catch (error) {
+		console.warn(
+			"[WARN] Failed to load config, using legacy template detection:",
+			error.message,
+		);
+		return null;
+	}
+}
 
 function getTemplates() {
 	if (_templateCache) return _templateCache;
-	const base = join(__dirname, "../templates");
-	_templateCache = {
-		character: Handlebars.compile(
-			readFileSync(join(base, "characters/character.md"), "utf8"),
-		),
-		scene: Handlebars.compile(
-			readFileSync(join(base, "scene/scene.md"), "utf8"),
-		),
-		location: Handlebars.compile(
-			readFileSync(join(base, "world/location.md"), "utf8"),
-		),
-	};
+
+	const config = loadConfig();
+	const templateConfig = config?.templateConfig;
+
+	if (templateConfig) {
+		console.log(
+			`[STATUS] Using config-based template system v${templateConfig.version}`,
+		);
+
+		// Use config-based template resolution
+		const locations = templateConfig.templateLocations || [];
+
+		for (const location of locations.sort((a, b) => a.priority - b.priority)) {
+			const base = join(process.cwd(), location.basePath);
+
+			try {
+				if (location.structure === "human-machine") {
+					// Modern structure with human/machine separation
+					_templateCache = {
+						character: Handlebars.compile(
+							readFileSync(
+								join(base, location.templates.character.human),
+								"utf8",
+							),
+						),
+						scene: Handlebars.compile(
+							readFileSync(join(base, location.templates.scene.human), "utf8"),
+						),
+						location: Handlebars.compile(
+							readFileSync(
+								join(base, location.templates.location.human),
+								"utf8",
+							),
+						),
+					};
+					console.log(
+						`[STATUS] Loaded human-machine templates from ${location.name}`,
+					);
+					return _templateCache;
+				} else if (location.structure === "legacy") {
+					// Legacy structure
+					_templateCache = {
+						character: Handlebars.compile(
+							readFileSync(join(base, location.templates.character), "utf8"),
+						),
+						scene: Handlebars.compile(
+							readFileSync(join(base, location.templates.scene), "utf8"),
+						),
+						location: Handlebars.compile(
+							readFileSync(join(base, location.templates.location), "utf8"),
+						),
+					};
+					console.log(`[STATUS] Loaded legacy templates from ${location.name}`);
+					return _templateCache;
+				}
+			} catch (error) {
+				console.warn(
+					`[WARN] Failed to load templates from ${location.name}:`,
+					error.message,
+				);
+				continue;
+			}
+		}
+	}
+
+	// Fallback to legacy detection if config fails
+	console.log("[STATUS] Falling back to legacy template detection");
+
+	const possibleBases = [
+		join(__dirname, "../templates"), // Relative to source file
+		join(process.cwd(), "templates"), // Relative to cwd
+		join(process.cwd(), "packages/bl1nk-core/templates"), // In package
+	];
+
+	let base: string | null = null;
+	let templateType: "handlebars" | "nunjucks" = "handlebars";
+
+	for (const possibleBase of possibleBases) {
+		// Check for modern templates first
+		try {
+			readFileSync(join(possibleBase, "human/characters/character.md"), "utf8");
+			base = possibleBase;
+			templateType = "nunjucks";
+			break;
+		} catch {
+			// Fall back to legacy templates
+			try {
+				readFileSync(join(possibleBase, "characters/character.md"), "utf8");
+				base = possibleBase;
+				templateType = "handlebars";
+				break;
+			} catch {
+				continue;
+			}
+		}
+	}
+
+	if (!base) {
+		throw new Error(
+			`Could not find templates. Tried: ${possibleBases.join(", ")}`,
+		);
+	}
+
+	if (templateType === "nunjucks") {
+		// Use modern human-machine templates
+		_templateCache = {
+			character: Handlebars.compile(
+				readFileSync(join(base, "human/characters/character.md"), "utf8"),
+			),
+			scene: Handlebars.compile(
+				readFileSync(join(base, "human/scenes/scene.md"), "utf8"),
+			),
+			location: Handlebars.compile(
+				readFileSync(join(base, "human/locations/location.md"), "utf8"),
+			),
+		};
+	} else {
+		// Use legacy templates
+		_templateCache = {
+			character: Handlebars.compile(
+				readFileSync(join(base, "characters/character.md"), "utf8"),
+			),
+			scene: Handlebars.compile(
+				readFileSync(join(base, "scene/scene.md"), "utf8"),
+			),
+			location: Handlebars.compile(
+				readFileSync(join(base, "world/location.md"), "utf8"),
+			),
+		};
+	}
+
+	console.log(`[STATUS] Templates loaded from ${base}`);
 	return _templateCache;
 }
 
@@ -399,10 +539,52 @@ function extractAliasesFromMentions(mentions: Mention[]): string[] {
 	return aliases;
 }
 
+function generateMachineJSON(entry: RawEntry, type: string): string {
+	const summary = generateSummary(entry);
+	const essence = generateEssence(entry, type);
+
+	// Base JSON structure
+	const baseData = {
+		name: entry.name,
+		summary,
+		essence,
+		mentions: entry.mentions,
+		events: extractEvents(entry),
+		quotes: extractKeyQuotes(entry.mentions),
+		tags: generateTags(entry),
+		type,
+	};
+
+	// Try to load machine template, fall back to inline JSON
+	try {
+		const possibleBases = [
+			join(__dirname, "../templates"),
+			join(process.cwd(), "templates"),
+			join(process.cwd(), "packages/bl1nk-core/templates"),
+		];
+
+		for (const base of possibleBases) {
+			try {
+				const templatePath = join(base, `machine/${type}s/${type}.json`);
+				const templateContent = readFileSync(templatePath, "utf8");
+				const template = Handlebars.compile(templateContent);
+				return template(baseData);
+			} catch {
+				continue;
+			}
+		}
+	} catch {
+		// Fall back to inline JSON generation
+	}
+
+	return JSON.stringify(baseData, null, 2);
+}
+
 function generateContent(entry: RawEntry, type: string): string {
 	const summary = generateSummary(entry);
 	const essence = generateEssence(entry, type);
 	const templates = getTemplates();
+	const jsonBlock = generateMachineJSON(entry, type);
 
 	if (type === "character") {
 		return templates.character({
@@ -412,6 +594,7 @@ function generateContent(entry: RawEntry, type: string): string {
 			mentions: entry.mentions,
 			events: extractEvents(entry),
 			quotes: extractKeyQuotes(entry.mentions),
+			jsonBlock,
 		});
 	}
 	if (type === "scene") {
@@ -420,6 +603,7 @@ function generateContent(entry: RawEntry, type: string): string {
 			summary,
 			essence,
 			mentions: entry.mentions,
+			jsonBlock,
 		});
 	}
 	return templates.location({
@@ -427,6 +611,7 @@ function generateContent(entry: RawEntry, type: string): string {
 		summary,
 		essence,
 		mentions: entry.mentions,
+		jsonBlock,
 	});
 }
 

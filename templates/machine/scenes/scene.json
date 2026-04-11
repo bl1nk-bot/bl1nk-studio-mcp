@@ -1,0 +1,15 @@
+{
+  "type": "scene",
+  "id": "{{id}}",
+  "title": "{{title}}",
+  "chapter": "{{chapter}}",
+  "act": "{{act}}",
+  "sceneNumber": {{sceneNumber}},
+  "location": "{{location}}",
+  "characters": [{% for char in characters %}"{{char}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+  "tags": [{% for tag in tags %}"{{tag}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+  "summary": "{{summary}}",
+  "keyEvents": [{% for event in keyEvents %}"{{event}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+  "emotionalArc": "{{emotionalArc}}",
+  "conflict": "{{conflict}}"
+}
