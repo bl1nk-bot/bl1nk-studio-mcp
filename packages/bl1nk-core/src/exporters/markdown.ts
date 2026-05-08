@@ -5,7 +5,6 @@ export function toMarkdown(
 	graph: StoryGraph,
 	options: { includeMetadata?: boolean; includeAnalysis?: boolean } = {},
 ): string {
-	const v = validateGraph(graph);
 	let md = `# ${graph.meta.title}\n\n`;
 
 	if (options.includeMetadata !== false) {
@@ -16,6 +15,7 @@ export function toMarkdown(
 	}
 
 	if (options.includeAnalysis !== false) {
+		const v = validateGraph(graph);
 		md += "## Story Analysis\n\n";
 		md += "### Statistics\n\n";
 		md += `- **Events:** ${v.analysis.eventCount}\n`;
@@ -51,8 +51,17 @@ export function toMarkdown(
 	}
 
 	md += "## Events\n\n";
+	// Optimized: Group events by act in a single pass to avoid multiple filter() calls
+	const acts: Record<number, typeof graph.events> = { 1: [], 2: [], 3: [] };
+	for (const e of graph.events) {
+		if (acts[e.act]) acts[e.act].push(e);
+		else acts[e.act] = [e];
+	}
+
 	for (const act of [1, 2, 3] as const) {
-		const actEvents = graph.events.filter((e) => e.act === act);
+		const actEvents = acts[act];
+		if (actEvents.length === 0) continue;
+
 		md += `### Act ${act}\n\n`;
 		for (const e of actEvents) {
 			md += `#### ${e.label}`;
