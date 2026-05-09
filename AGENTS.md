@@ -35,7 +35,7 @@
 - **Prevent Recurrence**: Create context and solutions for problems to prevent repetition
 - **Context-Driven**: All decisions based on documented learnings, not implicit knowledge
 
-### Tauri App (`tauri-app/`)
+### Desktop App (`bl1nk-desktop/`)
 
 | Command | Description |
 |---------|-------------|
