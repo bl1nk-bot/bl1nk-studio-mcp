@@ -27,7 +27,7 @@ async function ensureDependency(): Promise<void> {
          return;
      }
      throw error;
-		execSync("npm install beautiful-mermaid", { stdio: "inherit" });
+ }
 	}
 }
 
