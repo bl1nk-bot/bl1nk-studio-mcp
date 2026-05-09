@@ -16,6 +16,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import Handlebars from "handlebars";
+import nunjucks from "nunjucks";
 import { z } from "zod";
 import entitiesConfig from "../../known/entities.json" assert { type: "json" };
 import { STORY_PATTERNS } from "../core/parser.js";
@@ -70,30 +71,36 @@ function getTemplates() {
 
 			try {
 				if (location.structure === "human-machine") {
-					// Modern structure with human/machine separation
+					// Modern structure with human/machine separation (Nunjucks)
 					_templateCache = {
-						character: Handlebars.compile(
-							readFileSync(
-								join(base, location.templates.character.human),
-								"utf8",
+						character: (data) =>
+							nunjucks.renderString(
+								readFileSync(
+									join(base, location.templates.character.human),
+									"utf8",
+								),
+								data,
 							),
-						),
-						scene: Handlebars.compile(
-							readFileSync(join(base, location.templates.scene.human), "utf8"),
-						),
-						location: Handlebars.compile(
-							readFileSync(
-								join(base, location.templates.location.human),
-								"utf8",
+						scene: (data) =>
+							nunjucks.renderString(
+								readFileSync(join(base, location.templates.scene.human), "utf8"),
+								data,
 							),
-						),
+						location: (data) =>
+							nunjucks.renderString(
+								readFileSync(
+									join(base, location.templates.location.human),
+									"utf8",
+								),
+								data,
+							),
 					};
 					console.log(
 						`[STATUS] Loaded human-machine templates from ${location.name}`,
 					);
 					return _templateCache;
 				} else if (location.structure === "legacy") {
-					// Legacy structure
+					// Legacy structure (Handlebars)
 					_templateCache = {
 						character: Handlebars.compile(
 							readFileSync(join(base, location.templates.character), "utf8"),
@@ -128,25 +135,24 @@ function getTemplates() {
 	];
 
 	let base: string | null = null;
-	let templateType: "handlebars" | "nunjucks" = "handlebars";
+	let useNunjucks = false;
 
 	for (const possibleBase of possibleBases) {
 		// Check for modern templates first
 		try {
-			readFileSync(join(possibleBase, "human/characters/character.md"), "utf8");
-			base = possibleBase;
-			templateType = "nunjucks";
-			break;
-		} catch {
-			// Fall back to legacy templates
-			try {
-				readFileSync(join(possibleBase, "characters/character.md"), "utf8");
+			if (existsSync(join(possibleBase, "human/characters/character.md"))) {
 				base = possibleBase;
-				templateType = "handlebars";
+				useNunjucks = true;
 				break;
-			} catch {
-				continue;
 			}
+			// Fall back to legacy templates
+			if (existsSync(join(possibleBase, "characters/character.md"))) {
+				base = possibleBase;
+				useNunjucks = false;
+				break;
+			}
+		} catch {
+			continue;
 		}
 	}
 
@@ -156,18 +162,24 @@ function getTemplates() {
 		);
 	}
 
-	if (templateType === "nunjucks") {
+	if (useNunjucks) {
 		// Use modern human-machine templates
 		_templateCache = {
-			character: Handlebars.compile(
-				readFileSync(join(base, "human/characters/character.md"), "utf8"),
-			),
-			scene: Handlebars.compile(
-				readFileSync(join(base, "human/scenes/scene.md"), "utf8"),
-			),
-			location: Handlebars.compile(
-				readFileSync(join(base, "human/locations/location.md"), "utf8"),
-			),
+			character: (data) =>
+				nunjucks.renderString(
+					readFileSync(join(base, "human/characters/character.md"), "utf8"),
+					data,
+				),
+			scene: (data) =>
+				nunjucks.renderString(
+					readFileSync(join(base, "human/scenes/scene.md"), "utf8"),
+					data,
+				),
+			location: (data) =>
+				nunjucks.renderString(
+					readFileSync(join(base, "human/locations/location.md"), "utf8"),
+					data,
+				),
 		};
 	} else {
 		// Use legacy templates
@@ -586,31 +598,56 @@ function generateContent(entry: RawEntry, type: string): string {
 	const templates = getTemplates();
 	const jsonBlock = generateMachineJSON(entry, type);
 
+	// Enrich aliases and mentions for templates
+	const enrichedAliases = extractAliasesFromMentions(entry.mentions).map(
+		(name) => {
+			const mentionsForAlias = entry.mentions.filter((m) => m.nameUsed === name);
+			return {
+				name,
+				usedBy: Array.from(new Set(mentionsForAlias.map((m) => m.speaker || "narrator"))),
+				context: mentionsForAlias[0].context,
+			};
+		},
+	);
+
+	const enrichedMentions = entry.mentions.map((m) => ({
+		chapter: m.chapter.replace("chapter-", ""),
+		name: m.nameUsed,
+		speaker: m.speaker,
+	}));
+
 	if (type === "character") {
 		return templates.character({
-			name: entry.name,
+			id: generateId(type, entry.name),
+			canonicalName: entry.name,
+			aliases: enrichedAliases,
+			mentions: enrichedMentions,
+			relationships: [], // To be populated by cross-linking
+			status: "alive",
 			summary,
 			essence,
-			mentions: entry.mentions,
-			events: extractEvents(entry),
-			quotes: extractKeyQuotes(entry.mentions),
+			tags: generateTags(entry),
 			jsonBlock,
 		});
 	}
 	if (type === "scene") {
 		return templates.scene({
+			id: generateId(type, entry.name),
 			name: entry.name,
 			summary,
 			essence,
-			mentions: entry.mentions,
+			mentions: enrichedMentions,
+			tags: generateTags(entry),
 			jsonBlock,
 		});
 	}
 	return templates.location({
+		id: generateId(type, entry.name),
 		name: entry.name,
 		summary,
 		essence,
-		mentions: entry.mentions,
+		mentions: enrichedMentions,
+		tags: generateTags(entry),
 		jsonBlock,
 	});
 }
