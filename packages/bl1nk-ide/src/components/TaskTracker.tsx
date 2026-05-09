@@ -147,6 +147,7 @@ export function TaskTracker({ tasks, onToggle, onAdd }: TaskTrackerProps) {
           <button
             onClick={handleAdd}
             disabled={!newText.trim()}
+            aria-label="Add task"
             className="flex items-center justify-center w-8 h-8 rounded-lg transition-all disabled:opacity-30"
             style={{ background: "var(--teal)", color: "#000" }}
           >
