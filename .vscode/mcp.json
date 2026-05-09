@@ -1,14 +1,19 @@
 {
-	"servers": {
-		"microsoft/markitdown": {
-			"type": "stdio",
-			"command": "uvx",
-			"args": [
-				"markitdown-mcp@0.0.1a4"
-			],
-			"gallery": "https://api.mcp.github.com",
-			"version": "1.0.0"
+	"inputs": [
+		{
+			"id": "NETDATA_CLOUD_API_TOKEN",
+			"type": "promptString",
+			"description": "Netdata Cloud API token (create at app.netdata.cloud > User Settings > API Tokens with scope:mcp)",
+			"password": true
 		},
+		{
+			"id": "CONTEXT7_API_KEY",
+			"type": "promptString",
+			"description": "API key for authentication",
+			"password": true
+		}
+	],
+	"servers": {
 		"io.github.upstash/context7": {
 			"type": "stdio",
 			"command": "npx",
@@ -30,31 +35,11 @@
 			"gallery": "https://api.mcp.github.com",
 			"version": "0.3.6"
 		},
-		"neondatabase/mcp-server-neon": {
-			"type": "http",
-			"url": "https://mcp.neon.tech/sse",
-			"gallery": "https://api.mcp.github.com",
-			"version": "1.0.0"
-		},
 		"com.vercel/vercel-mcp": {
 			"type": "http",
 			"url": "https://mcp.vercel.com",
 			"gallery": "https://api.mcp.github.com",
 			"version": "0.0.3"
 		}
-	},
-	"inputs": [
-		{
-			"id": "NETDATA_CLOUD_API_TOKEN",
-			"type": "promptString",
-			"description": "Netdata Cloud API token (create at app.netdata.cloud > User Settings > API Tokens with scope:mcp)",
-			"password": true
-		},
-		{
-			"id": "CONTEXT7_API_KEY",
-			"type": "promptString",
-			"description": "API key for authentication",
-			"password": true
-		}
-	]
+	}
 }
