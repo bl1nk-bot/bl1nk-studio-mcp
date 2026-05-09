@@ -168,6 +168,9 @@ Examples:
 }
 
 main().catch((error) => {
-	console.error("Fatal error:", error instanceof Error ? error.message : error);
-	process.exit(1);
+    console.error(
+        "Fatal error:",
+        error instanceof Error ? error.message : error,
+    );
+    process.exit(1);
 });

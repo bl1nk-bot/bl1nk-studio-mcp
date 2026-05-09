@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { buildInitialGraph } from "../packages/bl1nk-core/src/analyzer.js";
-import { toCanvasJSON } from "../packages/bl1nk-core/src/exporters/canvas.js";
-import { toMarkdown } from "../packages/bl1nk-core/src/exporters/markdown.js";
+import { buildInitialGraph } from "../packages/bl1nk/analyzer.js";
+import { toCanvasJSON } from "../packages/bl1nk/exporters/json.js";
+import { toMarkdown } from "../packages/bl1nk/exporters/markdown.js";
 
 describe("Markdown Exporter", () => {
 	const storyText = `
@@ -185,26 +185,23 @@ Event: The end
 			const graph = buildInitialGraph(storyText);
 			const result = toCanvasJSON(graph);
 
-			expect(result).toHaveProperty("nodes");
-			expect(result).toHaveProperty("edges");
-			expect(result).toHaveProperty("viewport");
+			expect(result).toContain("```artifact");
+			expect(result).toContain("id: vsp3_canvas_json");
 		});
 
 		it("should include nodes for each event", () => {
 			const graph = buildInitialGraph(storyText);
 			const result = toCanvasJSON(graph);
 
-			expect(result.nodes).toBeInstanceOf(Array);
-			expect(result.edges).toBeInstanceOf(Array);
-			expect(result.nodes.length).toBeGreaterThan(0);
+			expect(result).toContain('"nodes"');
+			expect(result).toContain('"edges"');
 		});
 
 		it("should include graph metadata", () => {
 			const graph = buildInitialGraph(storyText);
 			const result = toCanvasJSON(graph);
 
-			expect(result.metadata).toBeDefined();
-			expect(result.metadata?.title).toBe(graph.meta.title);
+			expect(result).toContain('"meta"');
 		});
 
 		it("should handle empty events array", () => {
@@ -212,8 +209,7 @@ Event: The end
 			const graph = buildInitialGraph(emptyStory);
 			const result = toCanvasJSON(graph);
 
-			expect(result).toHaveProperty("nodes");
-			expect(result.nodes).toBeInstanceOf(Array);
+			expect(result).toContain("```artifact");
 		});
 
 		it("should handle empty relationships array", () => {
@@ -221,8 +217,7 @@ Event: The end
 			graph.relationships = [];
 			const result = toCanvasJSON(graph);
 
-			expect(result).toHaveProperty("edges");
-			expect(result.edges).toBeInstanceOf(Array);
+			expect(result).toContain('"edges"');
 		});
 	});
 

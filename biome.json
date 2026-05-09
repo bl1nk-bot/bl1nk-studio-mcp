@@ -7,9 +7,9 @@
 			"**/out/**",
 			"**/target/**",
 			"packages/craft-blog-cms/**",
-			"packages/bl1nk-sync/**",
-			"packages/bl1nk-desktop/**",
-			"packages/bl1nk-book/**"
+			"packages/github-sync/**",
+			"packages/tauri-app/**",
+			"tauri-app/**"
 		],
 		"maxSize": 2097152
 	},

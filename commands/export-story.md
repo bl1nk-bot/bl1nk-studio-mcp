@@ -1,7 +1,4 @@
----
-name: export-story
-description: Export a StoryGraph to various formats
----
+# /bl1nk-visual-mcp:export-story
 
 Export a StoryGraph to various formats: Mermaid diagram, Canvas JSON, Markdown, HTML Dashboard, or MCP UI Dashboard.
 
