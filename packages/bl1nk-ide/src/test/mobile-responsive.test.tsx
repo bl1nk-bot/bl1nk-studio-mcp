@@ -1,159 +1,130 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import App from '../App';
-
 /**
  * Mobile Responsive UX Tests
  * Coverage: Viewport behavior, layout adaptation, and touch-friendly dimensions
  */
-describe('Mobile Responsive Design - bl1nk-ide', () => {
-  const mobileViewports = [
-    { name: 'iPhone SE (375px)', width: 375, height: 812, dpr: 2 },
-    { name: 'iPhone 12 (390px)', width: 390, height: 844, dpr: 3 },
-    { name: 'Galaxy S21 (360px)', width: 360, height: 800, dpr: 1 },
+import { render } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
+import App from '../App'
+
+// กำหนด type สำหรับ viewport object
+interface Viewport {
+  name: string
+  width: number
+  height: number
+  dpr: number
+}
+
+describe('Mobile Responsive Design - bl1nk-ide', (): void => {
+  const mobileViewports: Viewport[] = [
+    { name: 'iPhone SE (375px)', width: 375, height: 667, dpr: 2 },
+    { name: 'iPhone 14 (390px)', width: 390, height: 844, dpr: 3 },
+    { name: 'Samsung Galaxy S21 (360px)', width: 360, height: 800, dpr: 3 },
     { name: 'iPad Mini (768px)', width: 768, height: 1024, dpr: 2 },
-  ];
+  ]
 
-  mobileViewports.forEach(viewport => {
-    describe(`Viewport: ${viewport.name}`, () => {
-      beforeEach(() => {
-        // Set viewport size
-        window.innerWidth = viewport.width;
-        window.innerHeight = viewport.height;
-        window.devicePixelRatio = viewport.dpr;
-        window.dispatchEvent(new Event('resize'));
-      });
+  // ✅ Fix: ระบุ type ของ viewport parameter และ return type ของ callback
+  mobileViewports.forEach((viewport: Viewport): void => {
+    describe(`Viewport: ${viewport.name}`, (): void => {
+      it('renders without horizontal overflow', (): void => {
+        Object.defineProperty(window, 'innerWidth', {
+          writable: true,
+          configurable: true,
+          value: viewport.width,
+        })
+        Object.defineProperty(window, 'innerHeight', {
+          writable: true,
+          configurable: true,
+          value: viewport.height,
+        })
+        Object.defineProperty(window, 'devicePixelRatio', {
+          writable: true,
+          configurable: true,
+          value: viewport.dpr,
+        })
 
-      it('should render without overflow on mobile width', () => {
-        const { container } = render(<App />);
-        
-        // App should render successfully on mobile viewport
-        expect(container).toBeTruthy();
-      });
+        const { container } = render(<App />)
 
-      it('should have minimum touch target sizes (44x44px)', () => {
-        render(<App />);
-        const buttons = screen.queryAllByRole('button');
-        
-        // Touch targets should exist and be accessible
-        expect(buttons.length >= 0).toBe(true);
-      });
+        expect(container).toBeTruthy()
 
-      it('should adapt layout for small screens (< 480px)', () => {
-        render(<App />);
-        
-        if (viewport.width < 480) {
-          // On small screens, sidebar should be collapsible
-          const sidebarToggle = screen.queryByRole('button', { name: /toggle|menu|sidebar/i });
-          expect(sidebarToggle || true).toBe(true);
+        const appElement = container.firstChild as HTMLElement | null
+        if (appElement) {
+          const styles = window.getComputedStyle(appElement)
+          const overflow = styles.overflow || styles.overflowX
+          expect(['hidden', 'auto', 'scroll', '']).toContain(overflow)
         }
-      });
+      })
 
-      it('should have readable font sizes on mobile', () => {
-        const { container } = render(<App />);
-        const textElements = container.querySelectorAll('p, span, div, button');
-        
-        // Should have text content elements
-        expect(textElements.length >= 0).toBe(true);
-      });
+      it('has no horizontal scroll on body', (): void => {
+        Object.defineProperty(window, 'innerWidth', {
+          writable: true,
+          configurable: true,
+          value: viewport.width,
+        })
 
-      it('should not have horizontal scroll on mobile', () => {
-        const { container } = render(<App />);
-        
-        // Check if any element exceeds viewport width
-        const allElements = container.querySelectorAll('*');
-        let hasHorizontalOverflow = false;
-        
-        allElements.forEach(element => {
-          if (element.scrollWidth > viewport.width) {
-            hasHorizontalOverflow = true;
+        const { container } = render(<App />)
+        const allElements = container.querySelectorAll('*')
+        let hasHorizontalOverflow = false
+
+        // ✅ Fix: ระบุ type ของ element parameter เป็น Element
+        allElements.forEach((element: Element): void => {
+          const htmlElement = element as HTMLElement
+          const rect = htmlElement.getBoundingClientRect()
+          if (rect.width > viewport.width) {
+            hasHorizontalOverflow = true
           }
-        });
-        
-        expect(hasHorizontalOverflow).toBe(false);
-      });
-    });
-  });
+        })
 
-  describe('Portrait vs Landscape Orientation', () => {
-    it('should handle portrait orientation (height > width)', () => {
-      window.innerWidth = 390;
-      window.innerHeight = 844;
-      window.dispatchEvent(new Event('resize'));
-      
-      const { container } = render(<App />);
-      expect(container).toBeTruthy();
-    });
+        expect(hasHorizontalOverflow).toBe(false)
+      })
 
-    it('should handle landscape orientation (width > height)', () => {
-      window.innerWidth = 844;
-      window.innerHeight = 390;
-      window.dispatchEvent(new Event('resize'));
-      
-      const { container } = render(<App />);
-      expect(container).toBeTruthy();
-    });
-  });
+      it('renders touch-friendly button sizes (min 44px)', (): void => {
+        const { container } = render(<App />)
+        const buttons = container.querySelectorAll('button')
 
-  describe('Flexible Spacing and Padding', () => {
-    it('should use responsive padding on mobile containers', () => {
-      window.innerWidth = 375;
-      window.innerHeight = 812;
-      window.dispatchEvent(new Event('resize'));
-      
-      const { container } = render(<App />);
-      const contentAreas = container.querySelectorAll('[class*="p-"]'); // Tailwind padding classes
-      
-      expect(contentAreas.length > 0 || true).toBe(true); // Should have padded content
-    });
+        buttons.forEach((button: HTMLButtonElement): void => {
+          const rect = button.getBoundingClientRect()
+          if (rect.width > 0 && rect.height > 0) {
+            expect(rect.height).toBeGreaterThanOrEqual(44)
+          }
+        })
+      })
 
-    it('should stack elements vertically on narrow screens', () => {
-      window.innerWidth = 360;
-      window.innerHeight = 800;
-      window.dispatchEvent(new Event('resize'));
-      
-      const { container } = render(<App />);
-      const rows = container.querySelectorAll('[class*="flex"]');
-      
-      // Flex containers should adapt for mobile
-      expect(rows.length >= 0).toBe(true);
-    });
-  });
+      it('does not render fixed-width elements wider than viewport', (): void => {
+        Object.defineProperty(window, 'innerWidth', {
+          writable: true,
+          configurable: true,
+          value: viewport.width,
+        })
 
-  describe('Modal and Overlay Behavior on Mobile', () => {
-    it('should display modals full-width on narrow screens', () => {
-      window.innerWidth = 375;
-      window.innerHeight = 812;
-      window.dispatchEvent(new Event('resize'));
-      
-      const { container } = render(<App />);
-      
-      // Check for modal-like elements
-      const potentialModals = container.querySelectorAll('[role="dialog"], .modal, [class*="modal"]');
-      
-      potentialModals.forEach(modal => {
-        const rect = modal.getBoundingClientRect();
-        expect(rect.width <= 375).toBe(true);
-      });
-    });
-  });
+        const { container } = render(<App />)
 
-  describe('Input and Form Fields on Mobile', () => {
-    it('should have large enough inputs for touch typing', () => {
-      window.innerWidth = 390;
-      window.innerHeight = 844;
-      window.dispatchEvent(new Event('resize'));
-      
-      const { container } = render(<App />);
-      const inputs = container.querySelectorAll('input, textarea, [role="textbox"]');
-      
-      // If there are inputs, they should be sized appropriately
-      if (inputs.length > 0) {
-        inputs.forEach(input => {
-          const rect = input.getBoundingClientRect();
-          expect(rect.height >= 0).toBe(true);
-        });
-      }
-    });
-  });
-});
+        // ตรวจสอบ modal-like elements
+        const potentialModals = container.querySelectorAll('[role="dialog"], .modal, [class*="modal"]')
+
+        // ✅ Fix: ระบุ type ของ modal parameter
+        potentialModals.forEach((modal: Element): void => {
+          const htmlModal = modal as HTMLElement
+          const rect = htmlModal.getBoundingClientRect()
+          if (rect.width > 0) {
+            expect(rect.width).toBeLessThanOrEqual(viewport.width)
+          }
+        })
+      })
+
+      it('renders inputs with mobile-friendly font size (min 16px to prevent iOS zoom)', (): void => {
+        const { container } = render(<App />)
+        const inputs = container.querySelectorAll('input[type="text"], textarea')
+
+        if (inputs.length > 0) {
+          // ✅ Fix: ระบุ type ของ input parameter
+          inputs.forEach((input: Element): void => {
+            const htmlInput = input as HTMLInputElement
+            const styles = window.getComputedStyle(htmlInput)
+            const fontSize = parseFloat(styles.fontSize || '16')
+            expect(fontSize).toBeGreaterThanOrEqual(16)
+          })
+        }
+      })
+    })
+  })
+})
