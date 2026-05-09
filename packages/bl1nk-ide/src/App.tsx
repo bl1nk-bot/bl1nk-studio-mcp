@@ -96,6 +96,8 @@ export default function App() {
         >
           <button
             onClick={() => setSidebarOpen(o => !o)}
+            aria-label={sidebarOpen ? "Close sidebar" : "Open sidebar"}
+            aria-expanded={sidebarOpen}
             className="flex items-center justify-center w-7 h-7 rounded transition-all hover:bg-[rgba(0,188,212,0.08)]"
             style={{ color: "var(--text-secondary)" }}
           >
