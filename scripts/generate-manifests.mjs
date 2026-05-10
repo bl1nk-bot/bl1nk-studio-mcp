@@ -39,7 +39,7 @@ const qwenManifest = {
 	mcpServers: {
 		bl1nkVisualServer: {
 			command: source.mcpServer.command,
-			args: [`${extensionPath}${/}${entryPoint}`],
+			args: [`\${extensionPath}\${/}${entryPoint}`],
 			cwd: "${extensionPath}",
 		},
 	},
