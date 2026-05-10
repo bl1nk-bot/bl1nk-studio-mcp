@@ -44,7 +44,7 @@ async function fetchRootBlockWithRetry(
 	}
 
 	if (lastError instanceof CraftApiError && lastError.status === 404) {
-     throw lastError;
+		throw lastError;
 	}
 
 	if (lastError instanceof CraftApiError && lastError.status === 429) {
@@ -63,10 +63,7 @@ async function fetchRootBlockWithRetry(
 		return null;
 	}
 
-	if (
-		lastError instanceof CraftApiError &&
-		lastError.status === 0
-	) {
+	if (lastError instanceof CraftApiError && lastError.status === 0) {
 		console.warn(
 			"[fetchBlocks] Block lookup network error; returning an empty block list for now.",
 			lastError,
@@ -120,13 +117,13 @@ export async function fetchBlocks(
 				);
 			},
 			create: async (item) => {
-    const targetPageId = documentId ?? rootBlock?.id;
-                    if (!targetPageId) return undefined;
-                    const result = await client.insertBlocks(
-                        [{ type: "text", markdown: (item.title as string) || "" }],
-                        {
-                            position: "end",
-                            pageId: targetPageId,
+				const targetPageId = documentId ?? rootBlock?.id;
+				if (!targetPageId) return undefined;
+				const result = await client.insertBlocks(
+					[{ type: "text", markdown: (item.title as string) || "" }],
+					{
+						position: "end",
+						pageId: targetPageId,
 					},
 				);
 				const block = result.items?.[0];

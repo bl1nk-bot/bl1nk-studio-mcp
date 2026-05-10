@@ -12,10 +12,11 @@
  * This is a SEARCH tool - it finds and catalogs entities, not analyzes story quality.
  */
 
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import Handlebars from "handlebars";
+import nunjucks from "nunjucks";
 import { z } from "zod";
 import entitiesConfig from "../../known/entities.json" assert { type: "json" };
 import { STORY_PATTERNS } from "../core/parser.js";
@@ -23,28 +24,179 @@ import { STORY_PATTERNS } from "../core/parser.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Lazy-loaded compiled Handlebars templates.
+// Lazy-loaded compiled templates.
+// Supports both Handlebars and Nunjucks templates.
 // Avoids blocking the event loop with synchronous file I/O at module load time.
 let _templateCache: {
-	character: ReturnType<typeof Handlebars.compile>;
-	scene: ReturnType<typeof Handlebars.compile>;
-	location: ReturnType<typeof Handlebars.compile>;
+	character: (data: any) => string;
+	scene: (data: any) => string;
+	location: (data: any) => string;
 } | null = null;
+
+function loadConfig() {
+	try {
+		const configPath = join(process.cwd(), "bl1nk-config.json");
+		if (!existsSync(configPath)) {
+			console.warn(
+				"[WARN] Config file not found, using legacy template detection",
+			);
+			return null;
+		}
+		return JSON.parse(readFileSync(configPath, "utf8"));
+	} catch (error) {
+		console.warn(
+			"[WARN] Failed to load config, using legacy template detection:",
+			error.message,
+		);
+		return null;
+	}
+}
 
 function getTemplates() {
 	if (_templateCache) return _templateCache;
-	const base = join(__dirname, "../templates");
-	_templateCache = {
-		character: Handlebars.compile(
-			readFileSync(join(base, "characters/character.md"), "utf8"),
-		),
-		scene: Handlebars.compile(
-			readFileSync(join(base, "scene/scene.md"), "utf8"),
-		),
-		location: Handlebars.compile(
-			readFileSync(join(base, "world/location.md"), "utf8"),
-		),
-	};
+
+	const config = loadConfig();
+	const templateConfig = config?.templateConfig;
+
+	if (templateConfig) {
+		console.log(
+			`[STATUS] Using config-based template system v${templateConfig.version}`,
+		);
+
+		// Use config-based template resolution
+		const locations = templateConfig.templateLocations || [];
+
+		for (const location of locations.sort((a, b) => a.priority - b.priority)) {
+			const base = join(process.cwd(), location.basePath);
+
+			try {
+				if (location.structure === "human-machine") {
+					// Modern structure with human/machine separation (Nunjucks)
+					_templateCache = {
+						character: (data) =>
+							nunjucks.renderString(
+								readFileSync(
+									join(base, location.templates.character.human),
+									"utf8",
+								),
+								data,
+							),
+						scene: (data) =>
+							nunjucks.renderString(
+								readFileSync(join(base, location.templates.scene.human), "utf8"),
+								data,
+							),
+						location: (data) =>
+							nunjucks.renderString(
+								readFileSync(
+									join(base, location.templates.location.human),
+									"utf8",
+								),
+								data,
+							),
+					};
+					console.log(
+						`[STATUS] Loaded human-machine templates from ${location.name}`,
+					);
+					return _templateCache;
+				} else if (location.structure === "legacy") {
+					// Legacy structure (Handlebars)
+					_templateCache = {
+						character: Handlebars.compile(
+							readFileSync(join(base, location.templates.character), "utf8"),
+						),
+						scene: Handlebars.compile(
+							readFileSync(join(base, location.templates.scene), "utf8"),
+						),
+						location: Handlebars.compile(
+							readFileSync(join(base, location.templates.location), "utf8"),
+						),
+					};
+					console.log(`[STATUS] Loaded legacy templates from ${location.name}`);
+					return _templateCache;
+				}
+			} catch (error) {
+				console.warn(
+					`[WARN] Failed to load templates from ${location.name}:`,
+					error.message,
+				);
+				continue;
+			}
+		}
+	}
+
+	// Fallback to legacy detection if config fails
+	console.log("[STATUS] Falling back to legacy template detection");
+
+	const possibleBases = [
+		join(__dirname, "../templates"), // Relative to source file
+		join(process.cwd(), "templates"), // Relative to cwd
+		join(process.cwd(), "packages/bl1nk-core/templates"), // In package
+	];
+
+	let base: string | null = null;
+	let useNunjucks = false;
+
+	for (const possibleBase of possibleBases) {
+		// Check for modern templates first
+		try {
+			if (existsSync(join(possibleBase, "human/characters/character.md"))) {
+				base = possibleBase;
+				useNunjucks = true;
+				break;
+			}
+			// Fall back to legacy templates
+			if (existsSync(join(possibleBase, "characters/character.md"))) {
+				base = possibleBase;
+				useNunjucks = false;
+				break;
+			}
+		} catch {
+			continue;
+		}
+	}
+
+	if (!base) {
+		throw new Error(
+			`Could not find templates. Tried: ${possibleBases.join(", ")}`,
+		);
+	}
+
+	if (useNunjucks) {
+		// Use modern human-machine templates
+		_templateCache = {
+			character: (data) =>
+				nunjucks.renderString(
+					readFileSync(join(base, "human/characters/character.md"), "utf8"),
+					data,
+				),
+			scene: (data) =>
+				nunjucks.renderString(
+					readFileSync(join(base, "human/scenes/scene.md"), "utf8"),
+					data,
+				),
+			location: (data) =>
+				nunjucks.renderString(
+					readFileSync(join(base, "human/locations/location.md"), "utf8"),
+					data,
+				),
+		};
+	} else {
+		// Use legacy templates
+		_templateCache = {
+			character: Handlebars.compile(
+				readFileSync(join(base, "characters/character.md"), "utf8"),
+			),
+			scene: Handlebars.compile(
+				readFileSync(join(base, "scene/scene.md"), "utf8"),
+			),
+			location: Handlebars.compile(
+				readFileSync(join(base, "world/location.md"), "utf8"),
+			),
+		};
+	}
+
+	console.log(`[STATUS] Templates loaded from ${base}`);
 	return _templateCache;
 }
 
@@ -399,34 +551,104 @@ function extractAliasesFromMentions(mentions: Mention[]): string[] {
 	return aliases;
 }
 
-function generateContent(entry: RawEntry, type: string): string {
+function generateMachineJSON(entry: RawEntry, type: string): string {
 	const summary = generateSummary(entry);
 	const essence = generateEssence(entry, type);
-	const templates = getTemplates();
 
-	if (type === "character") {
-		return templates.character({
-			name: entry.name,
-			summary,
-			essence,
-			mentions: entry.mentions,
-			events: extractEvents(entry),
-			quotes: extractKeyQuotes(entry.mentions),
-		});
-	}
-	if (type === "scene") {
-		return templates.scene({
-			name: entry.name,
-			summary,
-			essence,
-			mentions: entry.mentions,
-		});
-	}
-	return templates.location({
+	// Base JSON structure
+	const baseData = {
 		name: entry.name,
 		summary,
 		essence,
 		mentions: entry.mentions,
+		events: extractEvents(entry),
+		quotes: extractKeyQuotes(entry.mentions),
+		tags: generateTags(entry),
+		type,
+	};
+
+	// Try to load machine template, fall back to inline JSON
+	try {
+		const possibleBases = [
+			join(__dirname, "../templates"),
+			join(process.cwd(), "templates"),
+			join(process.cwd(), "packages/bl1nk-core/templates"),
+		];
+
+		for (const base of possibleBases) {
+			try {
+				const templatePath = join(base, `machine/${type}s/${type}.json`);
+				const templateContent = readFileSync(templatePath, "utf8");
+				const template = Handlebars.compile(templateContent);
+				return template(baseData);
+			} catch {
+				continue;
+			}
+		}
+	} catch {
+		// Fall back to inline JSON generation
+	}
+
+	return JSON.stringify(baseData, null, 2);
+}
+
+function generateContent(entry: RawEntry, type: string): string {
+	const summary = generateSummary(entry);
+	const essence = generateEssence(entry, type);
+	const templates = getTemplates();
+	const jsonBlock = generateMachineJSON(entry, type);
+
+	// Enrich aliases and mentions for templates
+	const enrichedAliases = extractAliasesFromMentions(entry.mentions).map(
+		(name) => {
+			const mentionsForAlias = entry.mentions.filter((m) => m.nameUsed === name);
+			return {
+				name,
+				usedBy: Array.from(new Set(mentionsForAlias.map((m) => m.speaker || "narrator"))),
+				context: mentionsForAlias[0].context,
+			};
+		},
+	);
+
+	const enrichedMentions = entry.mentions.map((m) => ({
+		chapter: m.chapter.replace("chapter-", ""),
+		name: m.nameUsed,
+		speaker: m.speaker,
+	}));
+
+	if (type === "character") {
+		return templates.character({
+			id: generateId(type, entry.name),
+			canonicalName: entry.name,
+			aliases: enrichedAliases,
+			mentions: enrichedMentions,
+			relationships: [], // To be populated by cross-linking
+			status: "alive",
+			summary,
+			essence,
+			tags: generateTags(entry),
+			jsonBlock,
+		});
+	}
+	if (type === "scene") {
+		return templates.scene({
+			id: generateId(type, entry.name),
+			name: entry.name,
+			summary,
+			essence,
+			mentions: enrichedMentions,
+			tags: generateTags(entry),
+			jsonBlock,
+		});
+	}
+	return templates.location({
+		id: generateId(type, entry.name),
+		name: entry.name,
+		summary,
+		essence,
+		mentions: enrichedMentions,
+		tags: generateTags(entry),
+		jsonBlock,
 	});
 }
 

@@ -11,7 +11,7 @@
  * - .kilo/kilo.jsonc
  */
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -39,7 +39,7 @@ const qwenManifest = {
 	mcpServers: {
 		bl1nkVisualServer: {
 			command: source.mcpServer.command,
-			args: ["${extensionPath}${/}" + entryPoint],
+			args: [`\${extensionPath}\${/}${entryPoint}`],
 			cwd: "${extensionPath}",
 		},
 	},
@@ -63,7 +63,7 @@ const geminiManifest = {
 	mcpServers: {
 		bl1nkVisualServer: {
 			command: source.mcpServer.command,
-			args: ["${extensionPath}${/}" + entryPoint],
+			args: [`${extensionPath}${/}${entryPoint}`],
 			cwd: "${extensionPath}",
 		},
 	},
@@ -102,7 +102,7 @@ console.log("✅ .claude-plugin/plugin.json");
 const claudeMcp = {
 	bl1nkVisualServer: {
 		command: source.mcpServer.command,
-		args: ["${extensionRoot}/" + source.mcpServer.entryPoint],
+		args: [`${extensionRoot}/${source.mcpServer.entryPoint}`],
 		cwd: "${extensionRoot}",
 	},
 };

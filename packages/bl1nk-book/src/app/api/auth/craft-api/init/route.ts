@@ -45,17 +45,17 @@ async function registerClient(redirectUri: string) {
 
 export async function POST(request: NextRequest) {
 	try {
-let body: { redirectUri?: string };
-try {
-    body = (await request.json()) as { redirectUri?: string };
-} catch {
-    throw new OAuthValidationError("Invalid request body");
-}
+		let body: { redirectUri?: string };
+		try {
+			body = (await request.json()) as { redirectUri?: string };
+		} catch {
+			throw new OAuthValidationError("Invalid request body");
+		}
 		const redirectUri = validateOAuthRedirectUri(body?.redirectUri || "");
 
-  const clientId = STATIC_CLIENT_ID;
-  if (!clientId) {
-      throw new Error("Missing CRAFT_OAUTH_CLIENT_ID configuration");
+		const clientId = STATIC_CLIENT_ID;
+		if (!clientId) {
+			throw new Error("Missing CRAFT_OAUTH_CLIENT_ID configuration");
 		}
 
 		const { codeVerifier, codeChallenge } = generatePKCE();

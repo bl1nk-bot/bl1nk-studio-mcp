@@ -6,6 +6,8 @@
 			"**/node_modules/**",
 			"**/out/**",
 			"**/target/**",
+			"templates/**",
+			"packages/bl1nk-core/templates/**",
 			"packages/craft-blog-cms/**",
 			"packages/bl1nk-sync/**",
 			"packages/bl1nk-desktop/**",

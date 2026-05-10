@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
 	const safeState = JSON.stringify(state).replace(/</g, "\\u003c");
 
 	const html = `<!DOCTYPE html><html><head><title>Authorizing…</title></head><body><script>
- var msg = { type: "craft-oauth-callback", code: ${safeCode}, state: ${safeState} };
+var msg = { type: "craft-oauth-callback", code: ${safeCode}, state: ${safeState} };
 var allowedOrigin = ${JSON.stringify(ALLOWED_CALLBACK_ORIGIN)};
 if (window.opener) { window.opener.postMessage(msg, allowedOrigin); window.close(); }
 </script></body></html>`;

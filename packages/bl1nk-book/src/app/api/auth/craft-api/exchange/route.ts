@@ -45,6 +45,7 @@ export async function POST(request: NextRequest) {
 			typeof (body as { state: unknown }).state === "string"
 				? (body as { state: string }).state
 				: "";
+
 		if (!code || !state) {
 			const response = NextResponse.json(
 				{ error: "Missing code or state" },
@@ -143,20 +144,16 @@ export async function POST(request: NextRequest) {
 			access_token: tokens.access_token,
 			expires_in: tokens.expires_in,
 		});
-		response.cookies.set(
-			REFRESH_COOKIE,
-			JSON.stringify({
-				refreshToken: tokens.refresh_token,
-				clientId: session.clientId,
-			}),
-			{
-				httpOnly: true,
-				secure: process.env.NODE_ENV === "production",
-				sameSite: "strict",
-				path: "/api/auth/craft-api",
-				maxAge: 30 * 24 * 60 * 60,
-			},
-		);
+		response.cookies.set(REFRESH_COOKIE, JSON.stringify({
+			refreshToken: tokens.refresh_token,
+			clientId: session.clientId,
+		}), {
+			httpOnly: true,
+			secure: process.env.NODE_ENV === "production",
+			sameSite: "strict",
+			path: "/api/auth/craft-api",
+			maxAge: 30 * 24 * 60 * 60,
+		});
 		clearOAuthSessionCookie(response);
 		applyNoStoreHeaders(response.headers);
 		return response;

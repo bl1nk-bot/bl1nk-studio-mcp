@@ -1,0 +1,71 @@
+{
+	"name": "bl1nk-visual-mcp",
+	"version": "3.0.0",
+	"description": "Visual Story Planner MCP Server",
+	"templateConfig": {
+		"version": "1.0.0",
+		"defaultEngine": "handlebars",
+		"supportedEngines": ["handlebars", "nunjucks"],
+		"templateLocations": [
+			{
+				"name": "human-machine",
+				"priority": 1,
+				"basePath": "templates",
+				"structure": "human-machine",
+				"engines": {
+					"human": "handlebars",
+					"machine": "handlebars"
+				},
+				"templates": {
+					"character": {
+						"human": "human/characters/character.md",
+						"machine": "machine/characters/character.json"
+					},
+					"scene": {
+						"human": "human/scenes/scene.md",
+						"machine": "machine/scenes/scene.json"
+					},
+					"location": {
+						"human": "human/locations/location.md",
+						"machine": "machine/locations/location.json"
+					}
+				}
+			},
+			{
+				"name": "legacy",
+				"priority": 2,
+				"basePath": "templates",
+				"structure": "legacy",
+				"engine": "handlebars",
+				"templates": {
+					"character": "characters/character.md",
+					"scene": "scene/scene.md",
+					"location": "world/location.md"
+				}
+			}
+		],
+		"fallbackLocations": ["packages/bl1nk-core/templates", "src/templates"]
+	},
+	"buildConfig": {
+		"entryPoint": "src/index.ts",
+		"output": "dist/index.js",
+		"platform": "node",
+		"format": "esm",
+		"bundle": true,
+		"packages": "bundle"
+	},
+	"qualityConfig": {
+		"linter": "biome",
+		"formatter": "biome",
+		"testRunner": "vitest",
+		"typeChecker": "tsc",
+		"coverage": true
+	},
+	"reportingConfig": {
+		"enableStatusUpdates": true,
+		"enableWarningAlerts": true,
+		"enableErrorReporting": true,
+		"enableChangeNotifications": true,
+		"logLevel": "info"
+	}
+}

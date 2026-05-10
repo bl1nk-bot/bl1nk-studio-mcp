@@ -19,6 +19,22 @@
 | `npm run lint` | Markdown lint |
 | `npm run lint:fix` | Markdown lint with auto-fix |
 
+### Hidden Build Commands
+- `node scripts/build.js build` - Build with proper status reporting
+- `node scripts/build.js check` - Quality checks with logging
+- Build must run from `packages/bl1nk-core/` directory
+
+### Operational Guidelines
+- Report problems to user immediately when encountered
+- Use question tool when tools/environment cause failures or uncertainties
+- Never work silently - keep user informed of progress and issues
+
+### AI Memory Management
+- **No Long-Term Memory**: AI has no persistent memory - context is the brain
+- **Document Problems**: Record all errors, solutions, and learnings in AGENTS.md files
+- **Prevent Recurrence**: Create context and solutions for problems to prevent repetition
+- **Context-Driven**: All decisions based on documented learnings, not implicit knowledge
+
 ### Desktop App (`bl1nk-desktop/`)
 
 | Command | Description |
