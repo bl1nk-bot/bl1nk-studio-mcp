@@ -1,27 +1,88 @@
 {
 	"outputDirectory": ".",
 	"functions": {
-		"api/mcp.ts": {
+		"packages/bl1nk-core/api/mcp.ts": {
 			"maxDuration": 60
 		}
 	},
-	"rewrites": [
+	"builds": [
 		{
-			"source": "/mcp",
-			"destination": "/api/mcp"
+			"src": "packages/bl1nk-core/api/mcp.ts",
+			"use": "@vercel/node"
+		}
+	],
+	"routes": [
+		{
+			"src": "/api/mcp",
+			"dest": "packages/bl1nk-core/api/mcp.ts"
 		},
 		{
-			"source": "/mcp/oauth",
-			"destination": "/api/mcp"
+			"src": "/mcp",
+			"dest": "packages/bl1nk-core/api/mcp.ts"
 		},
 		{
-			"source": "/mcp-oauth",
-			"destination": "/api/mcp"
+			"src": "/mcp/oauth",
+			"dest": "packages/bl1nk-core/api/mcp.ts"
+		},
+		{
+			"src": "/mcp-oauth",
+			"dest": "packages/bl1nk-core/api/mcp.ts"
 		}
 	],
 	"headers": [
 		{
 			"source": "/api/mcp",
+			"headers": [
+				{
+					"key": "Access-Control-Allow-Origin",
+					"value": "*"
+				},
+				{
+					"key": "Access-Control-Allow-Methods",
+					"value": "GET, POST, DELETE, OPTIONS"
+				},
+				{
+					"key": "Access-Control-Allow-Headers",
+					"value": "Content-Type, Authorization, x-api-key"
+				}
+			]
+		},
+		{
+			"source": "/mcp",
+			"headers": [
+				{
+					"key": "Access-Control-Allow-Origin",
+					"value": "*"
+				},
+				{
+					"key": "Access-Control-Allow-Methods",
+					"value": "GET, POST, DELETE, OPTIONS"
+				},
+				{
+					"key": "Access-Control-Allow-Headers",
+					"value": "Content-Type, Authorization, x-api-key"
+				}
+			]
+		},
+		{
+			"source": "/mcp/oauth",
+			"headers": [
+				{
+					"key": "Access-Control-Allow-Origin",
+					"value": "*"
+				},
+				{
+					"key": "Access-Control-Allow-Methods",
+					"value": "GET, POST, DELETE, OPTIONS"
+				},
+				{
+					"key": "Access-Control-Allow-Headers",
+					"value": "Content-Type, Authorization, x-api-key"
+				}
+			]
+		},
+		{
+			"source": "/mcp-oauth",
 			"headers": [
 				{
 					"key": "Access-Control-Allow-Origin",
