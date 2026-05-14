@@ -4,20 +4,20 @@
 
 ### Root Package (`bl1nk-visual-mcp`)
 
-| Command | Description |
-|---------|-------------|
-| `npm run build` | Bundle with esbuild → `dist/server.js` |
-| `npm run build:tsc` | Type-check only (no emit) |
-| `npm run dev` | Watch-mode esbuild rebuild |
-| `npm run start` | Run bundled server |
-| `npm test` | Run all tests via vitest |
-| `npm run test:watch` | Vitest watch mode |
-| `npm run test -- -t "test name"` | Run a single test by name |
-| `npm run test -- tests/exporters.test.ts` | Run a single test file |
-| `npm run check` | Biome lint + format with auto-fix |
-| `npm run format` | Biome format (write) |
-| `npm run lint` | Markdown lint |
-| `npm run lint:fix` | Markdown lint with auto-fix |
+| Command                                   | Description                            |
+| ----------------------------------------- | -------------------------------------- |
+| `npm run build`                           | Bundle with esbuild → `dist/server.js` |
+| `npm run build:tsc`                       | Type-check only (no emit)              |
+| `npm run dev`                             | Watch-mode esbuild rebuild             |
+| `npm run start`                           | Run bundled server                     |
+| `npm test`                                | Run all tests via vitest               |
+| `npm run test:watch`                      | Vitest watch mode                      |
+| `npm run test -- -t "test name"`          | Run a single test by name              |
+| `npm run test -- tests/exporters.test.ts` | Run a single test file                 |
+| `npm run check`                           | Biome lint + format with auto-fix      |
+| `npm run format`                          | Biome format (write)                   |
+| `npm run lint`                            | Markdown lint                          |
+| `npm run lint:fix`                        | Markdown lint with auto-fix            |
 
 ### Hidden Build Commands
 - `node scripts/build.js build` - Build with proper status reporting
@@ -37,24 +37,24 @@
 
 ### Desktop App (`bl1nk-desktop/`)
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Vite dev server |
-| `npm run build` | Type-check + Vite production build |
-| `npm run tauri:dev` | Tauri dev with hot reload |
-| `npm run tauri:build` | Tauri production build |
-| `npm test` | Run tests via vitest |
-| `npm run typecheck` | `tsc --noEmit` |
+| Command               | Description                        |
+| --------------------- | ---------------------------------- |
+| `npm run dev`         | Vite dev server                    |
+| `npm run build`       | Type-check + Vite production build |
+| `npm run tauri:dev`   | Tauri dev with hot reload          |
+| `npm run tauri:build` | Tauri production build             |
+| `npm test`            | Run tests via vitest               |
+| `npm run typecheck`   | `tsc --noEmit`                     |
 
 ### IDE App (`bl1nk-ide/`)
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Vite dev server |
-| `npm run build` | Vite production build |
-| `npm run preview` | Preview production build |
-| `npm test` | Run tests via vitest |
-| `npm run typecheck` | `tsc --noEmit` |
+| Command             | Description              |
+| ------------------- | ------------------------ |
+| `npm run dev`       | Vite dev server          |
+| `npm run build`     | Vite production build    |
+| `npm run preview`   | Preview production build |
+| `npm test`          | Run tests via vitest     |
+| `npm run typecheck` | `tsc --noEmit`           |
 
 ## Project Structure
 
@@ -82,35 +82,35 @@ packages/craft-blog-cms/# ⚠️ Orphaned (Next.js blog/CMS)
 
 Defined in `GRANULAR_TOOLS` array, schemas in `Schemas` object, executors in `executeGranularTool`.
 
-| Tool | Schema | Executor | Description |
-|------|--------|----------|-------------|
-| `analyze_story` | `Schemas.analyze_story` | `executeGranularTool` | Parse story text → StoryGraph |
-| `export_mermaid` | `Schemas.export_mermaid` | `executeGranularTool` | Mermaid diagram |
-| `export_canvas` | `Schemas.export_canvas` | `executeGranularTool` | Canvas JSON |
-| `export_dashboard` | `Schemas.export_dashboard` | `executeGranularTool` | HTML dashboard |
-| `export_markdown` | `Schemas.export_markdown` | `executeGranularTool` | Markdown document |
-| `validate_story_structure` | `Schemas.validate_story_structure` | `executeGranularTool` | 3-act validation |
-| `extract_characters` | `Schemas.extract_characters` | `executeGranularTool` | Character extraction |
-| `extract_conflicts` | `Schemas.extract_conflicts` | `executeGranularTool` | Conflict extraction |
-| `build_relationship_graph` | `Schemas.build_relationship_graph` | `executeGranularTool` | Relationship graph |
-| `export_mcp_ui_dashboard` | `Schemas.export_mcp_ui_dashboard` | `executeGranularTool` | MCP-UI dashboard |
-| `exa_search_story` | `Schemas.exa_search_story` | `executeGranularTool` | External search |
+| Tool                       | Schema                             | Executor              | Description                   |
+| -------------------------- | ---------------------------------- | --------------------- | ----------------------------- |
+| `analyze_story`            | `Schemas.analyze_story`            | `executeGranularTool` | Parse story text → StoryGraph |
+| `export_mermaid`           | `Schemas.export_mermaid`           | `executeGranularTool` | Mermaid diagram               |
+| `export_canvas`            | `Schemas.export_canvas`            | `executeGranularTool` | Canvas JSON                   |
+| `export_dashboard`         | `Schemas.export_dashboard`         | `executeGranularTool` | HTML dashboard                |
+| `export_markdown`          | `Schemas.export_markdown`          | `executeGranularTool` | Markdown document             |
+| `validate_story_structure` | `Schemas.validate_story_structure` | `executeGranularTool` | 3-act validation              |
+| `extract_characters`       | `Schemas.extract_characters`       | `executeGranularTool` | Character extraction          |
+| `extract_conflicts`        | `Schemas.extract_conflicts`        | `executeGranularTool` | Conflict extraction           |
+| `build_relationship_graph` | `Schemas.build_relationship_graph` | `executeGranularTool` | Relationship graph            |
+| `export_mcp_ui_dashboard`  | `Schemas.export_mcp_ui_dashboard`  | `executeGranularTool` | MCP-UI dashboard              |
+| `exa_search_story`         | `Schemas.exa_search_story`         | `executeGranularTool` | External search               |
 
 ### Legacy Tools (4 tools — backward compat)
 
 Defined in `BL1NK_VISUAL_TOOLS` array, executors in `executeStoryTool`.
 
-| Tool | Executor | Description |
-|------|----------|-------------|
-| `search_entries` | `executeStoryTool` | Entity extraction with templates |
-| `validate_story` | `executeStoryTool` | Quick validation from text |
-| `generate_artifacts` | `executeStoryTool` | All formats at once |
-| `sync_github` | `executeStoryTool` | Push to GitHub (not implemented) |
+| Tool                 | Executor           | Description                      |
+| -------------------- | ------------------ | -------------------------------- |
+| `search_entries`     | `executeStoryTool` | Entity extraction with templates |
+| `validate_story`     | `executeStoryTool` | Quick validation from text       |
+| `generate_artifacts` | `executeStoryTool` | All formats at once              |
+| `sync_github`        | `executeStoryTool` | Push to GitHub (not implemented) |
 
 ### Standalone Tool (1 tool)
 
-| Tool | Source | Description |
-|------|--------|-------------|
+| Tool             | Source              | Description                                      |
+| ---------------- | ------------------- | ------------------------------------------------ |
 | `search_entries` | `searchEntriesTool` | Full entity extraction with Handlebars templates |
 
 See [`docs/TOOL_MAPPING.md`](docs/TOOL_MAPPING.md) for complete mapping.
@@ -176,23 +176,30 @@ See [`docs/TOOL_MAPPING.md`](docs/TOOL_MAPPING.md) for complete mapping.
 - [ ] No commented-out code
 - [ ] Tests cover the change
 
+## Related Documentation
+
+| Document                                             | Purpose                            |
+| ---------------------------------------------------- | ---------------------------------- |
+| [`docs/README.md`](docs/README.md)                   | Documentation index and navigation |
+| [`docs/prompt-assembly.md`](docs/prompt-assembly.md) | AI agent prompt assembly system    |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)       | System architecture and dataflow   |
+| [`docs/TOOL_MAPPING.md`](docs/TOOL_MAPPING.md)       | Complete tool mapping (16 tools)   |
+
 ## AI Agent Config Files
 
-| File | Tool | Format | Purpose |
-|------|------|--------|---------|
-| `GEMINI.md` | Gemini | Markdown | Gemini system context |
-| `.gemini/config.toml` | Gemini CLI | TOML | Gemini CLI project config |
-| `QWEN.md` | Qwen | Markdown | Qwen system context |
-| `.qwen/config.toml` | Qwen CLI | TOML | Qwen CLI project config |
-| `CLAUDE.md` | Claude Code | Markdown | Claude project context |
-| `.opencode/config.md` | OpenCode | Markdown | OpenCode project context |
-| `.kilocode/commands/analyze.md` | KiloCode | Markdown | KiloCode command definitions |
+| File                            | Tool        | Format   | Purpose                      |
+| ------------------------------- | ----------- | -------- | ---------------------------- |
+| `GEMINI.md`                     | Gemini      | Markdown | Gemini system context        |
+| `.gemini/config.toml`           | Gemini CLI  | TOML     | Gemini CLI project config    |
+| `QWEN.md`                       | Qwen        | Markdown | Qwen system context          |
+| `.qwen/config.toml`             | Qwen CLI    | TOML     | Qwen CLI project config      |
+| `CLAUDE.md`                     | Claude Code | Markdown | Claude project context       |
+| `.opencode/config.md`           | OpenCode    | Markdown | OpenCode project context     |
+| `.kilocode/commands/analyze.md` | KiloCode    | Markdown | KiloCode command definitions |
 
 ### GitHub Workflows
 
-| File | Purpose |
-|------|---------|
-| `.github/workflows/test.yml` | Tests, build-check, plugin, validate-exporters |
-| `.github/workflows/lint.yml` | Biome lint + TypeScript type-check |
-| `.github/workflows/format.yml` | Biome format + markdown lint |
-| `.github/workflows/release.yml` | GitHub Release on tag push
+| File                       | Purpose                                      |
+| -------------------------- | -------------------------------------------- |
+| `.github/workflows/ci.yml` | Full CI pipeline: Lint, Type-check, and Test |
+| `.github/dependabot.yml`   | Automated dependency updates                 |

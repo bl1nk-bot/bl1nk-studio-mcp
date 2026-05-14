@@ -1,4 +1,6 @@
-# Kilo Instructions — bl1nk-visual-mcp
+---
+description: Analyze a story and extract its components
+---
 
 ## Build Commands
 

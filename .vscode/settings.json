@@ -2,5 +2,6 @@
 	"workbench.editor.autoLockGroups": {
 		"github-issues": true
 	},
-	"amazonQ.telemetry": false
+	"amazonQ.telemetry": false,
+	"markdown.validate.enabled": true
 }

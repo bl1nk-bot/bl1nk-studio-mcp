@@ -151,7 +151,7 @@ If you fail to read any of these files, you MUST stop and inform the user of the
 
 Check for the existence of installed skills in:
 
-- `.agents/skills/` (Workspace tier)
+- `skills/` (Workspace tier)
 - `~/.agents/extensions/conductor/skills/` (Extension tier)
 
 If either exists, list the subdirectories to identify available skills.

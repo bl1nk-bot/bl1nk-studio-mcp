@@ -286,7 +286,7 @@ questions:
 
 - Read `skills/catalog.md` from the directory where the Conductor extension is installed (typically `~/.gemini/extensions/conductor/skills/catalog.md`)
 - Analyze the confirmed `spec.md` and `plan.md` against the `Detection Signals` in the loaded `skills/catalog.md`
-- Identify any relevant skills that are NOT yet installed (check `~/.agents/extensions/conductor/skills/` and `.agents/skills/`)
+- Identify any relevant skills that are NOT yet installed (check `~/.agents/extensions/conductor/skills/` and `skills/`)
 
 #### Step 2: Recommendation Loop
 
@@ -316,7 +316,7 @@ questions:
 - Otherwise, set the path to:
 
 ```
-.agents/skills/<skill-name>/
+skills/<skill-name>/
 ```
 
 - Create directory at the determined path

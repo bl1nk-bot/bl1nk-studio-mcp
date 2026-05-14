@@ -7,8 +7,8 @@
  * from multiple directory levels. Inspired by Qwen's skill-manager.ts.
  *
  * Skill Levels (precedence: project > user > extension > bundled):
- *   project   — `.qwen/skills/` in project root
- *   user      — `~/.qwen/skills/` in user home
+ *   project   — `skills/` in project root
+ *   user      — `~/skills/` in user home
  *   extension — skills from installed extensions
  *   bundled   — `skills/` shipped with the package
  */
@@ -154,7 +154,7 @@ export class SkillManager {
 
 	stopWatching(): void {
 		for (const watcher of this.watchers.values()) {
-			void watcher.close().catch(() => {});
+			void watcher.close();
 		}
 		this.watchers.clear();
 		this.watchStarted = false;
@@ -262,7 +262,7 @@ export class SkillManager {
 		switch (level) {
 			case "project":
 				return [
-					path.join(this.projectRoot, QWEN_CONFIG_DIR, SKILLS_CONFIG_DIR),
+					path.join(this.projectRoot, SKILLS_CONFIG_DIR),
 				];
 			case "user":
 				return [
@@ -287,7 +287,7 @@ export class SkillManager {
 		// Remove stale watchers
 		for (const [existingPath, watcher] of this.watchers) {
 			if (!watchTargets.has(existingPath)) {
-				void watcher.close().catch(() => {});
+				void watcher.close();
 				this.watchers.delete(existingPath);
 			}
 		}
