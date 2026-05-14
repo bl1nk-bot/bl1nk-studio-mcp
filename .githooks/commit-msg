@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+# Validate commit message marker and add size label
+node scripts/git-hooks/validate-msg.js "$1"

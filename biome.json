@@ -10,7 +10,8 @@
 			"**/.next/**",
 			"templates/**",
 			"packages/bl1nk-core/templates/**",
-			"packages/craft-blog-cms/**"
+			"packages/craft-blog-cms/**",
+			".kilo/**"
 		],
 		"maxSize": 2097152
 	},
