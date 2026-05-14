@@ -280,11 +280,17 @@ function registerTools() {
 // Initial registration
 registerTools();
 
+const REGISTERED_TOOL_NAMES = [
+	...GRANULAR_TOOLS.map((t) => t.name),
+	...BL1NK_VISUAL_TOOLS.map((t) => t.name),
+	searchEntriesTool.name,
+];
+
 async function startServer() {
 	try {
 		const transport = new StdioServerTransport();
 		await server.connect(transport);
-		const totalTools = GRANULAR_TOOLS.length + BL1NK_VISUAL_TOOLS.length + 1;
+		const totalTools = REGISTERED_TOOL_NAMES.length;
 		console.error(`bl1nk-visual-mcp Server started with ${totalTools} tools`);
 	} catch (error: unknown) {
 		const message = error instanceof Error ? error.message : String(error);

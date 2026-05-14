@@ -15,9 +15,9 @@
 
 ### 🤖 AI Agent Architecture
 - **[Prompt Assembly](prompt-assembly.md)** - แนวคิดและการนำระบบประกอบ prompt ไปใช้ (ครบถ้วน)
+- **[Architecture](ARCHITECTURE.md)** - สถาปัตยกรรมระบบ, Dataflow และ Agent Skills Architecture
 
 ### 📋 Project Documentation
-- [`ARCHITECTURE.md`](ARCHITECTURE.md) - สถาปัตยกรรมระบบและ dataflow
 - [`TOOL_MAPPING.md`](TOOL_MAPPING.md) - การ mapping ทุก tools (16 tools)
 - [`PROJECT_SUMMARY.md`](PROJECT_SUMMARY.md) - ประวัติโปรเจค (Phase 1 + 2)
 
@@ -26,35 +26,26 @@
 - [`GITHUB-SYNC.md`](GITHUB-SYNC.md) - GitHub webhook sync service
 - [`CRAFT-BLOG-CMS.md`](CRAFT-BLOG-CMS.md) - Orphaned CMS package
 
-### 📚 Learning Resources
-- [`INSTRUCTIONS_TH.md`](INSTRUCTIONS_TH.md) - คำแนะนำการพัฒนา (ภาษาไทย)
-- [`kilo-cli-ref.md`](kilo-cli-ref.md) - Kilo CLI reference
-- [`kilo-cli-use-mcp.md`](kilo-cli-use-mcp.md) - การใช้ Kilo กับ MCP
+### 📚 Learning & References
 - [`quick-start.md`](quick-start.md) - Quick start guide
+- [`INSTRUCTIONS_TH.md`](INSTRUCTIONS_TH.md) - คำแนะนำการพัฒนา (ภาษาไทย)
+- **[Reference Gallery](./reference/)** - คลังข้อมูลอ้างอิงทางเทคนิค
+    - [`mcp_best_practices.md`](./reference/mcp_best_practices.md) - แนวทางปฏิบัติที่ดีที่สุดสำหรับ MCP
+    - [`quality_checklist.md`](./reference/quality_checklist.md) - รายการตรวจสอบคุณภาพงาน
+    - [`evaluation.md`](./reference/evaluation.md) - เกณฑ์การประเมินผล
 
-## 🏗️ Development
+## 🏗️ Development Structure
 
-### Architecture
 ```
 bl1nk-visual-mcp/
 ├── packages/                 # Source code
 │   ├── bl1nk-core/          # MCP Server (16 tools)
-│   ├── bl1nk-desktop/       # Tauri Desktop App
+│   ├── bl1nk-desktop/       # Tauri Desktop App (Rust API)
 │   ├── bl1nk-ide/           # Next.js Web IDE
 │   └── bl1nk-sync/          # GitHub Sync Service
-├── docs/                     # Documentation
-│   └── prompt-assembly/     # Prompt Assembly docs
-├── commands/                 # Kilo CLI commands
-├── agents/                   # Agent configurations
+├── docs/                     # Central Documentation
+│   └── reference/           # Technical references
+├── skills/                   # Centralized AI Skills (Source of Truth)
+├── commands/                 # CLI commands
 └── tests/                    # Integration tests
 ```
-
-### Getting Started
-1. อ่าน [`../README.md`](../README.md) สำหรับภาพรวมและการติดตั้ง
-2. ดู [`prompt-assembly/`](./prompt-assembly/) สำหรับ AI agent architecture
-3. อ่าน [`ARCHITECTURE.md`](./ARCHITECTURE.md) สำหรับ technical details
-
-### Contributing
-- ดู [`../AGENTS.md`](../AGENTS.md) สำหรับ coding guidelines
-- อ่าน [`INSTRUCTIONS_TH.md`](./INSTRUCTIONS_TH.md) สำหรับ best practices
-- เช็ค [`TODO.md`](../TODO.md) สำหรับ current tasks
