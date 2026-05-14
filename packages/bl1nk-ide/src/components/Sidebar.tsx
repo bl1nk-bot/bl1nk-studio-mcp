@@ -1,18 +1,18 @@
-import { useState } from "react";
 import {
-	FileText,
 	CheckSquare,
-	Layout,
-	Search,
-	Plus,
-	Settings,
 	ChevronDown,
 	ChevronRight,
-	Hash,
+	FileText,
 	Folder,
+	Hash,
+	Layout,
+	Plus,
+	Search,
+	Settings,
 } from "lucide-react";
-import { Note } from "../store/notes";
+import { useState } from "react";
 import { cn } from "../lib/utils";
+import type { Note } from "../store/notes";
 
 type Panel = "files" | "tasks" | "canvas" | "search";
 

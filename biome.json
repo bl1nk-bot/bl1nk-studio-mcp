@@ -1,33 +1,33 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-  "files": {
-    "ignore": [
-      "**/dist/**",
-      "**/node_modules/**",
-      "**/out/**",
-      "**/target/**",
-      "**/coverage/**",
-      "**/.next/**",
-      "templates/**",
-      "packages/bl1nk-core/templates/**",
-      "packages/craft-blog-cms/**"
-    ],
-    "maxSize": 2097152
-  },
-  "vcs": {
-    "enabled": true,
-    "clientKind": "git",
-    "useIgnoreFile": true
-  },
-  "formatter": {
-    "enabled": true,
-    "indentStyle": "tab",
-    "lineWidth": 80
-  },
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true
-    }
-  }
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"files": {
+		"ignore": [
+			"**/dist/**",
+			"**/node_modules/**",
+			"**/out/**",
+			"**/target/**",
+			"**/coverage/**",
+			"**/.next/**",
+			"templates/**",
+			"packages/bl1nk-core/templates/**",
+			"packages/craft-blog-cms/**"
+		],
+		"maxSize": 2097152
+	},
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"lineWidth": 80
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		}
+	}
 }

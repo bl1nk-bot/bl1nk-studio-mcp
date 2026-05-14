@@ -31,9 +31,7 @@ async function fetchRootBlockWithRetry(
 			const isRetryable =
 				err instanceof TypeError ||
 				(err instanceof CraftApiError &&
-					(err.status === 0 ||
-						err.status === 404 ||
-						err.status === 429));
+					(err.status === 0 || err.status === 404 || err.status === 429));
 			if (!isRetryable || attempt === 3) break;
 			console.warn(
 				`[fetchBlocks] Root block lookup failed on attempt ${attempt}/3; retrying…`,

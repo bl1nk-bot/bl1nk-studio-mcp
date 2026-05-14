@@ -36,7 +36,7 @@ export function CraftApp({ appConfig }: CraftAppProps) {
 	}, [storagePrefKey]);
 
 	const storageLocation: StorageLocation =
-     preferred === "craft" && isConnected ? "craft" : "browser";
+		preferred === "craft" && isConnected ? "craft" : "browser";
 
 	const handleSelectStorageLocation = useCallback(
 		(location: StorageLocation) => {

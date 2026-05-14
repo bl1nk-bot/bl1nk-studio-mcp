@@ -9,8 +9,8 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
 	extractCharacters,
-	extractScenes,
 	extractLocations,
+	extractScenes,
 } from "../packages/bl1nk/tools/search-entries.js";
 
 const __filename = fileURLToPath(import.meta.url);

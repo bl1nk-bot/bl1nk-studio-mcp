@@ -1,8 +1,8 @@
+import { Clock, Eye, EyeOff, Split } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Eye, EyeOff, Split, Clock } from "lucide-react";
-import { Note } from "../store/notes";
-import { MarkdownPreview } from "./MarkdownPreview";
 import { cn } from "../lib/utils";
+import type { Note } from "../store/notes";
+import { MarkdownPreview } from "./MarkdownPreview";
 
 interface EditorProps {
 	note: Note | null;

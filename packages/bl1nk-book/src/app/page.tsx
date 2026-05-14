@@ -103,7 +103,8 @@ export default function Home() {
 						My Reading List
 					</h2>
 					<p className="mt-1 text-sm text-slate-500">
-						Track your books and sync reading progress with your Craft workspace.
+						Track your books and sync reading progress with your Craft
+						workspace.
 					</p>
 				</div>
 

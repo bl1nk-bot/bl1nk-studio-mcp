@@ -261,9 +261,7 @@ export class SkillManager {
 	private getSkillsBaseDirs(level: SkillLevel): string[] {
 		switch (level) {
 			case "project":
-				return [
-					path.join(this.projectRoot, SKILLS_CONFIG_DIR),
-				];
+				return [path.join(this.projectRoot, SKILLS_CONFIG_DIR)];
 			case "user":
 				return [
 					path.join(
