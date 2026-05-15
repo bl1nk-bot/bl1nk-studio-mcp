@@ -1,10 +1,15 @@
-import { useState, useCallback, useMemo } from "react";
-import { Note, Task, notesStore, extractTasksFromNotes } from "./store/notes";
-import { Sidebar } from "./components/Sidebar";
-import { Editor } from "./components/Editor";
-import { TaskTracker } from "./components/TaskTracker";
+import { PanelLeft, PanelLeftClose } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
 import { CanvasView } from "./components/CanvasView";
-import { PanelLeftClose, PanelLeft } from "lucide-react";
+import { Editor } from "./components/Editor";
+import { Sidebar } from "./components/Sidebar";
+import { TaskTracker } from "./components/TaskTracker";
+import {
+	type Note,
+	type Task,
+	extractTasksFromNotes,
+	notesStore,
+} from "./store/notes";
 
 type Panel = "files" | "tasks" | "canvas" | "search";
 

@@ -48,7 +48,7 @@ visual-story-extension/
 │   ├── bl1nk-desktop/     # Tauri desktop app
 │   ├── bl1nk-ide/         # AI IDE app
 │   └── bl1nk-sync/        # GitHub sync service
-├── .agents/skills/        # AI skills (source of truth)
+├── skills/                # AI skills (source of truth)
 ├── commands/              # CLI commands (TOML)
 ├── hooks/                 # Event hooks
 ├── docs/                  # Documentation
@@ -176,9 +176,9 @@ pnpm run test:watch
 
 ## Adding Skills
 
-Skills are centralized in `.agents/skills/`. To add a new skill:
+Skills are centralized in `skills/`. To add a new skill:
 
-1. Create directory: `.agents/skills/your-skill-name/`
+1. Create directory: `skills/your-skill-name/`
 2. Add `SKILL.md` with YAML frontmatter:
 ```markdown
 ---
@@ -191,13 +191,9 @@ description: >
 
 Instructions for the AI agent...
 ```
-3. Run sync script:
-```powershell
-.\scripts\sync-skills.ps1
-```
-4. Commit the changes
+3. Commit the changes
 
-See existing skills in `.agents/skills/` for examples.
+See existing skills in `skills/` for examples.
 
 ## Security
 

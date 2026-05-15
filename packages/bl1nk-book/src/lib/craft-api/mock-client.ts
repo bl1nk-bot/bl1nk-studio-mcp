@@ -330,7 +330,8 @@ export function createMockClient(appConfig?: AppConfig): CraftApiClient {
 	const mockImages = appConfig?.init?.collection?.mockImages;
 
 	// For book-shelf slug, use real book data
-	const isBookShelf = slug === "book-shelf" || collectionName?.toLowerCase().includes("book");
+	const isBookShelf =
+		slug === "book-shelf" || collectionName?.toLowerCase().includes("book");
 	const mockCollectionItems: CollectionItem[] = isBookShelf
 		? MOCK_BOOKS
 		: collectionSchema
@@ -396,7 +397,9 @@ export function createMockClient(appConfig?: AppConfig): CraftApiClient {
 		lastModifiedAt: new Date(Date.UTC(2026, 2, index + 1)).toISOString(),
 	}));
 	const tasks = createMockTasks(layout);
-	const blocks = createMockBlocks(appConfig?.init?.document || "My Reading List");
+	const blocks = createMockBlocks(
+		appConfig?.init?.document || "My Reading List",
+	);
 
 	let localBooks = [...mockCollectionItems];
 
@@ -445,8 +448,25 @@ export function createMockClient(appConfig?: AppConfig): CraftApiClient {
 					type: "object" as const,
 					properties: {
 						author: { type: "string", title: "Author" },
-						status: { type: "string", title: "Status", enum: ["To Read", "Reading", "Completed", "On Hold"] },
-						genre: { type: "string", title: "Genre", enum: ["Fiction", "Non-Fiction", "Biography", "Science", "Technology", "Philosophy", "History", "Design"] },
+						status: {
+							type: "string",
+							title: "Status",
+							enum: ["To Read", "Reading", "Completed", "On Hold"],
+						},
+						genre: {
+							type: "string",
+							title: "Genre",
+							enum: [
+								"Fiction",
+								"Non-Fiction",
+								"Biography",
+								"Science",
+								"Technology",
+								"Philosophy",
+								"History",
+								"Design",
+							],
+						},
 						rating: { type: "number", title: "Rating" },
 						cover: { type: "string", title: "Cover URL" },
 						startDate: { type: "date", title: "Started" },
@@ -473,7 +493,11 @@ export function createMockClient(appConfig?: AppConfig): CraftApiClient {
 		},
 		updateCollectionItems: async (
 			_id: string,
-			updates: Array<{ id: string; title?: string; properties?: Record<string, unknown> }>,
+			updates: Array<{
+				id: string;
+				title?: string;
+				properties?: Record<string, unknown>;
+			}>,
 		) => {
 			localBooks = localBooks.map((book) => {
 				const update = updates.find((u) => u.id === book.id);
@@ -486,10 +510,7 @@ export function createMockClient(appConfig?: AppConfig): CraftApiClient {
 			});
 			return { items: localBooks };
 		},
-		deleteCollectionItems: async (
-			_id: string,
-			idsToDelete: string[],
-		) => {
+		deleteCollectionItems: async (_id: string, idsToDelete: string[]) => {
 			const deleted = localBooks.filter((b) => idsToDelete.includes(b.id));
 			localBooks = localBooks.filter((b) => !idsToDelete.includes(b.id));
 			return { items: deleted.map((b) => ({ id: b.id })) };
@@ -515,7 +536,9 @@ export function createMockClient(appConfig?: AppConfig): CraftApiClient {
 				.filter(
 					(b) =>
 						b.title.toLowerCase().includes(q) ||
-						String(b.properties.author ?? "").toLowerCase().includes(q),
+						String(b.properties.author ?? "")
+							.toLowerCase()
+							.includes(q),
 				)
 				.slice(0, 5)
 				.map((b, idx) => ({

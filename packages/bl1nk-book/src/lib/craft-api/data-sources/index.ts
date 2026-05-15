@@ -32,8 +32,8 @@ export function buildCraftBlockUrl(
 ): string | undefined {
 	if (!blockUrlTemplate || !blockId) return undefined;
 	return blockUrlTemplate
-     .replaceAll("{{blockId}}", blockId)
-     .replaceAll("{blockId}", blockId)
+		.replaceAll("{{blockId}}", blockId)
+		.replaceAll("{blockId}", blockId)
 		.replaceAll(":blockId", blockId)
 		.replaceAll("%BLOCK_ID%", blockId)
 		.replaceAll("%s", blockId);
@@ -94,5 +94,5 @@ export async function fetchDataSource(
 	}
 	const spaceId = resources?.spaceId;
 	const blockUrlTemplate = resources?.blockUrlTemplate;
- return fetchBlocks(client, config, resources?.documentId, blockUrlTemplate);
+	return fetchBlocks(client, config, resources?.documentId, blockUrlTemplate);
 }

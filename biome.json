@@ -6,12 +6,12 @@
 			"**/node_modules/**",
 			"**/out/**",
 			"**/target/**",
+			"**/coverage/**",
+			"**/.next/**",
 			"templates/**",
 			"packages/bl1nk-core/templates/**",
 			"packages/craft-blog-cms/**",
-			"packages/bl1nk-sync/**",
-			"packages/bl1nk-desktop/**",
-			"packages/bl1nk-book/**"
+			".kilo/**"
 		],
 		"maxSize": 2097152
 	},

@@ -56,7 +56,7 @@ export class CraftApiClient {
 			// Handle network errors (connection issues, timeouts, etc.)
 			const networkError = new CraftApiError(
 				0, // Use 0 for network errors
-				`Network error: ${error instanceof Error ? error.message : 'Connection failed'}`,
+				`Network error: ${error instanceof Error ? error.message : "Connection failed"}`,
 				path,
 				{ networkError: true },
 			);
@@ -153,7 +153,7 @@ export class CraftApiClient {
 			// Handle JSON parsing errors or other unexpected errors
 			const parseError = new CraftApiError(
 				response.status,
-				`Response parsing error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+				`Response parsing error: ${error instanceof Error ? error.message : "Unknown error"}`,
 				path,
 				{ parseError: true },
 			);
@@ -479,7 +479,7 @@ export class CraftApiClient {
 		} catch (error) {
 			const networkError = new CraftApiError(
 				0,
-				`Network error during upload: ${error instanceof Error ? error.message : 'Connection failed'}`,
+				`Network error during upload: ${error instanceof Error ? error.message : "Connection failed"}`,
 				"/upload",
 				{ networkError: true },
 			);
@@ -544,10 +544,9 @@ export class CraftApiClient {
 								throw parseError;
 							}
 						}
-						const retryBody = (await retryResponse.json().catch(() => ({}))) as Record<
-							string,
-							unknown
-						>;
+						const retryBody = (await retryResponse
+							.json()
+							.catch(() => ({}))) as Record<string, unknown>;
 						const retryError = new CraftApiError(
 							retryResponse.status,
 							(retryBody.error as string) || retryResponse.statusText,

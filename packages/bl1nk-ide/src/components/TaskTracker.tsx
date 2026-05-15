@@ -1,7 +1,7 @@
+import { AlertCircle, CheckCircle2, Circle, Clock, Plus } from "lucide-react";
 import { useState } from "react";
-import { Plus, Circle, CheckCircle2, AlertCircle, Clock } from "lucide-react";
-import { Task } from "../store/notes";
 import { cn } from "../lib/utils";
+import type { Task } from "../store/notes";
 
 interface TaskTrackerProps {
 	tasks: Task[];

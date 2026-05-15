@@ -1,9 +1,5 @@
 import type { CraftApiClient } from "../client";
-import type {
-	DataSourceResult,
-	FieldSchema,
-	InitConfig,
-} from "../types";
+import type { DataSourceResult, FieldSchema, InitConfig } from "../types";
 import type { ResolvedResources } from "./index";
 import { mergeWithDesignSchema } from "./index";
 
@@ -34,11 +30,17 @@ export async function fetchCollections(
 	const designProperties = initConfig?.collection?.schema?.properties;
 
 	let schema: FieldSchema[] = [];
-	let schemaRaw: Record<string, { type: string; title?: string; enum?: string[] }> = {};
+	let schemaRaw: Record<
+		string,
+		{ type: string; title?: string; enum?: string[] }
+	> = {};
 
 	try {
 		const schemaRes = await client.getCollectionSchema(collectionId);
-		schemaRaw = schemaRes.properties as Record<string, { type: string; title?: string; enum?: string[] }>;
+		schemaRaw = schemaRes.properties as Record<
+			string,
+			{ type: string; title?: string; enum?: string[] }
+		>;
 		schema = schemaToFields(schemaRaw);
 	} catch {
 		if (designProperties) schema = schemaToFields(designProperties);
@@ -48,13 +50,17 @@ export async function fetchCollections(
 		schema = mergeWithDesignSchema(schema, designProperties);
 	}
 
-	let items: Array<{ id: string; title: string; properties: Record<string, unknown> }> = [];
+	let items: Array<{
+		id: string;
+		title: string;
+		properties: Record<string, unknown>;
+	}> = [];
 	try {
 		const itemsRes = await client.getCollectionItems(collectionId);
 		items = itemsRes.items;
- } catch (err) {
-     const status = (err as { status?: number }).status;
-     if (status === 401 || status === 403) throw err;
+	} catch (err) {
+		const status = (err as { status?: number }).status;
+		if (status === 401 || status === 403) throw err;
 		items = [];
 	}
 

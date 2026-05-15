@@ -83,7 +83,10 @@ function getTemplates() {
 							),
 						scene: (data) =>
 							nunjucks.renderString(
-								readFileSync(join(base, location.templates.scene.human), "utf8"),
+								readFileSync(
+									join(base, location.templates.scene.human),
+									"utf8",
+								),
 								data,
 							),
 						location: (data) =>
@@ -601,10 +604,14 @@ function generateContent(entry: RawEntry, type: string): string {
 	// Enrich aliases and mentions for templates
 	const enrichedAliases = extractAliasesFromMentions(entry.mentions).map(
 		(name) => {
-			const mentionsForAlias = entry.mentions.filter((m) => m.nameUsed === name);
+			const mentionsForAlias = entry.mentions.filter(
+				(m) => m.nameUsed === name,
+			);
 			return {
 				name,
-				usedBy: Array.from(new Set(mentionsForAlias.map((m) => m.speaker || "narrator"))),
+				usedBy: Array.from(
+					new Set(mentionsForAlias.map((m) => m.speaker || "narrator")),
+				),
 				context: mentionsForAlias[0].context,
 			};
 		},
