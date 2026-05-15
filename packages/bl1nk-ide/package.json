@@ -16,7 +16,7 @@
 		"clsx": "^2.1.1",
 		"lucide-react": "^0.400.0",
 		"marked": "^12.0.0",
-		"react": "^19.2.5",
+		"react": "^19.2.6",
 		"react-dom": "^19.2.5",
 		"tailwind-merge": "^3.0.0"
 	},
