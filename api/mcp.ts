@@ -410,7 +410,7 @@ function hasAuth(request: Request): boolean {
 		const url = new URL(request.url);
 		if (url.searchParams.get("exaApiKey")) return true;
 	} catch (error) {
-		console.error("[EXA-MCP] hasAuth URL parse error:", error);
+		console.error("hasAuth URL parse error:", error);
 	}
 	return false;
 }

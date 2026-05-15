@@ -1,142 +1,118 @@
 # AGENTS.md — bl1nk-visual-mcp
 
-## 🔄 Command Workflows
-
-### Workflow 1: Analyze New Story
-1. User provides story text
-2. Use `analyze_story` tool with appropriate depth
-3. Validate resulting graph
-4. Report findings and recommendations
-5. Offer export options
-
-### Workflow 2: Validate Existing Story
-1. User provides story graph
-2. Use `validate_story_structure` tool
-3. Report all issues with suggestions
-4. Offer refinement options
-5. Suggest specific improvements
-
-### Workflow 3: Export Story
-1. Confirm story is valid (run validation if needed)
-2. Determine export format based on user need:
-   - **Mermaid:** Diagram/visualization
-   - **Canvas:** Interactive editing
-   - **Dashboard:** Comprehensive analysis
-   - **Markdown:** Document/report
-   - **JSON:** Raw data
-3. Use appropriate export tool
-4. Present formatted output
-5. Offer alternative formats
-
-### Workflow 4: Audit & Optimize
-1. Perform structural audit
-2. Analyze character development
-3. Detect conflict patterns
-4. Optimize pacing and arcs
-5. Provide comprehensive recommendations
+This is the consolidated reference for all AI agents (Gemini, Qwen, Claude, and others). It contains the core project information, commands, structure, and coding guidelines.
 
 ---
 
-## 📊 Output & Skill Preferences
+## 🏗️ Project Overview
 
-### Default Behavior
-- **Prefer Canvas JSON** for interactive visualization
-- **Use Mermaid** only when user specifically requests diagrams
-- **Include metadata and statistics** by default
-- **Provide recommendations** unless explicitly declined
+**bl1nk-visual-mcp** is a production-ready **MCP server** for structured story analysis, planning, and optimization. It converts natural-language story text into structured **StoryGraph JSON** and provides 16 tools for visualization and analysis.
 
-### Format Selection Guide
-| User Need | Format |
-|-----------|--------|
-| Quick visualization | Mermaid |
-| Interactive editing | Canvas |
-| Full analysis | Dashboard |
-| Documentation | Markdown |
-| API integration | JSON |
+### Core Mission
 
-### Skill Activation
-- **Structural Audit Skill:** Triggers on "audit story", "check structure". Performs 3-Act validation, Arc validation, Pacing analysis.
-- **Character Analysis Skill:** Triggers on "analyze characters", "character development". Performs Arc analysis, Motivation analysis, Relationship mapping.
-- **Conflict Detection Skill:** Triggers on "analyze conflicts", "conflict detection". Performs Escalation analysis, Impact assessment.
+- Convert narrative input into structured StoryGraph JSON
+- Validate story structure using three-act framework
+- Provide actionable recommendations for improvement
+- Export in multiple formats (Mermaid, Canvas, Dashboard, Markdown, JSON)
 
 ---
 
-## 📝 Response Guidelines
+## 🚀 Building and Running
 
-### When Analyzing
-- Be thorough but concise
-- Highlight both strengths and weaknesses
-- Provide specific, actionable suggestions
-- Use clear examples from the story
+### Quick Commands
 
-### When Validating
-- Report all issues with clear severity
-- Explain why each issue matters
-- Suggest specific fixes
-- Prioritize critical issues first
+\`\`\`bash
+npm run build          # esbuild → dist/index.js
+npm run build:tsc      # Type-check only (no emit)
+npm run dev            # Watch-mode rebuild
+npm run start          # Run bundled server
+npm test               # Run all vitest tests
+npm run test -- -t "test name"  # Single test
+npm run check          # Biome lint + format (auto-fix)
+\`\`\`
 
-### When Exporting
-- Confirm format and options before proceeding
-- Provide clean, well-formatted output
-- Include relevant metadata
-- Offer alternative formats
+### Hidden Build Commands
+
+- \`node scripts/build.js build\` - Build with proper status reporting
+- \`node scripts/build.js check\` - Quality checks with logging
+- Build must run from \`packages/bl1nk-core/\` directory
 
 ---
 
-## 🏗️ Project Structure
+## 📂 Project Structure
 
-```
-packages/bl1nk-core/       # Core MCP Server & Story Analysis
+\`\`\`
+packages/bl1nk-core/    # Core MCP Server & Story Analysis
   src/
-    index.ts               # MCP server entry
-    tools/                 # Tool definitions & executors
-    exporters/             # Output formatters
-    analyzer.ts            # Story text → StoryGraph
-    validators.ts          # Structural validation
-    types.ts               # TypeScript interfaces
-  templates/               # Handlebars templates
-packages/bl1nk-unified-ui/  # Unified UI (React 19 + Tauri 2)
-  src/                     # React source
-  src-tauri/               # Rust backend
-packages/bl1nk-sync/       # GitHub → Notion sync
-```
-
-## 🛠️ Tool System
-
-### Granular Tools (11 tools)
-| Tool | Description |
-|------|-------------|
-| `analyze_story` | Parse story text → StoryGraph |
-| `export_mermaid` | Mermaid diagram markdown |
-| `export_canvas` | Canvas JSON |
-| `export_dashboard` | HTML dashboard |
-| `export_markdown` | Structured Markdown |
-| `validate_story_structure` | 3-act structure validation |
-| `extract_characters` | Character data extraction |
-| `extract_conflicts` | Conflict data extraction |
-| `build_relationship_graph` | Relationship mapping |
-| `export_mcp_ui_dashboard` | MCP-UI dashboard |
-| `exa_search_story` | External research (Exa AI) |
-
-### Standalone Tool
-- `search_entries`: Full entity extraction with Handlebars templates.
+    index.ts            # MCP server entry, tool registration, Zod schemas
+    tools/              # Tool definitions & executors
+    exporters/          # Output formatters (mermaid, canvas, dashboard, markdown)
+    analyzer.ts         # Story text → StoryGraph builder
+    validators.ts       # Structural validation logic
+    types.ts            # TypeScript interfaces (StoryGraph, Character, etc.)
+  tests/                # Integration tests
+packages/bl1nk-sync/    # GitHub webhook → Notion sync
+packages/bl1nk-desktop/ # Desktop app (React + Tauri)
+packages/bl1nk-ide/     # Web IDE (Vite + React)
+packages/bl1nk-book/    # Book publishing platform (development)
+packages/craft-blog-cms/# ⚠️ Orphaned (Next.js blog/CMS)
+\`\`\`
 
 ---
 
-## 💻 Operations
+## 🛠️ MCP Tool System (16 Tools)
 
-| Command | Description |
-|---------|-------------|
-| `npm run build` | Bundle core server |
-| `npm run dev` | Watch-mode core development |
-| `pnpm -r run test` | Run all tests in workspace |
-| `pnpm --filter @bl1nk/unified-ui run tauri:dev` | Run Unified UI in Desktop mode |
-| `npm run test:audit` | Run Omni-Critic consistency check |
+### Granular Tools (11 — source of truth)
+
+| Tool | Purpose |
+|------|---------|
+| \`analyze_story\` | Parse story text → StoryGraph |
+| \`export_mermaid\` | Generate Mermaid diagram |
+| \`export_canvas\` | Generate Canvas JSON |
+| \`export_dashboard\` | Generate HTML dashboard |
+| \`export_markdown\` | Generate Markdown document |
+| \`export_mcp_ui_dashboard\` | Generate MCP-UI dashboard |
+| \`validate_story_structure\` | Validate structure (50+ rules) |
+| \`extract_characters\` | Extract character info |
+| \`extract_conflicts\` | Extract conflict info |
+| \`build_relationship_graph\` | Build relationship graph |
+| \`exa_search_story\` | External story research |
+
+### Legacy & Standalone Tools
+
+| Tool | Purpose |
+|------|---------|
+| \`search_entries\` | Entity extraction with templates |
+| \`validate_story\` | Quick validation from text |
+| \`generate_artifacts\` | All formats at once |
+| \`sync_github\` | Push to GitHub (not implemented) |
 
 ---
 
-## 📚 Operational Guidelines
-- Report problems to user immediately.
-- Use `ask_user` for confirmations.
-- All decisions based on documented learnings in `SPEC.md` and `AGENTS.md`.
-- **Zero Warnings** policy for Rust and TypeScript code.
+## 📋 Code Style & Standards
+
+- **ESM imports**: Use \`.js\` extension: \`import { x } from './module.js'\`
+- **Type-only imports**: \`import type { x } from './types.js'\`
+- **Formatting**: Biome handles everything — run \`npm run check\`
+- **TypeScript**: \`strict: true\`, no \`any\`, prefer \`unknown\`
+- **Naming**: camelCase variables, PascalCase types, UPPER_SNAKE constants
+- **Error handling**: \`unknown\` + \`instanceof Error\`, never swallow exceptions
+- **Zod schemas**: Use \`.describe()\` on input fields, \`.default()\` for optional
+
+---
+
+## 🧠 Operational Guidelines (MANDATORY)
+
+1. **อ่าน TODO.md ก่อนเริ่มทำงานทุกครั้ง** — \`TODO.md\` คือ source of truth สำหรับงานทั้งหมด
+2. **อัปเดต TODO.md ทุกครั้งที่จบงาน** — เปลี่ยน \`[ ]\` → \`[x]\` หรือ \`[~]\` ตามสถานะ
+3. **AI Memory Management**: AI has no persistent memory - context is the brain.
+4. **Prevent Recurrence**: Record all errors, solutions, and learnings in this file or siblings.
+5. **No Long-Term Memory**: All decisions based on documented learnings, not implicit knowledge.
+
+---
+
+## 🔗 Related Documentation
+
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - System architecture
+- [docs/TOOL_MAPPING.md](docs/TOOL_MAPPING.md) - Complete tool mapping
+- [TODO.md](TODO.md) - Current tasks and project status

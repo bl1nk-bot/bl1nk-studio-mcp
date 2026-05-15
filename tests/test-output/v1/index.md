@@ -7,23 +7,23 @@ lastUpdated: 2026-05-15T16:58:41.784Z
 # Story Index
 
 ## Characters (7)
-- [[characters/อิกนัส]] — Aliases: ซิลเวอร์ไนท์
-- [[characters/เบลซ]] — Main character
-- [[characters/ลูฟัส]] — Aliases: ลูฟัส กลอส
-- [[characters/อีริก]] — Main character
-- [[characters/ซาเบล]] — Main character
-- [[characters/โนเอล]] — Main character
-- [[characters/การ์ดภารกิจ]] — Aliases: หญิงสาวเมด
+- [[characters/ignis]] — Aliases: ซิลเวอร์ไนท์
+- [[characters/belz]] — Main character
+- [[characters/lufus]] — Aliases: ลูฟัส กลอส
+- [[characters/eric]] — Main character
+- [[characters/zabel]] — Main character
+- [[characters/noel]] — Main character
+- [[characters/quest-card]] — Aliases: หญิงสาวเมด
 
 ## Scenes (3)
-- [[scenes/การ์ดภารกิจและการตัดสินใจ]]
-- [[scenes/คนแปลกหน้า]]
-- [[scenes/สงครามสัตว์อสูร_9]]
+- [[scenes/quest-card-and-decision]]
+- [[scenes/stranger]]
+- [[scenes/war-of-monsters-9]]
 
 ## Locations (3)
-- [[locations/เมืองไวท์ชาโดว์]]
-- [[locations/ทุ่งหญ้า]]
-- [[locations/กำแพงเมือง]]
+- [[locations/whiteshadow-city]]
+- [[locations/grass-field]]
+- [[locations/city-wall]]
 
 ---
 

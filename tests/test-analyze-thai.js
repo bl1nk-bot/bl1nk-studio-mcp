@@ -11,6 +11,30 @@ import Handlebars from "handlebars";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// Slug mapping: Thai names → English ASCII-safe filenames
+const NAME_SLUGS = {
+  // Characters
+  "อิกนัส": "ignis",
+  "เบลซ": "belz",
+  "ลูฟัส": "lufus",
+  "ซาเบล": "zabel",
+  "อีริก": "eric",
+  "โนเอล": "noel",
+  "การ์ดภารกิจ": "quest-card",
+  // Locations
+  "ทุ่งหญ้า": "grass-field",
+  "กำแพงเมือง": "city-wall",
+  "เมืองไวท์ชาโดว์": "whiteshadow-city",
+  // Scenes / chapter titles
+  "คนแปลกหน้า": "stranger",
+  "สงครามสัตว์อูร 9": "war-of-monsters-9",
+  "สงครามสัตว์อูร 9": "war-of-monsters-9",
+  "การ์ดภารกิจและการตัดสินใจ": "quest-card-and-decision",
+};
+function slug(name) {
+  return NAME_SLUGS[name] || name.toLowerCase().replace(/\s+/g, "-");
+}
+
 // Read templates
 const characterTemplate = readFileSync(
 	join(__dirname, "../packages/bl1nk-core/templates/characters/character.md"),
@@ -84,21 +108,18 @@ for (const char of characters) {
 	const filename = join(
 		outputDir,
 		"characters",
-		`${char.name.toLowerCase().replace(/\s+/g, "_")}.md`,
+		`${slug(char.name)}.md`,
 	);
 	const content = renderCharacterWithHandlebars(char, characterTemplateFn);
 	writeFileSync(filename, content);
 	console.log(
-		`   ✅ characters/${char.name.toLowerCase().replace(/\s+/g, "_")}.md`,
+		`   ✅ characters/${slug(char.name)}.md`,
 	);
 }
 
 // Scene files
 for (const scene of scenes) {
-	const safeName = scene.name
-		.toLowerCase()
-		.replace(/\s+/g, "_")
-		.replace(/[:]/g, "");
+	const safeName = slug(scene.name);
 	const filename = join(outputDir, "scenes", `${safeName}.md`);
 	const content = renderSceneWithHandlebars(scene, sceneTemplateFn);
 	writeFileSync(filename, content);
@@ -110,12 +131,12 @@ for (const loc of locations) {
 	const filename = join(
 		outputDir,
 		"locations",
-		`${loc.name.toLowerCase().replace(/\s+/g, "_")}.md`,
+		`${slug(loc.name)}.md`,
 	);
 	const content = renderLocationWithHandlebars(loc, locationTemplateFn);
 	writeFileSync(filename, content);
 	console.log(
-		`   ✅ locations/${loc.name.toLowerCase().replace(/\s+/g, "_")}.md`,
+		`   ✅ locations/${slug(loc.name)}.md`,
 	);
 }
 
@@ -280,7 +301,7 @@ function renderCharacterWithHandlebars(char, templateFn) {
 
 	const templateData = {
 		type: "character",
-		id: `char_${char.name.toLowerCase().replace(/\s+/g, "_")}`,
+		id: `char_${slug(char.name)}`,
 		canonicalName: char.name,
 		status: "alive",
 		tags,
@@ -300,7 +321,7 @@ function renderCharacterWithHandlebars(char, templateFn) {
 		jsonBlock: JSON.stringify(
 			{
 				type: "character",
-				id: `char_${char.name.toLowerCase().replace(/\s+/g, "_")}`,
+				id: `char_${slug(char.name)}`,
 				canonicalName: char.name,
 				status: "alive",
 			},
@@ -347,21 +368,28 @@ function renderSceneWithHandlebars(scene, templateFn) {
 function renderLocationWithHandlebars(loc, templateFn) {
 	const templateData = {
 		type: "location",
-		id: `loc_${loc.name.toLowerCase().replace(/\s+/g, "_")}`,
-		name: loc.name,
-		locationType: "Place",
-		region: "Unknown",
-		significance: "Standard",
-		tags: [],
-		description: "A location mentioned in the story.",
-		keyFeatures: [],
-		associatedCharacters: [],
-		scenesSetHere: [],
-		jsonBlock: JSON.stringify(
+		id: `loc_${slug(loc.name)}`,
+		canonicalName: loc.name,
+		hasAliases: loc.aliases && loc.aliases.length > 0,
+		aliases: loc.aliases || [],
+		hasScenes: false,
+		scenes: [],
+		hasConnections: false,
+		connections: [],
+		hasDescription: true,
+		hasAtmosphere: false,
+		hasSignificance: false,
+		hasSensoryDetails: false,
+		content: {
+			description: "A location mentioned in the story.",
+			essence: "A place in the fantasy world.",
+		},
+		jsonString: JSON.stringify(
 			{
 				type: "location",
-				id: `loc_${loc.name.toLowerCase().replace(/\s+/g, "_")}`,
-				name: loc.name,
+				id: `loc_${slug(loc.name)}`,
+				canonicalName: loc.name,
+				aliases: loc.aliases || [],
 			},
 			null,
 			2,
@@ -381,13 +409,13 @@ lastUpdated: ${new Date().toISOString()}
 # Story Index
 
 ## Characters (${characters.length})
-${characters.map((c) => `- [[characters/${c.name.toLowerCase().replace(/\s+/g, "_")}]] — ${c.aliases.length > 0 ? `Aliases: ${c.aliases.join(", ")}` : "Main character"}`).join("\n")}
+${characters.map((c) => `- [[characters/${slug(c.name)}]] — ${c.aliases.length > 0 ? `Aliases: ${c.aliases.join(", ")}` : "Main character"}`).join("\n")}
 
 ## Scenes (${scenes.length})
-${scenes.map((s) => `- [[scenes/${s.name.toLowerCase().replace(/\s+/g, "_")}]]`).join("\n")}
+${scenes.map((s) => `- [[scenes/${slug(s.name)}]]`).join("\n")}
 
 ## Locations (${locations.length})
-${locations.map((l) => `- [[locations/${l.name.toLowerCase().replace(/\s+/g, "_")}]]`).join("\n")}
+${locations.map((l) => `- [[locations/${slug(l.name)}]]`).join("\n")}
 
 ---
 
