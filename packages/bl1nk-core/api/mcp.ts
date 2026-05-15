@@ -196,7 +196,7 @@ async function checkRateLimits(
 function getBearerToken(request: Request): string | undefined {
 	const authHeader = request.headers.get("authorization");
 	if (authHeader) {
-		const match = authHeader.match(/^Bearer\\s+(.+)$/i);
+		const match = authHeader.match(/^Bearer\s+(.+)$/i);
 		if (match?.[1]) {
 			return match[1];
 		}
@@ -308,7 +308,9 @@ function hasAuth(request: Request): boolean {
 	try {
 		const url = new URL(request.url);
 		if (url.searchParams.get("exaApiKey")) return true;
-	} catch {}
+	} catch (error) {
+		console.error("[EXA-MCP] hasAuth URL parse error:", error);
+	}
 	return false;
 }
 

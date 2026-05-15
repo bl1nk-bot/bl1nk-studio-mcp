@@ -12,10 +12,9 @@ export function initializeMcpServer(
 	server: McpServer,
 	config: McpRequestConfig,
 ): void {
-	if (config.exaApiKey) {
-		process.env.EXA_API_KEY = config.exaApiKey;
-	}
-
-	registerBl1nkTools(server, { enabledTools: config.enabledTools });
+	registerBl1nkTools(server, {
+		enabledTools: config.enabledTools,
+		exaApiKey: config.exaApiKey,
+	});
 }
 

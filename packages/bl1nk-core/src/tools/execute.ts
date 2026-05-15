@@ -36,6 +36,7 @@ function formatErrorResult(toolName: string, error: unknown) {
 export async function executeGranularTool(
 	toolName: string,
 	args: Record<string, unknown>,
+	exaApiKey?: string,
 ): Promise<ToolResult> {
 	if (!args || typeof args !== "object") {
 		return {
@@ -337,6 +338,7 @@ export async function executeGranularTool(
 					query,
 					category as Parameters<typeof searchStoryReferences>[1],
 					numResults,
+					exaApiKey,
 				);
 				return {
 					content: [
@@ -368,6 +370,7 @@ export async function executeGranularTool(
 export async function executeStoryTool(
 	toolName: string,
 	args: Record<string, unknown>,
+	exaApiKey?: string,
 ): Promise<ToolResult> {
 	if (!args || typeof args !== "object") {
 		return {
@@ -380,7 +383,7 @@ export async function executeStoryTool(
 
 	try {
 		// 1. Try Granular Tools first (11 tools - source of truth)
-		const granularResult = await executeGranularTool(toolName, args);
+		const granularResult = await executeGranularTool(toolName, args, exaApiKey);
 		if (
 			!granularResult.isError ||
 			!granularResult.content[0].text.includes("Error: Unknown tool")

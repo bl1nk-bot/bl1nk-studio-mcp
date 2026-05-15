@@ -11,11 +11,12 @@ import { searchEntriesTool } from "./tools/search-entries.js";
 
 export function registerBl1nkTools(
 	server: McpServer,
-	options?: { enabledTools?: string[] },
+	options?: { enabledTools?: string[]; exaApiKey?: string },
 ): void {
-	const enabled = options?.enabledTools?.length
+	const enabled = options?.enabledTools !== undefined
 		? new Set(options.enabledTools)
 		: undefined;
+	const apiKey = options?.exaApiKey;
 
 	try {
 		for (const tool of GRANULAR_TOOLS) {
@@ -29,7 +30,7 @@ export function registerBl1nkTools(
 				tool.description,
 				schema.shape as ZodRawShape,
 				async (args: Record<string, unknown>) =>
-					executeGranularTool(tool.name, args),
+					executeGranularTool(tool.name, args, apiKey),
 			);
 		}
 
@@ -40,7 +41,8 @@ export function registerBl1nkTools(
 				tool.name,
 				tool.description,
 				{} as ZodRawShape,
-				async (args: Record<string, unknown>) => executeStoryTool(tool.name, args),
+				async (args: Record<string, unknown>) =>
+					executeStoryTool(tool.name, args, apiKey),
 			);
 		}
 
