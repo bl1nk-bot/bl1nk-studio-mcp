@@ -46,7 +46,25 @@ npm run build
 npm run start
 ```
 
-### 2. **@bl1nk/github-sync** (`packages/bl1nk-sync/`)
+### 2. **@bl1nk/unified-ui** (`packages/bl1nk-unified-ui/`)
+
+Unified Desktop & Web UI (React 19 + Tauri 2) สำหรับเขียนเรื่องราวและวิเคราะห์แบบ Visual
+
+**Features:**
+- **Writer (Editor):** Obsidian-style Markdown editor พร้อม live preview
+- **Dashboard:** ดูภาพรวมตัวละคร, ความขัดแย้ง และสถิติ
+- **Visualizations:** Graph View (Mermaid) และ Interactive Timeline
+- **Task Tracker:** ระบบจัดการงานที่เชื่อมโยงกับเนื้อเรื่อง
+- **Structural Insights:** ตรวจสอบโครงสร้าง 3-Act อัตโนมัติ
+
+**Usage:**
+```bash
+cd packages/bl1nk-unified-ui
+pnpm run dev         # Web mode
+pnpm run tauri:dev   # Desktop mode
+```
+
+### 3. **@bl1nk/github-sync** (`packages/bl1nk-sync/`)
 
 GitHub App สำหรับ sync markdown/CSV files ไป Notion อัตโนมัติ
 
@@ -63,37 +81,11 @@ npm run build
 npm run start
 ```
 
-### 3. **bl1nk-desktop** (`packages/bl1nk-desktop/`)
-
-Desktop Application (React + Tauri) สำหรับดูและจัดการ story entities
-
-**Features:**
-- StoryGraph visualization
-- Character relationship graph
-- Timeline view
-- Markdown preview
-
-**Usage:**
-```bash
-cd packages/bl1nk-desktop
-npm run tauri:dev
-```
-
-### 4. **bl1nk-ide** (`packages/bl1nk-ide/`)
-
-Web IDE สำหรับ story writing และ analysis
-
-**Features:**
-- Code editor สำหรับ story text
-- Real-time analysis
-- Canvas visualization
-- Markdown export
-
-### 5. **bl1nk-book** (`packages/bl1nk-book/`) — ⚠️ Development
+### 4. **bl1nk-book** (`packages/bl1nk-book/`) — ⚠️ Development
 
 Book publishing platform (under development)
 
-### 6. **craft-blog-cms** (`packages/craft-blog-cms/`) — ⚠️ Orphaned
+### 5. **craft-blog-cms** (`packages/craft-blog-cms/`) — ⚠️ Orphaned
 
 Next.js blog/CMS — ไม่มี integration กับ core architecture
 **Recommendation:** Archive หรือแยกไป repo อื่น
@@ -122,11 +114,9 @@ pnpm run test
 cd packages/bl1nk-core
 pnpm run dev  # watch mode
 
-cd packages/bl1nk-desktop
-pnpm run tauri:dev  # Tauri dev mode
-
-cd packages/bl1nk-ide
-pnpm run dev  # Vite dev server
+cd packages/bl1nk-unified-ui
+pnpm run dev         # Web mode
+pnpm run tauri:dev   # Desktop mode
 ```
 
 ---
@@ -140,30 +130,24 @@ visual-story-extension/
 │   │   ├── src/
 │   │   │   ├── index.ts          # MCP server entry, tool registration
 │   │   │   ├── tools/            # Tool definitions & executors
-│   │   │   ├── exporters/        # Output formatters (mermaid, canvas, dashboard, markdown)
-│   │   │   ├── analyzer.ts       # Story text → StoryGraph
-│   │   │   ├── validators.ts     # Structural validation
-│   │   │   ├── types.ts          # TypeScript interfaces
-│   │   │   └── edge-cases.test.ts
-│   │   ├── tests/                # Unit tests
+│   │   │   ├── exporters/        # Output formatters
+│   │   │   └── types.ts          # TypeScript interfaces
+│   │   ├── templates/            # Handlebars templates
+│   │   └── package.json
+│   │
+│   ├── bl1nk-unified-ui/         # Unified UI (React 19 + Tauri 2)
+│   │   ├── src/
+│   │   │   ├── components/       # Dashboard & Editor components
+│   │   │   └── store/            # State management
+│   │   ├── src-tauri/            # Rust Desktop backend
 │   │   └── package.json
 │   │
 │   ├── bl1nk-sync/               # GitHub → Notion sync
 │   │   ├── src/
 │   │   └── package.json
 │   │
-│   ├── bl1nk-desktop/            # Desktop UI (Tauri + React)
-│   │   ├── src/
-│   │   └── package.json
-│   │
-│   ├── bl1nk-ide/                # Web IDE (Vite + React)
-│   │   ├── src/
-│   │   └── package.json
-│   │
-│   ├── bl1nk-book/               # Book publishing platform (dev)
-│   │   └── package.json
-│   │
-│   └── craft-blog-cms/           # ⚠️ Orphaned Next.js blog/CMS
+│   └── bl1nk-book/               # Book publishing platform (dev)
+```
 │
 ├── commands/                     # Kilo CLI commands (story analysis)
 ├── agents/                       # Agent configurations

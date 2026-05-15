@@ -2,7 +2,7 @@
 title: TODO - bl1nk-visual-mcp
 description: Source of truth for all implementation tasks
 status: in_progress
-last_updated: 2026-04-09
+last_updated: 2026-05-16
 owner: dev-team
 ---
 
@@ -15,6 +15,24 @@ owner: dev-team
 > หมายเหตุ: ให้ปรับสถานะ TODO.md ทุกครั้งเมื่อจบงานหรือเปลี่ยนสถานะงาน
 >
 > คู่มือเพิ่มเติม: `docs/INSTRUCTIONS_TH.md`
+
+---
+
+## ✅ UI Unification & Omni-Critic Audit (2026-05-16)
+
+*Completed: Unified Desktop/IDE, High-Fidelity UI, Test Audit*
+
+### UI Unification
+- [x] `type:refactor` `label:core` Unify `bl1nk-desktop` and `bl1nk-ide` → `bl1nk-unified-ui`
+- [x] `type:feat` `label:component` Create high-fidelity Unified UI with React 19 + Tauri 2
+- [x] `type:feat` `label:integration` Integrate Editor, Dashboard, Graph, and Task Tracker
+- [x] `type:style` `label:style` Implement "Teal Metallic" theme and iOS-style glassmorphism
+
+### Omni-Critic & Quality
+- [x] `type:feat` `label:test` Create `scripts/audit-tests.js` for automated consistency checks
+- [x] `type:fix` `label:test` Fix Thai story analysis test paths and template structures
+- [x] `type:fix` `label:test` Convert all templates to pure Handlebars for consistency
+- [x] `type:docs` `label:docs` Create `packages/bl1nk-unified-ui/README.md` and update root docs
 
 ---
 

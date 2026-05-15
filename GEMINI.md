@@ -505,10 +505,10 @@ Push generated files to GitHub repository.
 
 ## 🔗 Related Files
 
-- **[`packages/bl1nk/src/index.ts`](packages/bl1nk/src/index.ts)** — MCP server entry, tool registration
-- **[`packages/bl1nk/tools/index.ts`](packages/bl1nk/tools/index.ts)** — Tool definitions
-- **[`packages/bl1nk/tools/execute.ts`](packages/bl1nk/tools/execute.ts)** — Tool executors
-- **[`packages/bl1nk/types.ts`](packages/bl1nk/types.ts)** — Core type definitions
+- **[`packages/bl1nk-core/src/index.ts`](packages/bl1nk-core/src/index.ts)** — MCP server entry, tool registration
+- **[`packages/bl1nk-core/tools/index.ts`](packages/bl1nk-core/tools/index.ts)** — Tool definitions
+- **[`packages/bl1nk-core/tools/execute.ts`](packages/bl1nk-core/tools/execute.ts)** — Tool executors
+- **[`packages/bl1nk-core/types.ts`](packages/bl1nk-core/types.ts)** — Core type definitions
 - **[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)** — System architecture + dataflow
 - **[`docs/TOOL_MAPPING.md`](docs/TOOL_MAPPING.md)** — Complete tool mapping (16 tools)
 - **[`AGENTS.md`](AGENTS.md)** — Root agent instructions
@@ -531,5 +531,5 @@ A successful story analysis should have:
 ---
 
 **Version:** 3.0.0  
-**Last Updated:** 2026-04-03  
+**Last Updated:** 2026-05-16  
 **Status:** Production Ready
