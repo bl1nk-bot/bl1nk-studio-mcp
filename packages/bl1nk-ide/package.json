@@ -21,6 +21,6 @@
 		"tailwind-merge": "^3.0.0"
 	},
 	"devDependencies": {
-		"@tailwindcss/vite": "^4.0.0"
+		"@tailwindcss/vite": "^4.3.0"
 	}
 }
