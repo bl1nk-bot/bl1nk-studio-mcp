@@ -40,12 +40,14 @@ Listens to GitHub webhook events and syncs exported story files to Notion databa
 ## Dependencies
 
 ### Required
+
 - `@octokit/webhooks` — GitHub webhook handling
 - `@notionhq/client` — Notion API client
 - `gray-matter` — Frontmatter parsing
 - `csv-parse` — CSV parsing
 
 ### Optional
+
 - `@bl1nk/visual-mcp` — If consuming exports directly (not currently implemented)
 
 ---
@@ -79,6 +81,7 @@ Listens to GitHub webhook events and syncs exported story files to Notion databa
 
 Currently, github-sync operates independently by consuming files from GitHub.
 Future integration could:
+
 - Import types from `@bl1nk/visual-mcp` for type-safe parsing
 - Use validation functions to verify StoryGraph integrity
 - Direct MCP server calls instead of file-based sync

@@ -122,6 +122,7 @@ Harry defeated Voldemort and saved the wizarding world.
 ```
 
 **Expected Output:**
+
 - StoryGraph JSON with characters, events, and conflicts
 - Validation results
 - Recommendations for improvement
@@ -133,6 +134,7 @@ gemini story validate
 ```
 
 **Expected Output:**
+
 - List of structural issues (errors, warnings, info)
 - Act distribution analysis
 - Recommendations
@@ -144,6 +146,7 @@ gemini story export --format mermaid
 ```
 
 **Expected Output:**
+
 ```mermaid
 graph TD
   subgraph Act_1["Act 1"]
@@ -157,6 +160,7 @@ graph TD
 ## 🛠️ Common Commands
 
 ### Analyze Story
+
 ```bash
 # Basic analysis
 gemini story analyze "Your story text"
@@ -166,6 +170,7 @@ gemini story analyze "Your story" --depth detailed
 ```
 
 ### Export in Different Formats
+
 ```bash
 # Mermaid diagram
 gemini story export --format mermaid
@@ -181,6 +186,7 @@ gemini story export --format markdown
 ```
 
 ### Validate Structure
+
 ```bash
 # Standard validation
 gemini story validate
@@ -190,6 +196,7 @@ gemini story validate --strict --include-recommendations
 ```
 
 ### Deep Audit
+
 ```bash
 # Comprehensive audit
 gemini story audit --depth deep
@@ -199,6 +206,7 @@ gemini story audit --focus-areas characters
 ```
 
 ### Get Refinement Suggestions
+
 ```bash
 # Refine all elements
 gemini story refine
@@ -263,6 +271,7 @@ Issues are reported with severity levels:
 ### Act Distribution
 
 Ideal distribution:
+
 - **Act 1**: 25% of events (Setup)
 - **Act 2**: 50% of events (Confrontation)
 - **Act 3**: 25% of events (Resolution)
@@ -285,6 +294,7 @@ export VSP_DEFAULT_MODE=canvas
 ### Settings in gemini-extension.json
 
 Current settings:
+
 - **Default Mode**: Controls default export format
 
 ---
@@ -296,6 +306,7 @@ Current settings:
 **Error**: `Cannot find module '@modelcontextprotocol/sdk'`
 
 **Solution**:
+
 ```bash
 pnpm install
 # or
@@ -307,6 +318,7 @@ npm install
 **Error**: `Extension not linked`
 
 **Solution**:
+
 ```bash
 gemini extensions link .
 ```
@@ -328,6 +340,7 @@ gemini extensions link .
 ### Export Fails
 
 **Solution**: Run validation first and fix all errors:
+
 ```bash
 gemini story validate
 # Fix issues, then:
@@ -348,7 +361,7 @@ gemini story export --format mermaid
 ### Best Practices
 
 1. **Always Validate First**: Run `gemini story validate` before exporting
-2. **Use Appropriate Depth**: 
+2. **Use Appropriate Depth**:
    - `basic` for quick checks
    - `detailed` for normal analysis
    - `deep` for comprehensive audit
