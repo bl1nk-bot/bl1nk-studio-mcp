@@ -3,7 +3,7 @@
  * Runs the tool against the combined story input
  */
 
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync, rmSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import Handlebars from "handlebars";
@@ -13,15 +13,15 @@ const __dirname = dirname(__filename);
 
 // Read templates
 const characterTemplate = readFileSync(
-	join(__dirname, "../packages/bl1nk/templates/characters/character.md"),
+	join(__dirname, "../packages/bl1nk-core/templates/characters/character.md"),
 	"utf8",
 );
 const sceneTemplate = readFileSync(
-	join(__dirname, "../packages/bl1nk/templates/scene/scene.md"),
+	join(__dirname, "../packages/bl1nk-core/templates/scene/scene.md"),
 	"utf8",
 );
 const locationTemplate = readFileSync(
-	join(__dirname, "../packages/bl1nk/templates/world/location.md"),
+	join(__dirname, "../packages/bl1nk-core/templates/world/location.md"),
 	"utf8",
 );
 
@@ -68,6 +68,9 @@ for (const l of locations) {
 
 // Generate output directory
 const outputDir = join(__dirname, "./test-output/v1");
+if (existsSync(outputDir)) {
+	rmSync(outputDir, { recursive: true, force: true });
+}
 mkdirSync(outputDir, { recursive: true });
 mkdirSync(join(outputDir, "characters"), { recursive: true });
 mkdirSync(join(outputDir, "scenes"), { recursive: true });
@@ -280,39 +283,25 @@ function renderCharacterWithHandlebars(char, templateFn) {
 		id: `char_${char.name.toLowerCase().replace(/\s+/g, "_")}`,
 		canonicalName: char.name,
 		status: "alive",
-		tags: tags.join(", "),
-		hasAliases: char.aliases.length > 0,
+		tags,
 		aliases: char.aliases.map((a) => ({
 			name: a,
 			usedBy: ["various"],
 			context: "narration",
 		})),
-		hasMentions: char.mentions.length > 0,
-		mentions: char.mentions.slice(0, 10),
-		hasRelationships: false,
+		mentions: char.mentions.slice(0, 10).map(m => ({
+			chapter: m.chapter,
+			name: m.nameUsed,
+			speaker: m.speaker
+		})),
 		relationships: [],
-		hasPersonality: false,
-		hasMotivation: false,
-		hasArc: false,
-		hasKeyQuotes: false,
-		content: {
-			summary: `${char.name} appears ${char.mentions.length} times in the story.`,
-			essence: "A character in the fantasy hunting world.",
-			personality: [],
-			keyQuotes: [],
-		},
-		jsonString: JSON.stringify(
+		summary: `${char.name} appears ${char.mentions.length} times in the story.`,
+		essence: "A character in the fantasy hunting world.",
+		jsonBlock: JSON.stringify(
 			{
 				type: "character",
 				id: `char_${char.name.toLowerCase().replace(/\s+/g, "_")}`,
 				canonicalName: char.name,
-				aliases: char.aliases.map((a) => ({
-					name: a,
-					usedBy: ["various"],
-					context: "narration",
-				})),
-				mentions: char.mentions.slice(0, 10),
-				tags,
 				status: "alive",
 			},
 			null,
@@ -329,32 +318,23 @@ function renderSceneWithHandlebars(scene, templateFn) {
 	const templateData = {
 		type: "scene",
 		id: `scene_chapter_${chapterNum}`,
-		canonicalName: scene.name,
+		title: scene.name,
+		chapter: chapterNum,
 		act: 1,
-		importance: "normal",
-		hasCharacters: false,
+		sceneNumber: 1,
+		location: "unknown",
 		characters: [],
-		hasLocation: false,
-		location: "",
-		hasTimeline: false,
-		timeline: null,
-		hasEvents: false,
-		hasEmotionalTone: false,
-		hasConflicts: false,
-		hasTurningPoint: false,
-		content: {
-			summary: `Chapter ${chapterNum} of the story.`,
-			essence: "A chapter in the fantasy adventure.",
-			events: [],
-			conflicts: [],
-		},
-		jsonString: JSON.stringify(
+		tags: [],
+		summary: `Chapter ${chapterNum} of the story.`,
+		keyEvents: [],
+		emotionalArc: "Neutral",
+		conflict: "None",
+		jsonBlock: JSON.stringify(
 			{
 				type: "scene",
 				id: `scene_chapter_${chapterNum}`,
-				canonicalName: scene.name,
+				title: scene.name,
 				act: 1,
-				importance: "normal",
 			},
 			null,
 			2,
@@ -368,27 +348,20 @@ function renderLocationWithHandlebars(loc, templateFn) {
 	const templateData = {
 		type: "location",
 		id: `loc_${loc.name.toLowerCase().replace(/\s+/g, "_")}`,
-		canonicalName: loc.name,
-		hasAliases: loc.aliases && loc.aliases.length > 0,
-		aliases: loc.aliases || [],
-		hasScenes: false,
-		scenes: [],
-		hasConnections: false,
-		connections: [],
-		hasDescription: true,
-		hasAtmosphere: false,
-		hasSignificance: false,
-		hasSensoryDetails: false,
-		content: {
-			description: "A location mentioned in the story.",
-			essence: "A place in the fantasy world.",
-		},
-		jsonString: JSON.stringify(
+		name: loc.name,
+		locationType: "Place",
+		region: "Unknown",
+		significance: "Standard",
+		tags: [],
+		description: "A location mentioned in the story.",
+		keyFeatures: [],
+		associatedCharacters: [],
+		scenesSetHere: [],
+		jsonBlock: JSON.stringify(
 			{
 				type: "location",
 				id: `loc_${loc.name.toLowerCase().replace(/\s+/g, "_")}`,
-				canonicalName: loc.name,
-				aliases: loc.aliases || [],
+				name: loc.name,
 			},
 			null,
 			2,
