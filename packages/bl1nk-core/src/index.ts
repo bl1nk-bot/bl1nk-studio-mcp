@@ -143,50 +143,101 @@ const StoryGraphSchema = z.object({
 export const Schemas = {
 	analyze_story: z.object({
 		text: z.string().describe("Story text to analyze"),
-		depth: z.enum(["basic", "detailed", "deep"]).default("detailed"),
-		includeMetadata: z.boolean().default(true),
+		depth: z
+			.enum(["basic", "detailed", "deep"])
+			.default("detailed")
+			.describe("Analysis depth: basic (fast), detailed (standard), or deep (full)"),
+		includeMetadata: z
+			.boolean()
+			.default(true)
+			.describe("Include metadata such as genre, createdAt, and version in the output"),
 	}),
 	export_mermaid: z.object({
 		graph: StoryGraphSchema.describe("StoryGraph object"),
-		includeMetadata: z.boolean().default(true),
-		style: z.enum(["default", "dark", "minimal"]).default("default"),
+		includeMetadata: z
+			.boolean()
+			.default(true)
+			.describe("Include title and metadata header in the generated Mermaid diagram"),
+		style: z
+			.enum(["default", "dark", "minimal"])
+			.default("default")
+			.describe("Visual style for the Mermaid diagram"),
 	}),
 	export_canvas: z.object({
 		graph: StoryGraphSchema.describe("StoryGraph object"),
-		includeMetadata: z.boolean().default(true),
-		autoLayout: z.boolean().default(true),
+		includeMetadata: z
+			.boolean()
+			.default(true)
+			.describe("Include metadata properties in the Canvas JSON output"),
+		autoLayout: z
+			.boolean()
+			.default(true)
+			.describe("Automatically compute node positions; set false to preserve manual layout"),
 	}),
 	export_dashboard: z.object({
 		graph: StoryGraphSchema.describe("StoryGraph object"),
-		includeStats: z.boolean().default(true),
-		includeRecommendations: z.boolean().default(true),
+		includeStats: z
+			.boolean()
+			.default(true)
+			.describe("Include character and event counts, density metrics, and timing data"),
+		includeRecommendations: z
+			.boolean()
+			.default(true)
+			.describe("Include automated story improvement suggestions in the dashboard"),
 	}),
 	export_markdown: z.object({
 		graph: StoryGraphSchema.describe("StoryGraph object"),
-		includeMetadata: z.boolean().default(true),
-		includeAnalysis: z.boolean().default(true),
+		includeMetadata: z
+			.boolean()
+			.default(true)
+			.describe("Include YAML frontmatter metadata block in Markdown output"),
+		includeAnalysis: z
+			.boolean()
+			.default(true)
+			.describe("Include narrative structure analysis section in Markdown output"),
 	}),
 	validate_story_structure: z.object({
 		graph: StoryGraphSchema.describe("StoryGraph object"),
-		strict: z.boolean().default(false),
-		includeRecommendations: z.boolean().default(true),
+		strict: z
+			.boolean()
+			.default(false)
+			.describe("Treat all structural rules as errors (fail closed) instead of warnings"),
+		includeRecommendations: z
+			.boolean()
+			.default(true)
+			.describe("Include actionable improvement suggestions with each validation finding"),
 	}),
 	extract_characters: z.object({
 		graph: StoryGraphSchema.describe("StoryGraph object"),
-		detailed: z.boolean().default(true),
+		detailed: z
+			.boolean()
+			.default(true)
+			.describe("Include full character arc, motivations, and relationship data in the output"),
 	}),
 	extract_conflicts: z.object({
 		graph: StoryGraphSchema.describe("StoryGraph object"),
-		includeEscalation: z.boolean().default(true),
+		includeEscalation: z
+			.boolean()
+			.default(true)
+			.describe("Include conflict escalation stages and intensity breakdown in the output"),
 	}),
 	build_relationship_graph: z.object({
 		graph: StoryGraphSchema.describe("StoryGraph object"),
-		includeStats: z.boolean().default(true),
+		includeStats: z
+			.boolean()
+			.default(true)
+			.describe("Include node/edge counts, density metrics, and hub/isolate analysis"),
 	}),
 	export_mcp_ui_dashboard: z.object({
 		graph: StoryGraphSchema.describe("StoryGraph object"),
-		includeStats: z.boolean().default(true),
-		includeRecommendations: z.boolean().default(true),
+		includeStats: z
+			.boolean()
+			.default(true)
+			.describe("Include character and event counts, density metrics, and timing data"),
+		includeRecommendations: z
+			.boolean()
+			.default(true)
+			.describe("Include automated story improvement suggestions in the MCP-UI dashboard"),
 	}),
 	exa_search_story: z.object({
 		query: z.string().describe("Search query for story research"),
@@ -222,12 +273,20 @@ const server = new McpServer({
 });
 
 let toolsRegistered = false;
+
+function isAlreadyRegisteredError(error: unknown): boolean {
+	return (
+		error instanceof Error && /already\s+registered/i.test(error.message)
+	);
+}
+
 function registerTools() {
 	if (toolsRegistered) return;
 
-	try {
-		// Register 11 granular tools (source of truth)
-		for (const tool of GRANULAR_TOOLS) {
+	// Register 11 granular tools (source of truth) — per-tool try/catch so one
+	// failure cannot short-circuit the remaining registrations.
+	for (const tool of GRANULAR_TOOLS) {
+		try {
 			const schema = Schemas[tool.name as keyof typeof Schemas];
 			if (!schema) {
 				console.error(`Warning: No schema found for tool "${tool.name}"`);
@@ -240,10 +299,18 @@ function registerTools() {
 				async (args: Record<string, unknown>) =>
 					executeGranularTool(tool.name, args),
 			);
+		} catch (error) {
+			if (isAlreadyRegisteredError(error)) {
+				// Tool already registered from a previous run — skip without failing
+				continue;
+			}
+			throw error;
 		}
+	}
 
-		// Register 4 legacy tools (backward compatibility)
-		for (const tool of BL1NK_VISUAL_TOOLS) {
+	// Register 4 legacy tools (backward compatibility) — same per-tool isolation
+	for (const tool of BL1NK_VISUAL_TOOLS) {
+		try {
 			server.tool(
 				tool.name,
 				tool.description,
@@ -251,9 +318,16 @@ function registerTools() {
 				async (args: Record<string, unknown>) =>
 					executeStoryTool(tool.name, args),
 			);
+		} catch (error) {
+			if (isAlreadyRegisteredError(error)) {
+				continue;
+			}
+			throw error;
 		}
+	}
 
-		// Register search_entries tool (has its own schema in the tool definition)
+	// Register search_entries tool (has its own schema in the tool definition)
+	try {
 		server.tool(
 			searchEntriesTool.name,
 			searchEntriesTool.description,
@@ -263,18 +337,15 @@ function registerTools() {
 					args as Parameters<typeof searchEntriesTool.execute>[0],
 				),
 		);
-
-		toolsRegistered = true;
-	} catch (error: unknown) {
-		if (
-			error instanceof Error &&
-			error.message.includes("already registered")
-		) {
-			toolsRegistered = true;
-			return;
+	} catch (error) {
+		if (isAlreadyRegisteredError(error)) {
+			// Already registered — safe to ignore
+		} else {
+			throw error;
 		}
-		throw error;
 	}
+
+	toolsRegistered = true;
 }
 
 // Initial registration
@@ -284,7 +355,12 @@ async function startServer() {
 	try {
 		const transport = new StdioServerTransport();
 		await server.connect(transport);
-		const totalTools = GRANULAR_TOOLS.length + BL1NK_VISUAL_TOOLS.length + 1;
+		// count search_entries (1) next to GRANULAR + LEGACY so future tool additions are visible
+		const SEARCH_ENTRIES_TOOL_COUNT = 1;
+		const totalTools =
+			GRANULAR_TOOLS.length +
+			BL1NK_VISUAL_TOOLS.length +
+			SEARCH_ENTRIES_TOOL_COUNT;
 		console.error(`bl1nk-visual-mcp Server started with ${totalTools} tools`);
 	} catch (error: unknown) {
 		const message = error instanceof Error ? error.message : String(error);

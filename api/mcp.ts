@@ -409,8 +409,8 @@ function hasAuth(request: Request): boolean {
 	try {
 		const url = new URL(request.url);
 		if (url.searchParams.get("exaApiKey")) return true;
-	} catch {
-		// URL parsing failed — no auth
+	} catch (error) {
+		console.error("hasAuth URL parse error:", error);
 	}
 	return false;
 }
