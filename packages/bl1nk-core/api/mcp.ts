@@ -10,24 +10,9 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { createMcpHandler } from "mcp-handler";
-import { initializeMcpServer } from "../packages/bl1nk/mcp-handler.js";
-import { isJwtToken, verifyOAuthToken } from "../packages/bl1nk/utils/auth.js";
+import { initializeMcpServer } from "../src/mcp-handler.js";
+import { isJwtToken, verifyOAuthToken } from "../src/utils/auth.js";
 
-/**
- * IP-based rate limiting configuration for free MCP users.
- * Users who provide their own API key via ?exaApiKey= bypass rate limiting.
- *
- * Rate limiting only applies to actual tool calls (tools/call method), not to
- * basic MCP protocol methods like tools/list, initialize, ping, etc.
- *
- * Environment variables (supports both Vercel KV and Upstash naming):
- * - KV_REST_API_URL or UPSTASH_REDIS_REST_URL: Redis connection URL
- * - KV_REST_API_TOKEN or UPSTASH_REDIS_REST_TOKEN: Redis auth token
- * - RATE_LIMIT_QPS: Queries per second limit (default: 2)
- * - RATE_LIMIT_DAILY: Daily request quota (default: 50)
- */
-
-// Lazy-initialize rate limiters only when Upstash is configured
 let qpsLimiter: Ratelimit | null = null;
 let dailyLimiter: Ratelimit | null = null;
 let rateLimitersInitialized = false;
@@ -40,7 +25,6 @@ function initializeRateLimiters(): boolean {
 
 	rateLimitersInitialized = true;
 
-	// Support both Vercel KV naming (KV_REST_API_*) and Upstash naming (UPSTASH_REDIS_REST_*)
 	const redisUrl =
 		process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
 	const redisToken =
@@ -65,14 +49,12 @@ function initializeRateLimiters(): boolean {
 			10,
 		);
 
-		// QPS limiter: sliding window for smooth rate limiting
 		qpsLimiter = new Ratelimit({
 			redis: redisClient,
 			limiter: Ratelimit.slidingWindow(qpsLimit, "1 s"),
 			prefix: "exa-mcp:qps",
 		});
 
-		// Daily limiter: fixed window that resets daily
 		dailyLimiter = new Ratelimit({
 			redis: redisClient,
 			limiter: Ratelimit.fixedWindow(dailyLimit, "1 d"),
@@ -104,12 +86,6 @@ Fix: Create API key at https://dashboard.exa.ai/api-keys , then either:
 - Set the header: Authorization: Bearer YOUR_EXA_API_KEY
 - Or use the URL: https://mcp.exa.ai/mcp?exaApiKey=YOUR_EXA_API_KEY`;
 
-/**
- * Create a JSON-RPC 2.0 error response for rate limiting.
- * MCP uses JSON-RPC 2.0, so we need to return errors in the proper format.
- * Note: We intentionally hide rate limit dimension info (limit set to 0) to prevent
- * users from inferring which limit they hit (QPS vs daily).
- */
 function createRateLimitResponse(
 	retryAfterSeconds: number,
 	reset: number,
@@ -136,11 +112,6 @@ function createRateLimitResponse(
 	);
 }
 
-/**
- * Check if a JSON-RPC request is a tools/call method that should be rate limited.
- * Returns true only for actual tool invocations, not for protocol methods like
- * tools/list, initialize, ping, resources/list, prompts/list, etc.
- */
 function isRateLimitedMethod(body: string): boolean {
 	try {
 		const parsed = JSON.parse(body);
@@ -150,14 +121,8 @@ function isRateLimitedMethod(body: string): boolean {
 	}
 }
 
-/** 7-day TTL for ~10-minute bypass tracking buckets. */
 const BYPASS_BUCKET_TTL_SECONDS = 7 * 24 * 60 * 60;
 
-/**
- * Save IP and user agent for bypass requests to Redis for tracking.
- * Uses ~15-min-bucketed sorted sets (e.g. exa-mcp:bypass:2026-03-24T14:00, exa-mcp:bypass:2026-03-24T14:15)
- * to prevent unbounded growth that would hit Upstash's 100MB single-record limit.
- */
 async function saveBypassRequestInfo(
 	ip: string,
 	userAgent: string,
@@ -194,20 +159,15 @@ async function saveBypassRequestInfo(
 	}
 }
 
-/**
- * Check rate limits for a given IP.
- * Returns null if within limits, or a Response if rate limited.
- */
 async function checkRateLimits(
 	ip: string,
 	debug: boolean,
 ): Promise<Response | null> {
 	if (!qpsLimiter || !dailyLimiter) {
-		return null; // Rate limiting not configured
+		return null;
 	}
 
 	try {
-		// Check QPS limit first (more likely to be hit)
 		const qpsResult = await qpsLimiter.limit(ip);
 		if (!qpsResult.success) {
 			if (debug) {
@@ -217,7 +177,6 @@ async function checkRateLimits(
 			return createRateLimitResponse(retryAfter, qpsResult.reset);
 		}
 
-		// Check daily limit
 		const dailyResult = await dailyLimiter.limit(ip);
 		if (!dailyResult.success) {
 			if (debug) {
@@ -227,47 +186,13 @@ async function checkRateLimits(
 			return createRateLimitResponse(retryAfter, dailyResult.reset);
 		}
 
-		return null; // Within limits
+		return null;
 	} catch (error) {
-		// If rate limiting fails, allow the request through (fail open)
 		console.error("[EXA-MCP] Rate limit check failed:", error);
 		return null;
 	}
 }
 
-/**
- * Vercel Function entry point for MCP server
- *
- * This handler is automatically deployed as a Vercel Function and provides
- * Streamable HTTP transport for the MCP protocol.
- *
- * Supports API key via header (recommended) or URL query parameter:
- * - x-api-key: YOUR_KEY - Pass API key via header (recommended)
- * - Authorization: Bearer YOUR_KEY - Pass API key via header (alternative)
- * - ?exaApiKey=YOUR_KEY - Pass API key via URL (backwards compatible)
- *
- * Other URL query parameters:
- * - ?tools=web_search_exa,get_code_context_exa - Enable specific tools
- * - ?debug=true - Enable debug logging
- *
- * Also supports environment variables:
- * - EXA_API_KEY: Your Exa AI API key
- * - DEBUG: Enable debug logging (true/false)
- * - ENABLED_TOOLS: Comma-separated list of tools to enable
- *
- * Priority: x-api-key header > Authorization header > URL query parameter > environment variable.
- *
- * ARCHITECTURE NOTE:
- * The mcp-handler library creates a single server instance and doesn't pass
- * the request to the initializeServer callback. To support per-request
- * configuration via URL params (like ?tools=... and ?exaApiKey=...), we
- * create a fresh handler for each request. This ensures:
- * 1. Feature parity with the production Smithery-based deployment at mcp.exa.ai
- * 2. Each request gets its own configuration (no API key leakage between users)
- * 3. Users can specify different tools and API keys per request
- */
-
-/** Extract bearer token from Authorization header. */
 function getBearerToken(request: Request): string | undefined {
 	const authHeader = request.headers.get("authorization");
 	if (authHeader) {
@@ -279,11 +204,6 @@ function getBearerToken(request: Request): string | undefined {
 	return undefined;
 }
 
-/**
- * Extract configuration from request headers, URL, or environment variables.
- * Priority: x-api-key header > OAuth JWT > plain Bearer API key > query parameter > environment variable.
- */
-
 interface RequestConfig {
 	exaApiKey?: string;
 	enabledTools?: string[];
@@ -292,10 +212,6 @@ interface RequestConfig {
 	authMethod: "oauth" | "api_key" | "free_tier";
 }
 
-/**
- * Extract configuration from request headers, URL, or environment variables.
- * Priority: x-api-key header > OAuth JWT > plain Bearer API key > query parameter > environment variable.
- */
 async function getConfigFromRequest(request: Request): Promise<RequestConfig> {
 	let exaApiKey = process.env.EXA_API_KEY;
 	let enabledTools: string[] | undefined;
@@ -303,7 +219,6 @@ async function getConfigFromRequest(request: Request): Promise<RequestConfig> {
 	let userProvidedApiKey = false;
 	let authMethod: "oauth" | "api_key" | "free_tier" = "free_tier";
 
-	// 1. Check x-api-key header (highest priority)
 	const xApiKey = request.headers.get("x-api-key");
 	if (xApiKey) {
 		exaApiKey = xApiKey;
@@ -311,24 +226,19 @@ async function getConfigFromRequest(request: Request): Promise<RequestConfig> {
 		authMethod = "api_key";
 	}
 
-	// 2. Check Authorization: Bearer header (fallback when no x-api-key)
 	if (!xApiKey) {
 		const bearerToken = getBearerToken(request);
 		if (bearerToken) {
-			// Distinguish JWT (OAuth) from plain API key
 			if (isJwtToken(bearerToken)) {
 				const claims = await verifyOAuthToken(bearerToken);
 				if (claims) {
-					// The api_key_id claim IS the API key (ApiKey.id UUID = the key string)
-					exaApiKey = claims["exa:api_key_id"];
+					exaApiKey = claims["exa:api_key_id"] as string | undefined;
 					userProvidedApiKey = true;
 					authMethod = "oauth";
 				} else {
-					// JWT verification failed — don't fall through to treating it as an API key
 					console.error("[EXA-MCP] Invalid OAuth JWT token");
 				}
 			} else {
-				// Plain API key in Bearer header
 				exaApiKey = bearerToken;
 				userProvidedApiKey = true;
 				authMethod = "api_key";
@@ -340,7 +250,6 @@ async function getConfigFromRequest(request: Request): Promise<RequestConfig> {
 		const parsedUrl = new URL(request.url);
 		const params = parsedUrl.searchParams;
 
-		// 3. Check ?exaApiKey=YOUR_KEY (fallback for backwards compat, only if no header)
 		if (!xApiKey && !getBearerToken(request) && params.has("exaApiKey")) {
 			const keyFromUrl = params.get("exaApiKey");
 			if (keyFromUrl) {
@@ -350,7 +259,6 @@ async function getConfigFromRequest(request: Request): Promise<RequestConfig> {
 			}
 		}
 
-		// Support ?tools=tool1,tool2
 		if (params.has("tools")) {
 			const toolsParam = params.get("tools");
 			if (toolsParam) {
@@ -361,18 +269,15 @@ async function getConfigFromRequest(request: Request): Promise<RequestConfig> {
 			}
 		}
 
-		// Support ?debug=true
 		if (params.has("debug")) {
 			debug = params.get("debug") === "true";
 		}
 	} catch (error) {
-		// URL parsing failed, will use env vars
 		if (debug) {
 			console.error("Failed to parse request URL:", error);
 		}
 	}
 
-	// Fall back to env vars if no query params were found
 	if (!enabledTools && process.env.ENABLED_TOOLS) {
 		enabledTools = process.env.ENABLED_TOOLS.split(",")
 			.map((t) => t.trim())
@@ -382,12 +287,6 @@ async function getConfigFromRequest(request: Request): Promise<RequestConfig> {
 	return { exaApiKey, enabledTools, debug, userProvidedApiKey, authMethod };
 }
 
-/**
- * Create a fresh handler for the given configuration
- * We create a new handler per request to ensure each request gets its own
- * configuration (tools and API key). This prevents API key leakage between
- * different users who might pass different keys via URL.
- */
 function createHandler(config: {
 	exaApiKey?: string;
 	enabledTools?: string[];
@@ -398,8 +297,8 @@ function createHandler(config: {
 		(server: McpServer) => {
 			initializeMcpServer(server, config);
 		},
-		{}, // Server options
-		{ basePath: "/api" }, // Config - basePath for Vercel Functions
+		{ name: "bl1nk-visual-mcp", version: "3.0.0" },
+		{ basePath: "/api" },
 	);
 }
 
@@ -410,7 +309,7 @@ function hasAuth(request: Request): boolean {
 		const url = new URL(request.url);
 		if (url.searchParams.get("exaApiKey")) return true;
 	} catch (error) {
-		console.error("hasAuth URL parse error:", error);
+		console.error("[EXA-MCP] hasAuth URL parse error:", error);
 	}
 	return false;
 }
@@ -436,24 +335,18 @@ function create401Response(): Response {
 	);
 }
 
-/**
- * Main request handler that extracts config from URL and creates
- * a fresh handler for each request
- */
 async function handleRequest(
 	request: Request,
 	options?: { forceOAuth?: boolean },
 ): Promise<Response> {
 	const debug = process.env.DEBUG === "true";
 
-	// Check user-agent bypass BEFORE the 401 gate so bypass clients never see auth prompts
 	const userAgent = request.headers.get("user-agent") || "";
 	const bypassPrefix = process.env.RATE_LIMIT_BYPASS;
 	const bypassApiKey = process.env.EXA_API_KEY_BYPASS;
 	const bypassRateLimit =
 		bypassPrefix && bypassApiKey && userAgent.startsWith(bypassPrefix);
 
-	// Check if user-agent matches OAUTH_USER_AGENTS (force OAuth on /mcp for these clients)
 	const oauthUserAgents =
 		process.env.OAUTH_USER_AGENTS?.split(",")
 			.map((s) => s.trim())
@@ -462,13 +355,11 @@ async function handleRequest(
 		userAgent.includes(ua),
 	);
 
-	// Gate: require auth for /mcp/oauth endpoint OR matching user agents (unless bypassed)
 	const requireOAuth = options?.forceOAuth || userAgentMatchesOAuth;
 	if (!bypassRateLimit && requireOAuth && !hasAuth(request)) {
 		return create401Response();
 	}
 
-	// Extract configuration from request headers, URL, and env vars
 	const config = await getConfigFromRequest(request);
 
 	if (config.debug) {
@@ -482,23 +373,17 @@ async function handleRequest(
 		);
 	}
 
-	// Use separate API key for bypass users and save their IP/user-agent for tracking
 	if (bypassRateLimit) {
 		config.exaApiKey = bypassApiKey;
 		const clientIp = getClientIp(request);
 		saveBypassRequestInfo(clientIp, userAgent, config.debug);
 	}
 
-	// Rate limit users who didn't provide their own API key (including bypass users)
-	// Only rate limit actual tool calls (tools/call), not protocol methods like tools/list
 	if (!config.userProvidedApiKey && request.method === "POST") {
-		// Clone the request to read the body without consuming it
 		const clonedRequest = request.clone();
 		const body = await clonedRequest.text();
 
-		// Only rate limit actual tool calls, not protocol methods
 		if (isRateLimitedMethod(body)) {
-			// Initialize rate limiters on first request (lazy init)
 			initializeRateLimiters();
 
 			const clientIp = getClientIp(request);
@@ -516,11 +401,8 @@ async function handleRequest(
 		}
 	}
 
-	// Create a fresh handler for this request's configuration
 	const handler = createHandler(config);
 
-	// Normalize URL pathname to /api/mcp for mcp-handler (it checks url.pathname)
-	// This handles requests from /mcp and / rewrites
 	const url = new URL(request.url);
 	let normalizedRequest = request;
 	if (
@@ -534,11 +416,9 @@ async function handleRequest(
 		normalizedRequest = new Request(url.toString(), request);
 	}
 
-	// Delegate to the handler
 	return handler(normalizedRequest);
 }
 
-// Export handlers for Vercel Functions
 export { handleRequest as GET, handleRequest as POST, handleRequest as DELETE };
 
 export { handleRequest };
