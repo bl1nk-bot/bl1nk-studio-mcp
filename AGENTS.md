@@ -103,9 +103,14 @@ packages/craft-blog-cms/# ⚠️ Orphaned (Next.js blog/CMS)
 
 ## 🧠 Operational Guidelines (MANDATORY)
 
-1. **อ่าน TODO.md ก่อนเริ่มทำงานทุกครั้ง** — \`TODO.md\` คือ source of truth สำหรับงานทั้งหมด
-2. **อัปเดต TODO.md ทุกครั้งที่จบงาน** — เปลี่ยน \`[ ]\` → \`[x]\` หรือ \`[~]\` ตามสถานะ
-3. **AI Memory Management**: AI has no persistent memory - context is the brain.
+1. **อ่าน TODO.md ก่อนเริ่มทำงานทุกครั้ง** — `TODO.md` คือ source of truth สำหรับงานทั้งหมด
+2. **อัปเดต TODO.md ทุกครั้งที่จบงาน** — เปลี่ยน `[ ]` → `[x]` หรือ `[~]` ตามสถานะ
+3. **[CRITICAL SAFEGUARD]**
+   - **DO NOT** assume "clear" or "sort" means "delete". "Clear" = "Finalize and Organize".
+   - **DO NOT** use destructive commands (`git branch -D`, `rm -rf`, etc.) without per-item confirmation.
+   - **MUST** list all items and ask for confirmation "one by one" before taking action.
+4. **AI Memory Management**: AI has no persistent memory - context is the brain.
+
 4. **Prevent Recurrence**: Record all errors, solutions, and learnings in this file or siblings.
 5. **No Long-Term Memory**: All decisions based on documented learnings, not implicit knowledge.
 
