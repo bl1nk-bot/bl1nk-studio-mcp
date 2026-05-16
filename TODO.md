@@ -31,7 +31,11 @@
 
 ## ✅ Recently Completed
 
-- [x] Consolidate agent documentation into \`AGENTS.md\` and symlink \`GEMINI.md\`, \`QWEN.md\`, \`CLAUDE.md\`
-- [x] Update \`README.md\` and \`docs/TOOL_MAPPING.md\` to reflect actual state
-- [x] Merged dependency update for \`postcss\` security fix
+- [x] **Fix 4 Critical Bugs** (Character duplication, Act distribution 25-50-25, Mermaid export, Node.js types)
+- [x] **Restore Trae Agent & Unified UI Structure** (Consolidated packages into bl1nk-unified-ui)
+- [x] **Purge Corrupted Thai Filenames** (Completely cleaned Git history and test outputs)
+- [x] **Sync dev branch to main** (Fully merged and synchronized state)
+- [x] Consolidate agent documentation into `AGENTS.md` and symlink `GEMINI.md`, `QWEN.md`, `CLAUDE.md`
+- [x] Update `README.md` and `docs/TOOL_MAPPING.md` to reflect actual state
+- [x] Merged dependency update for `postcss` security fix
 - [x] Cleared backlog of conflicting or problematic PRs
