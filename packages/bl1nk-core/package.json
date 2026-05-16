@@ -17,8 +17,9 @@
 		"@upstash/redis": "^1.34.3",
 		"fs-extra": "^11.3.5",
 		"handlebars": "^4.7.8",
-		"nunjucks": "^3.2.4",
 		"jose": "^5.9.6",
+		"mcp-handler": "^1.1.0",
+		"nunjucks": "^3.2.4",
 		"zod": "^3.22.4"
 	}
 }
