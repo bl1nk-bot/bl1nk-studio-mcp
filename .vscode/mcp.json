@@ -37,12 +37,12 @@
 			"version": "0.0.3"
 		}
 	},
-	"inputs": [
-		{
-			"id": "NETDATA_CLOUD_API_TOKEN",
-			"type": "promptString",
-			"description": "Netdata Cloud API token (create at app.netdata.cloud > User Settings > API Tokens with scope:mcp)",
-			"password": true,
-		}
-	]
+  "inputs": [
+    {
+      "id": "NETDATA_CLOUD_API_TOKEN",
+      "type": "promptString",
+      "description": "Netdata Cloud API token (create at app.netdata.cloud > User Settings > API Tokens with scope:mcp)",
+      "password": true
+    }
+  ]
 }
