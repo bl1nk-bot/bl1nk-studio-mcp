@@ -6,7 +6,7 @@
  * CSV Generator for StoryGraph data.
  */
 
-import type { Character, Conflict, EventNode, StoryGraph } from "../types.js";
+import type { Character, Conflict, EventNode, StoryGraph } from "./types.js";
 
 /**
  * Escape a value for safe CSV output.

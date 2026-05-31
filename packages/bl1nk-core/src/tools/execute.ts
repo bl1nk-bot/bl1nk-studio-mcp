@@ -176,9 +176,8 @@ export async function executeGranularTool(
 						isError: true,
 					};
 				}
-				const strict = args.strict === true;
 				const includeRecommendations = args.includeRecommendations !== false;
-				const result = validateGraph(graph, strict);
+				const result = validateGraph(graph);
 				const { recommendations, ...rest } = result;
 				return {
 					content: [
@@ -413,7 +412,7 @@ export async function executeStoryTool(
 					};
 				}
 				const graph = buildInitialGraph(text);
-				const result = validateGraph(graph, args.strict === true);
+				const result = validateGraph(graph);
 				return {
 					content: [
 						{ type: "text" as const, text: JSON.stringify(result, null, 2) },

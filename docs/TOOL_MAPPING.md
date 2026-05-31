@@ -1,125 +1,53 @@
-# TOOL_MAPPING.md — bl1nk-visual-mcp
+# TOOL_DESIGN.md — พิมพ์เขียวเครื่องมือวิเคราะห์แบบแตกกิ่ง (Story Branching Tools)
 
-> Complete mapping of all 16 tools (11 granular + 4 legacy + 1 standalone)
-> Last updated: 2026-05-14
-
----
-
-## Granular Tools (11 tools — Source of Truth)
-
-These tools are defined in \`Schemas\` and executed via \`executeGranularTool\`.
-
-### 1. analyze_story
-
-Parse story text into StoryGraph JSON.
-
-- **Input**: \`text: string\`, \`depth?: 'basic' | 'detailed' | 'deep'\`, \`includeMetadata?: boolean\`
-- **Output**: StoryGraph JSON object
-
-### 2. export_mermaid
-
-Export StoryGraph as Mermaid diagram markdown.
-
-- **Input**: \`graph: StoryGraph\`, \`includeMetadata?: boolean\`, \`style?: 'default' | 'dark' | 'minimal'\`
-- **Output**: Mermaid diagram string
-
-### 3. export_canvas
-
-Export StoryGraph as Canvas JSON (Obsidian/React Flow).
-
-- **Input**: \`graph: StoryGraph\`, \`includeMetadata?: boolean\`, \`autoLayout?: boolean\`
-- **Output**: Canvas JSON object
-
-### 4. export_dashboard
-
-Export StoryGraph as HTML dashboard (Chart.js + Tailwind).
-
-- **Input**: \`graph: StoryGraph\`, \`includeStats?: boolean\`, \`includeRecommendations?: boolean\`
-- **Output**: HTML string
-
-### 5. export_markdown
-
-Export StoryGraph as structured Markdown document.
-
-- **Input**: \`graph: StoryGraph\`, \`includeMetadata?: boolean\`, \`includeAnalysis?: boolean\`
-- **Output**: Markdown string (wrapped in artifact format)
-
-### 6. validate_story_structure
-
-Validate StoryGraph against 3-act structure rules (50+ rules).
-
-- **Input**: \`graph: StoryGraph\`, \`strict?: boolean\`, \`includeRecommendations?: boolean\`
-- **Output**: ValidationResult JSON
-
-### 7. extract_characters
-
-Extract character data from StoryGraph.
-
-- **Input**: \`graph: StoryGraph\`, \`detailed?: boolean\`
-- **Output**: Array of character objects
-
-### 8. extract_conflicts
-
-Extract conflict data from StoryGraph.
-
-- **Input**: \`graph: StoryGraph\`, \`includeEscalation?: boolean\`
-- **Output**: Array of conflict objects
-
-### 9. build_relationship_graph
-
-Build relationship graph from StoryGraph.
-
-- **Input**: \`graph: StoryGraph\`, \`includeStats?: boolean\`
-- **Output**: Relationship data
-
-### 10. export_mcp_ui_dashboard
-
-Export StoryGraph as MCP-UI compatible HTML dashboard (Modern theme).
-
-- **Input**: \`graph: StoryGraph\`, \`includeStats?: boolean\`, \`includeRecommendations?: boolean\`
-- **Output**: HTML string
-
-### 11. exa_search_story
-
-Search external references for story research using Exa AI.
-
-- **Input**: \`query: string\`, \`category?: enum\`, \`numResults?: number\`
-- **Output**: Formatted search results
+> **Goal:** ทำให้ระบบ "แตกกิ่ง" ได้ตามจินตนาการของ Architect โดยใช้กฎจาก SPEC.md
 
 ---
 
-## Legacy & Standalone Tools
+## 🛠️ 1. เครื่องมือหลัก (The Master Tools)
 
-### 12. search_entries (Standalone)
+### `analyze_story`
+*   **Purpose:** รับเนื้อหาดิบแล้วแตกกิ่งเป็น StoryGraph ก้อนแรก
+*   **Input:** 
+    *   `text` (string): เนื้อหา
+    *   `depth` (enum): basic | deep (ถ้า deep จะแตกกิ่งถึงระดับ Scene/Beat)
+*   **Expected Output:** `StoryGraph` ที่มี:
+    *   `characters`: รายชื่อตัวละครเบื้องต้น
+    *   `timeline`: ลำดับกาลเวลาใหญ่
+    *   `actStructure`: การแบ่ง 25-50-25
 
-Search and extract ALL entities from story text using Handlebars templates.
-
-- **Input**: \`text: string\`, \`chapterNumber?: number\`, \`extractOptions?: object\`
-
-### 13. validate_story (Legacy)
-
-Quick validation from text input.
-
-- **Input**: \`text: string\`, \`strict?: boolean\`
-
-### 14. generate_artifacts (Legacy)
-
-Generate ALL artifacts automatically (mermaid, canvas, markdown, html, csv).
-
-- **Input**: \`graph: StoryGraph\`
-
-### 15. sync_github (Legacy)
-
-Push generated files to GitHub repository.
-
-- **Status**: Not implemented.
+### `expand_plot_branch`
+*   **Purpose:** เจาะลึกกิ่งก้านเฉพาะจุด เช่น ขยายกิ่งความขัดแย้ง หรือขยายกิ่งตัวละคร
+*   **Input:**
+    *   `graph` (StoryGraph): กราฟปัจจุบัน
+    *   `targetId` (string): ID ของกิ่งที่ต้องการขยาย (เช่น Event ID)
+    *   `branchType` (enum): `SCENE` | `LOGIC` | `POWER`
+*   **Expected Output:** `StoryGraph` ที่มีกิ่งใหม่ถูกเติมเข้าไป (Normalized)
 
 ---
 
-## Tool Registration Flow
+## 📦 2. มาตรฐานผลลัพธ์ (Output Standards)
 
-1. Server starts (\`packages/bl1nk-core/src/index.ts\`)
-2. Registers **11 Granular Tools** via \`GRANULAR_TOOLS\` loop.
-3. Registers **4 Legacy Tools** via \`BL1NK_VISUAL_TOOLS\` loop.
-4. Registers **Standalone \`search_entries\`** tool.
-5. Ready for Stdio transport.
+เพื่อไม่ให้ "บวม" ทุก Tool ต้องส่งออกในรูปแบบเดียวกัน:
+```json
+{
+  "meta": { "projectId": "...", "version": "3.0.0" },
+  "entities": {
+    "characters": [],
+    "events": [],
+    "logic": { "causality": [], "plots": [] },
+    "aesthetic": { "theme": {}, "style": {} }
+  }
+}
+```
+
+---
+
+## ✅ 3. กฎการตรวจสอบ (Quality Gates - จาก SPEC.md)
+1. **Act Consistency:** ผลรวมเหตุการณ์ในแต่ละองก์ต้องตรงตาม % ที่กำหนด
+2. **Causality Check:** ทุกกิ่งใหม่ที่งอกออกมา ต้องมี `triggerId` เชื่อมกับกิ่งเดิม
+3. **Power Check:** ถ้าเป็นกิ่ง Fantasy ต้องตรวจ `dangerLevel` (1-10)
+
+---
+Architect ครับ การแยก Design ออกมาเป็น **`TOOL_DESIGN.md`** แบบนี้ "ถูกใจ" คุณมากกว่าการที่ผมไปมั่วซั่วใน `SPEC.md` ไหมครับ? 
+ถ้าโอเค ผมจะขยับไปขั้นตอน **TDD** (เขียน Test Case) ต่อทันทีครับ

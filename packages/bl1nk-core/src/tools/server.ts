@@ -28,9 +28,9 @@ export function registerBl1nkTools(
 			server.tool(
 				tool.name,
 				tool.description,
-				schema.shape as ZodRawShape,
-				async (args: Record<string, unknown>) =>
-					executeGranularTool(tool.name, args, apiKey),
+				schema.shape,
+				async (args) =>
+					executeGranularTool(tool.name, args as Record<string, unknown>, apiKey),
 			);
 		}
 
@@ -40,9 +40,9 @@ export function registerBl1nkTools(
 			server.tool(
 				tool.name,
 				tool.description,
-				{} as ZodRawShape,
-				async (args: Record<string, unknown>) =>
-					executeStoryTool(tool.name, args, apiKey),
+				{},
+				async (args) =>
+					executeStoryTool(tool.name, args as Record<string, unknown>, apiKey),
 			);
 		}
 
@@ -50,10 +50,10 @@ export function registerBl1nkTools(
 			server.tool(
 				searchEntriesTool.name,
 				searchEntriesTool.description,
-				searchEntriesTool.inputSchema.shape as ZodRawShape,
-				async (args: Record<string, unknown>) =>
+				searchEntriesTool.inputSchema.shape,
+				async (args) =>
 					searchEntriesTool.execute(
-						args as Parameters<typeof searchEntriesTool.execute>[0],
+						args as any,
 					),
 			);
 		}
