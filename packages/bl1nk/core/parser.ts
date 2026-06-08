@@ -6,7 +6,8 @@
 export const STORY_PATTERNS = {
 	TITLE_1: /^Title:[ \t]*(\S[^\r\n]*)$/im,
 	TITLE_2: /^#+[ \t]+(\S[^\r\n]*)$/m,
-	CHARACTER: /^Character:[ \t]*([A-Za-z][^,\r\n]*?)(?:,[ \t]*role:[ \t]*(\w+))?$/gim,
+	CHARACTER:
+		/^Character:[ \t]*([A-Za-z][^,\r\n]*?)(?:,[ \t]*role:[ \t]*(\w+))?$/gim,
 	EVENT: /^Event:[ \t]*(\S[^\r\n]*)$/gim,
 	CONFLICT: /^Conflict:[ \t]*(\S[^\r\n]*)$/gim,
 	SCENE: /(?:Chapter|Scene)\s*\d*:?\s*(.+)/gi,

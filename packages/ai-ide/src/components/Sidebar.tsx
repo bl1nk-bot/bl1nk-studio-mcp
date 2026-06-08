@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   FileText, CheckSquare, Layout, Search, Plus, Settings,
   ChevronDown, ChevronRight, Hash, Folder
@@ -86,7 +86,7 @@ export function Sidebar({ notes, activeNoteId, activePanel, onSelectNote, onNewN
                 onChange={e => setSearch(e.target.value)}
                 placeholder="Search notes..."
                 className="flex-1 bg-transparent text-xs outline-none"
-                style={{ color: "var(--text-primary)", "::placeholder": { color: "var(--text-muted)" } } as React.CSSProperties}
+                style={{ color: "var(--text-primary)" }}
               />
             </div>
           </div>

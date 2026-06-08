@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Pencil, Square, Circle, Minus, Trash2, ZoomIn, ZoomOut } from "lucide-react";
 import { cn } from "../lib/utils";
 

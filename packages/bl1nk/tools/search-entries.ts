@@ -100,7 +100,10 @@ class EntityManager {
 // Extraction Functions
 // ============================================================================
 
-export function extractCharacters(text: string, chapterNum: number): RawEntry[] {
+export function extractCharacters(
+	text: string,
+	chapterNum: number,
+): RawEntry[] {
 	const characters: RawEntry[] = [];
 	const lines = text.split("\n");
 

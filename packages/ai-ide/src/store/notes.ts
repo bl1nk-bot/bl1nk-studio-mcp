@@ -58,7 +58,9 @@ function loadNotes(): Note[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) return JSON.parse(raw) as Note[];
-  } catch {}
+  } catch (err) {
+    console.warn("[ai-ide] Failed to parse notes from storage — resetting to demo data.", err);
+  }
   return DEMO_NOTES;
 }
 
@@ -70,7 +72,9 @@ function loadTasks(): Task[] {
   try {
     const raw = localStorage.getItem(TASKS_KEY);
     if (raw) return JSON.parse(raw) as Task[];
-  } catch {}
+  } catch (err) {
+    console.warn("[ai-ide] Failed to parse tasks from storage — resetting to empty list.", err);
+  }
   return [];
 }
 
@@ -102,7 +106,7 @@ export const notesStore = {
   load: loadNotes,
   save: saveNotes,
   create: (title: string): Note => ({
-    id: `note-${Date.now()}`,
+    id: `note-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
     title,
     content: `# ${title}\n\n`,
     tags: [],
