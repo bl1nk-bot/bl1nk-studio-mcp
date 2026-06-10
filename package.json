@@ -3,26 +3,59 @@
 	"version": "3.0.0",
 	"private": true,
 	"type": "module",
+	"engines": {
+		"node": ">=22",
+		"pnpm": ">=9"
+	},
 	"scripts": {
 		"build": "pnpm -r run build",
+		"dev": "pnpm -r --parallel run dev",
 		"test": "pnpm -r run test",
-		"lint": "pnpm -r run lint",
-		"format": "pnpm -r run format"
+		"test:watch": "pnpm -r run test:watch",
+		"lint": "biome check . && markdownlint-cli2 \"**/*.md\"",
+		"lint:fix": "biome check --write . && markdownlint-cli2 --fix \"**/*.md\"",
+		"format": "biome format --write .",
+		"typecheck": "pnpm -r run typecheck",
+		"clean": "pnpm -r exec rm -rf dist .next out target coverage",
+		"clean:all": "pnpm run clean && rm -rf node_modules && pnpm -r exec rm -rf node_modules",
+		"hook:pre-commit": "pnpm run lint",
+		"docs:update": "node ./scripts/hooks/update-docs.js",
+		"hook:task-complete": "pnpm run lint && pnpm run docs:update",
+		"hooks:install": "git config core.hooksPath .githooks",
+		"mcp:build": "node scripts/build.js build",
+		"mcp:check": "node scripts/build.js check"
 	},
 	"dependencies": {
-		"@google/genai": "^1.41.0",
 		"@modelcontextprotocol/sdk": "^1.27.1",
+		"@vercel/analytics": "^2.0.1",
 		"fs-extra": "^11.3.4",
 		"handlebars": "^4.7.9",
 		"zod": "^3.22.4"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
+		"@playwright/test": "^1.48.0",
+		"@tailwindcss/vite": "^4.0.0",
+		"@tauri-apps/cli": "^2.0.0",
+		"@testing-library/jest-dom": "^6.6.3",
+		"@testing-library/react": "^16.1.0",
+		"@testing-library/user-event": "^14.5.2",
 		"@types/fs-extra": "^11.0.4",
-		"@types/node": "^20.11.0",
-		"esbuild": "^0.27.5",
+		"@types/node": "^22.0.0",
+		"@types/react": "^19.2.0",
+		"@types/react-dom": "^19.2.0",
+		"@vitejs/plugin-react": "^6.0.2",
+		"autoprefixer": "^10.4.20",
+		"esbuild": "^0.28.0",
+		"jsdom": "^25.0.1",
 		"markdownlint-cli2": "^0.21.0",
-		"typescript": "^5.3.3",
-		"vitest": "^4.0.18"
+		"postcss": "^8.5.10",
+		"tailwindcss": "^4.0.0",
+		"typescript": "^5.6.3",
+		"vite": "^8.0.2",
+		"vitest": "^4.1.2"
+	},
+	"overrides": {
+		"rollup": "^4.59.0"
 	}
 }

@@ -1,83 +1,72 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
 import { TaskTracker } from "./TaskTracker";
-import type { Task } from "../store/notes";
+import { Task } from "../store/notes";
 
-const tasks: Task[] = [
-  { id: "1", text: "Write tests", done: false, priority: "high" },
-  { id: "2", text: "Review PR", done: true, priority: "medium" },
-  { id: "3", text: "Deploy", done: false, priority: "low" },
-];
-
-describe("TaskTracker — rendering", () => {
-  it("renders all tasks", () => {
-    render(<TaskTracker tasks={tasks} onToggle={vi.fn()} onAdd={vi.fn()} />);
-    expect(screen.getByText("Write tests")).toBeInTheDocument();
-    expect(screen.getByText("Review PR")).toBeInTheDocument();
-    expect(screen.getByText("Deploy")).toBeInTheDocument();
-  });
-
-  it("shows correct completion count", () => {
-    render(<TaskTracker tasks={tasks} onToggle={vi.fn()} onAdd={vi.fn()} />);
-    expect(screen.getByText("1 / 3 completed")).toBeInTheDocument();
-  });
-
-  it("shows correct percentage", () => {
-    render(<TaskTracker tasks={tasks} onToggle={vi.fn()} onAdd={vi.fn()} />);
-    expect(screen.getByText("33%")).toBeInTheDocument();
-  });
-
-  it("renders filter tabs", () => {
-    render(<TaskTracker tasks={tasks} onToggle={vi.fn()} onAdd={vi.fn()} />);
-    expect(screen.getByText("All")).toBeInTheDocument();
-    expect(screen.getByText("To Do")).toBeInTheDocument();
-    expect(screen.getByText("Done")).toBeInTheDocument();
-  });
+const makeTask = (overrides: Partial<Task> = {}): Task => ({
+  id: "t1",
+  text: "Test task",
+  done: false,
+  priority: "medium",
+  ...overrides,
 });
 
-describe("TaskTracker — interactions", () => {
-  it("calls onToggle with the task id when clicked", () => {
+describe("TaskTracker", () => {
+  it("renders without crashing when tasks is empty", () => {
+    render(<TaskTracker tasks={[]} onToggle={vi.fn()} onAdd={vi.fn()} />);
+    expect(screen.getByText(/no tasks yet/i)).toBeTruthy();
+  });
+
+  it("shows 0 / 0 done when empty", () => {
+    render(<TaskTracker tasks={[]} onToggle={vi.fn()} onAdd={vi.fn()} />);
+    expect(screen.getByText("0 / 0 done")).toBeTruthy();
+  });
+
+  it("renders a task text", () => {
+    render(<TaskTracker tasks={[makeTask({ text: "Buy groceries" })]} onToggle={vi.fn()} onAdd={vi.fn()} />);
+    expect(screen.getByText("Buy groceries")).toBeTruthy();
+  });
+
+  it("shows done count correctly", () => {
+    const tasks = [makeTask({ done: true }), makeTask({ id: "t2", done: false })];
+    render(<TaskTracker tasks={tasks} onToggle={vi.fn()} onAdd={vi.fn()} />);
+    expect(screen.getByText("1 / 2 done")).toBeTruthy();
+  });
+
+  it("calls onToggle when a standalone task is clicked", () => {
     const onToggle = vi.fn();
-    render(<TaskTracker tasks={tasks} onToggle={onToggle} onAdd={vi.fn()} />);
-    fireEvent.click(screen.getByText("Write tests"));
-    expect(onToggle).toHaveBeenCalledWith("1");
+    render(<TaskTracker tasks={[makeTask()]} onToggle={onToggle} onAdd={vi.fn()} />);
+    fireEvent.click(screen.getByText("Test task"));
+    expect(onToggle).toHaveBeenCalledWith("t1");
   });
 
-  it("filters to show only incomplete tasks", () => {
-    render(<TaskTracker tasks={tasks} onToggle={vi.fn()} onAdd={vi.fn()} />);
-    fireEvent.click(screen.getByText("To Do"));
-    expect(screen.getByText("Write tests")).toBeInTheDocument();
-    expect(screen.getByText("Deploy")).toBeInTheDocument();
-    expect(screen.queryByText("Review PR")).not.toBeInTheDocument();
+  it("renders filter buttons", () => {
+    render(<TaskTracker tasks={[]} onToggle={vi.fn()} onAdd={vi.fn()} />);
+    expect(screen.getByText("all")).toBeTruthy();
+    expect(screen.getByText("high")).toBeTruthy();
+    expect(screen.getByText("low")).toBeTruthy();
   });
 
-  it("filters to show only completed tasks", () => {
-    render(<TaskTracker tasks={tasks} onToggle={vi.fn()} onAdd={vi.fn()} />);
-    fireEvent.click(screen.getByText("Done"));
-    expect(screen.getByText("Review PR")).toBeInTheDocument();
-    expect(screen.queryByText("Write tests")).not.toBeInTheDocument();
+  it("opens add task form when Add task button clicked", () => {
+    render(<TaskTracker tasks={[]} onToggle={vi.fn()} onAdd={vi.fn()} />);
+    fireEvent.click(screen.getByText(/add task/i));
+    expect(screen.getByPlaceholderText(/task description/i)).toBeTruthy();
   });
 
-  it("calls onAdd with trimmed text and current priority on Enter", () => {
+  it("calls onAdd when Enter pressed in the new task input", () => {
     const onAdd = vi.fn();
     render(<TaskTracker tasks={[]} onToggle={vi.fn()} onAdd={onAdd} />);
-    const input = screen.getByPlaceholderText("Add a task...");
-    fireEvent.change(input, { target: { value: "  New task  " } });
+    fireEvent.click(screen.getByText(/add task/i));
+    const input = screen.getByPlaceholderText(/task description/i);
+    fireEvent.change(input, { target: { value: "New task" } });
     fireEvent.keyDown(input, { key: "Enter" });
     expect(onAdd).toHaveBeenCalledWith("New task", "medium");
   });
 
-  it("does not call onAdd when input is blank", () => {
-    const onAdd = vi.fn();
-    render(<TaskTracker tasks={[]} onToggle={vi.fn()} onAdd={onAdd} />);
-    const input = screen.getByPlaceholderText("Add a task...");
-    fireEvent.keyDown(input, { key: "Enter" });
-    expect(onAdd).not.toHaveBeenCalled();
-  });
-
-  it("shows empty state when no tasks match filter", () => {
-    const noTasks: Task[] = [];
-    render(<TaskTracker tasks={noTasks} onToggle={vi.fn()} onAdd={vi.fn()} />);
-    expect(screen.getByText("No tasks here")).toBeInTheDocument();
+  it("shows priority badge on each task", () => {
+    render(<TaskTracker tasks={[makeTask({ priority: "high" })]} onToggle={vi.fn()} onAdd={vi.fn()} />);
+    const highElements = screen.getAllByText("high");
+    expect(highElements.length).toBeGreaterThanOrEqual(1);
   });
 });

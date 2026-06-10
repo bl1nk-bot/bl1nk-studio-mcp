@@ -1,0 +1,23 @@
+node_modules
+dist
+build
+coverage
+.env
+.DS_Store
+*.log
+.idea
+outputs/
+*-output.*
+test-exports.js
+skill-lock.json
+tsconfig.tsbuildinfo
+plugins
+.next
+package-lock.json
+# Secrets
+*.secret
+.env.local
+.env.*.local
+# Kilo config (may contain API keys)
+.kilo/kilo.json
+kilo.json

@@ -1,0 +1,35 @@
+{
+  "type": "character",
+  "id": "{{id}}",
+  "canonicalName": "{{canonicalName}}",
+  "aliases": [
+    {% for alias in aliases %}
+    {
+      "name": "{{alias.name}}",
+      "usedBy": [{% for user in alias.usedBy %}"{{user}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+      "context": "{{alias.context}}"
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ],
+  "tags": [{% for tag in tags %}"{{tag}}"{% if not loop.last %}, {% endif %}{% endfor %}],
+  "status": "{{status}}",
+  "summary": "{{summary}}",
+  "essence": "{{essence}}",
+  "mentions": [
+    {% for mention in mentions %}
+    {
+      "chapter": "{{mention.chapter}}",
+      "name": "{{mention.name}}"{% if mention.speaker %},
+      "speaker": "{{mention.speaker}}"{% endif %}
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ],
+  "relationships": [
+    {% for relationship in relationships %}
+    {
+      "target": "{{relationship.target}}",
+      "type": "{{relationship.type}}"
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}

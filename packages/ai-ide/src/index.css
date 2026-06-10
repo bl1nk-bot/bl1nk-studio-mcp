@@ -1,135 +1,161 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --bg-base: #050d0d;
-    --bg-surface: rgba(10, 22, 22, 0.85);
-    --bg-elevated: rgba(14, 28, 28, 0.9);
-    --bg-hover: rgba(0, 188, 212, 0.07);
-    --border: rgba(0, 188, 212, 0.12);
-    --border-strong: rgba(0, 188, 212, 0.25);
-    --teal: #00bcd4;
-    --teal-bright: #00e5ff;
-    --teal-dim: rgba(0, 188, 212, 0.35);
-    --text-primary: #cce8e8;
-    --text-secondary: #6ba5a5;
-    --text-muted: #3d6b6b;
-    --scrollbar: rgba(0, 188, 212, 0.15);
-  }
-
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  html, body, #root {
-    height: 100%;
-    background: var(--bg-base);
-    color: var(--text-primary);
-    font-family: "Inter", "SF Pro Text", system-ui, -apple-system, sans-serif;
-    overflow: hidden;
-  }
-
-  ::-webkit-scrollbar { width: 4px; height: 4px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 2px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--teal-dim); }
+:root {
+  --bg-base:        #050d0d;
+  --bg-surface:     #081515;
+  --bg-elevated:    #0d1f1f;
+  --teal:           #00bcd4;
+  --teal-bright:    #00e5ff;
+  --text-primary:   #cce8e8;
+  --text-secondary: #7aaabb;
+  --text-muted:     #3d6e6e;
+  --border:         rgba(0, 188, 212, 0.12);
+  --border-strong:  rgba(0, 188, 212, 0.28);
+  --glass:          rgba(5, 20, 20, 0.75);
 }
 
-@layer components {
-  .prose-teal h1, .prose-teal h2, .prose-teal h3, .prose-teal h4 {
-    color: var(--text-primary);
-    font-weight: 600;
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
-    line-height: 1.3;
-  }
-  .prose-teal h1 { font-size: 1.5rem; color: var(--teal-bright); }
-  .prose-teal h2 { font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
-  .prose-teal h3 { font-size: 1rem; color: var(--teal); }
-  .prose-teal p { margin-bottom: 0.9em; line-height: 1.7; font-size: 0.875rem; color: var(--text-primary); }
-  .prose-teal a { color: var(--teal); text-decoration: underline; text-decoration-color: rgba(0,188,212,0.3); }
-  .prose-teal a:hover { color: var(--teal-bright); }
-  .prose-teal strong { color: var(--text-primary); font-weight: 600; }
-  .prose-teal em { color: var(--teal-dim); font-style: italic; }
-  .prose-teal blockquote {
-    border-left: 3px solid var(--teal);
-    padding: 0.4em 1em;
-    margin: 1em 0;
-    background: rgba(0,188,212,0.04);
-    border-radius: 0 4px 4px 0;
-    color: var(--text-secondary);
-    font-style: italic;
-    font-size: 0.875rem;
-  }
-  .prose-teal code {
-    font-family: "JetBrains Mono", "Fira Code", monospace;
-    font-size: 0.8em;
-    background: rgba(0,188,212,0.08);
-    color: var(--teal-bright);
-    padding: 0.15em 0.4em;
-    border-radius: 3px;
-    border: 1px solid rgba(0,188,212,0.15);
-  }
-  .prose-teal pre {
-    background: rgba(0,0,0,0.4);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1em;
-    overflow-x: auto;
-    margin: 1em 0;
-  }
-  .prose-teal pre code {
-    background: none;
-    border: none;
-    padding: 0;
-    font-size: 0.85rem;
-  }
-  .prose-teal ul, .prose-teal ol {
-    padding-left: 1.5em;
-    margin-bottom: 0.9em;
-    font-size: 0.875rem;
-    color: var(--text-primary);
-  }
-  .prose-teal li { margin-bottom: 0.25em; line-height: 1.6; }
-  .prose-teal ul li::marker { color: var(--teal); }
-  .prose-teal ol li::marker { color: var(--teal); }
-  .prose-teal hr { border: none; border-top: 1px solid var(--border); margin: 1.5em 0; }
-  .prose-teal table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin: 1em 0; }
-  .prose-teal th { border-bottom: 1px solid var(--border-strong); padding: 0.5em 0.75em; text-align: left; color: var(--teal); font-weight: 600; }
-  .prose-teal td { border-bottom: 1px solid var(--border); padding: 0.5em 0.75em; color: var(--text-primary); }
-  .prose-teal input[type="checkbox"] { accent-color: var(--teal); margin-right: 0.4em; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@layer utilities {
-  .glass {
-    background: var(--bg-surface);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid var(--border);
-  }
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
 
-  .glass-elevated {
-    background: var(--bg-elevated);
-    backdrop-filter: blur(24px) saturate(200%);
-    -webkit-backdrop-filter: blur(24px) saturate(200%);
-    border: 1px solid var(--border-strong);
-  }
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  .teal-glow {
-    box-shadow: 0 0 20px rgba(0, 188, 212, 0.08), inset 0 1px 0 rgba(0, 229, 255, 0.06);
+/* ── Touch targets ── min 44px on mobile ── */
+@media (max-width: 767px) {
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
   }
-
-  .teal-text-glow {
-    text-shadow: 0 0 12px rgba(0, 188, 212, 0.4);
-  }
-
-  .metallic-border {
-    border-image: linear-gradient(135deg, rgba(0, 188, 212, 0.4), rgba(0, 229, 255, 0.1), rgba(0, 188, 212, 0.3)) 1;
-  }
-
-  .editor-font {
-    font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "SF Mono", Menlo, monospace;
+  /* Prevent iOS auto-zoom on focus */
+  input, textarea, select {
+    font-size: 16px !important;
   }
 }
+
+.editor-font {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+}
+
+.teal-glow {
+  box-shadow: 0 0 12px rgba(0, 188, 212, 0.35), 0 0 24px rgba(0, 188, 212, 0.15);
+}
+
+.teal-text-glow {
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.45);
+}
+
+::-webkit-scrollbar        { width: 5px; height: 5px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: rgba(0, 188, 212, 0.2); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 188, 212, 0.4); }
+
+/* ── Markdown prose ── mobile-first ── */
+.prose-teal {
+  color: var(--text-primary);
+  padding: 1.25rem;
+  overflow-y: auto;
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  .prose-teal {
+    padding: 2rem;
+    max-width: 72ch;
+  }
+}
+
+.prose-teal h1 {
+  font-size: clamp(1.3rem, 5vw, 1.6rem);
+  font-weight: 700;
+  color: var(--teal-bright);
+  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+  line-height: 1.3;
+}
+.prose-teal h2 {
+  font-size: clamp(1.05rem, 4vw, 1.2rem);
+  font-weight: 600;
+  color: var(--teal);
+  margin-bottom: 0.75rem;
+  margin-top: 1.5rem;
+}
+.prose-teal h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  margin-top: 1.25rem;
+}
+.prose-teal p {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  margin-bottom: 0.875rem;
+  color: var(--text-secondary);
+}
+.prose-teal ul, .prose-teal ol {
+  padding-left: 1.5rem;
+  margin-bottom: 0.875rem;
+}
+.prose-teal li {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+.prose-teal li input[type="checkbox"] {
+  margin-right: 0.5rem;
+  accent-color: var(--teal);
+}
+.prose-teal code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+  background: rgba(0, 188, 212, 0.1);
+  color: var(--teal-bright);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+}
+.prose-teal pre {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+}
+.prose-teal pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.85rem;
+}
+.prose-teal blockquote {
+  border-left: 3px solid var(--teal);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: var(--text-muted);
+}
+.prose-teal a       { color: var(--teal); text-decoration: underline; text-underline-offset: 2px; }
+.prose-teal hr      { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+.prose-teal table   { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.875rem; }
+.prose-teal th      { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border-strong); color: var(--teal); font-weight: 600; }
+.prose-teal td      { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+.prose-teal strong  { color: var(--text-primary); font-weight: 600; }
+.prose-teal em      { color: var(--text-muted); font-style: italic; }

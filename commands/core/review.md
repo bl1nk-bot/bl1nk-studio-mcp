@@ -51,7 +51,7 @@ call the `ask_user` tool to ask for the scope (do not repeat the question in the
 - If
 it exists, list and read ALL `.md` files within it. These are the **Law**. Violations here are **High** severity. - **Check for Installed Skills:**
 - Check
-for the existence of `.agents/skills/` (Workspace tier) and `~/.agents/extensions/conductor/skills/` (Extension tier).
+for the existence of `skills/` (Workspace tier) and `~/.agents/extensions/conductor/skills/` (Extension tier).
 - If either exists, list
 the subdirectories to identify installed skills across both paths.
 - If relevant skills (e.g., `gcp-*`) are found, enable specialized feedback

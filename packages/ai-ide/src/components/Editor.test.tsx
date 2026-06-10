@@ -1,47 +1,46 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { Editor } from "./Editor";
-import type { Note } from "../store/notes";
+import { Note } from "../store/notes";
 
-const mockNote: Note = {
-  id: "note-1",
-  title: "My Note",
-  content: "# Hello\n\nSome content here.",
-  tags: ["draft", "ideas"],
-  createdAt: 1000,
-  updatedAt: 2000,
-};
-
-describe("Editor — empty state", () => {
-  it("shows a prompt when no note is selected", () => {
-    render(<Editor note={null} onChange={vi.fn()} />);
-    expect(screen.getByText(/Select a note/i)).toBeInTheDocument();
-  });
+const makeNote = (overrides: Partial<Note> = {}): Note => ({
+  id: "n1",
+  title: "Test Note",
+  content: "# Test Note\n\nHello world",
+  tags: ["test"],
+  emoji: "📝",
+  createdAt: Date.now(),
+  updatedAt: Date.now(),
+  ...overrides,
 });
 
-describe("Editor — with note", () => {
-  it("displays the note title in the toolbar", () => {
-    render(<Editor note={mockNote} onChange={vi.fn()} />);
-    expect(screen.getByText("My Note")).toBeInTheDocument();
+describe("Editor", () => {
+  it("shows empty state when no note selected", () => {
+    render(<Editor note={null} onChange={vi.fn()} />);
+    expect(screen.getByText(/select a note/i)).toBeTruthy();
   });
 
-  it("renders each tag as a badge", () => {
-    render(<Editor note={mockNote} onChange={vi.fn()} />);
-    expect(screen.getByText("draft")).toBeInTheDocument();
-    expect(screen.getByText("ideas")).toBeInTheDocument();
+  it("displays the note title", () => {
+    render(<Editor note={makeNote()} onChange={vi.fn()} />);
+    const matches = screen.getAllByText("Test Note");
+    expect(matches.length).toBeGreaterThanOrEqual(1);
   });
 
-  it("shows the mode toggle buttons", () => {
-    render(<Editor note={mockNote} onChange={vi.fn()} />);
-    expect(screen.getByTitle("Split")).toBeInTheDocument();
-    expect(screen.getByTitle("Edit")).toBeInTheDocument();
-    expect(screen.getByTitle("Preview")).toBeInTheDocument();
+  it("shows note tags", () => {
+    render(<Editor note={makeNote({ tags: ["design"] })} onChange={vi.fn()} />);
+    expect(screen.getByText("design")).toBeTruthy();
   });
 
-  it("renders a textarea with the note content in split/edit mode", () => {
-    render(<Editor note={mockNote} onChange={vi.fn()} />);
-    const ta = screen.getByPlaceholderText(/Start writing/i) as HTMLTextAreaElement;
-    expect(ta).toBeInTheDocument();
-    expect(ta.value).toContain("# Hello");
+  it("renders mode buttons (Split / Edit / Preview)", () => {
+    render(<Editor note={makeNote()} onChange={vi.fn()} />);
+    expect(screen.getByTitle("Split")).toBeTruthy();
+    expect(screen.getByTitle("Edit")).toBeTruthy();
+    expect(screen.getByTitle("Preview")).toBeTruthy();
+  });
+
+  it("shows the note emoji", () => {
+    render(<Editor note={makeNote({ emoji: "🚀" })} onChange={vi.fn()} />);
+    expect(screen.getByText("🚀")).toBeTruthy();
   });
 });

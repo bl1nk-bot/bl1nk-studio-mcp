@@ -6,10 +6,12 @@
 			"**/node_modules/**",
 			"**/out/**",
 			"**/target/**",
+			"**/coverage/**",
+			"**/.next/**",
+			"templates/**",
+			"packages/bl1nk-core/templates/**",
 			"packages/craft-blog-cms/**",
-			"packages/github-sync/**",
-			"packages/tauri-app/**",
-			"tauri-app/**"
+			".kilo/**"
 		],
 		"maxSize": 2097152
 	},
