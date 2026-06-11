@@ -24,6 +24,9 @@
       ]
     }
   },
+  "remoteEnv": {
+    "COREPACK_ENABLE_DOWNLOAD_PROMPT": "0"
+  },
   "postCreateCommand": "corepack enable && pnpm install --frozen-lockfile",
   "waitFor": "postCreateCommand"
 }
