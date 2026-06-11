@@ -26,7 +26,7 @@ jobs:
           node-version: 22
           cache: 'pnpm'
           
-      # แก้ install command ให้ไม่ frozen
+      # Install dependencies with frozen lockfile for CI reproducibility
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
         
