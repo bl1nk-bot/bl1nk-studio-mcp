@@ -1,29 +1,32 @@
 {
-	"name": "bl1nk-visual-mcp-monorepo",
-	"image": "ubuntu:24.04",
-	"features": {
-		"ghcr.io/devcontainers/features/node:1": {
-			"version": "22"
-		},
-		"ghcr.io/devcontainers/features/python:1": {
-			"version": "3.11"
-		},
-		"ghcr.io/devcontainers/features/rust:1": {
-			"version": "latest"
-		}
-	},
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"bradlc.vscode-tailwindcss",
-				"vitest.explorer",
-				"ms-vscode.vscode-json",
-				"ms-vscode.vscode-markdown",
-				"rust-lang.rust-analyzer",
-				"ms-vscode.vscode-yaml"
-			]
-		}
-	},
-	"postCreateCommand": "corepack enable && pnpm install --frozen-lockfile",
-	"waitFor": "postCreateCommand"
+  "name": "bl1nk-visual-mcp-monorepo",
+  "image": "mcr.microsoft.com/devcontainers/base:bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11"
+    },
+    "ghcr.io/devcontainers/features/rust:1": {
+      "version": "latest"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bradlc.vscode-tailwindcss",
+        "vitest.explorer",
+        "ms-vscode.vscode-json",
+        "ms-vscode.vscode-markdown",
+        "rust-lang.rust-analyzer",
+        "ms-vscode.vscode-yaml"
+      ]
+    }
+  },
+  "remoteEnv": {
+    "COREPACK_ENABLE_DOWNLOAD_PROMPT": "0"
+  },
+  "postCreateCommand": "corepack enable && pnpm install --frozen-lockfile",
+  "waitFor": "postCreateCommand"
 }
