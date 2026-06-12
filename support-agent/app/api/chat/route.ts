@@ -74,24 +74,34 @@ export async function GET(request: NextRequest) {
   const state = searchParams.get('state');
   const error = searchParams.get('error');
 
+  // Safe redirect with validated parameters
+  const safeRedirect = (params: Record<string, string>) => {
+    const url = new URL('/', request.url);
+    Object.entries(params).forEach(([key, value]) => {
+      url.searchParams.set(key, value);
+    });
+    return Response.redirect(url);
+  };
+
   if (error) {
-    return Response.redirect(new URL('/?error=' + error, request.url));
+    // Validate error parameter to prevent open redirect
+    const sanitizedError = error.replace(/[^a-zA-Z0-9_-]/g, '');
+    return safeRedirect({ error: sanitizedError });
   }
 
   if (!code || !state) {
-    return Response.redirect(new URL('/?error=invalid_callback', request.url));
+    return safeRedirect({ error: 'invalid_callback' });
   }
 
   try {
     const docsUrl = process.env.DOCS_URL || '';
     await oauthService.handleCallback(request.url, docsUrl);
-    
-    // Redirect to success page
-    return Response.redirect(new URL('/?auth=success', request.url));
+
+    // Redirect to success page - safe internal redirect
+    return safeRedirect({ auth: 'success' });
   } catch (err) {
     console.error('OAuth callback error:', err);
-    return Response.redirect(
-      new URL('/?error=' + encodeURIComponent((err as Error).message), request.url)
-    );
+    const sanitizedMessage = encodeURIComponent((err as Error).message).replace(/[^a-zA-Z0-9_%-]/g, '');
+    return safeRedirect({ error: sanitizedMessage });
   }
 }
