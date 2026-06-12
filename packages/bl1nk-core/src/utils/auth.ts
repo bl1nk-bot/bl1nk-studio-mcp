@@ -24,6 +24,7 @@ export async function verifyOAuthToken(
 	token: string,
 ): Promise<Record<string, unknown> | null> {
 	try {
+		// Dynamic import to avoid bundling jose in all cases
 		const { createRemoteJWKSet, jwtVerify } = await import("jose");
 
 		const jwks = createRemoteJWKSet(new URL(JWKS_ENDPOINT));
