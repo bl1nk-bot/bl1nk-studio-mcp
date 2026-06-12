@@ -6,8 +6,8 @@
 
 ## 🚨 EMERGENCY: Technical Debt & Restoration
 - [x] **Restore System-wide Integrity:** Fixed broken `types.ts` and re-synchronized property names (`meta`, `tags`).
-- [ ] `type:fix` `label:emergency` **Rebuild Test Suite:** Fixing type errors in restored tests (`validators.test.ts` fixed, others pending).
-- [ ] `type:fix` `label:emergency` **Resolve Dependency Hell:** Fix `mcp-handler` module resolution.
+- [ ] `fix: [label:emergency][size/XL]` **Rebuild Test Suite:** Fixing type errors in restored tests (`validators.test.ts` fixed, others pending).
+- [ ] `fix: [label:emergency][size/XL]` **Resolve Dependency Hell:** Fix `mcp-handler` module resolution.
 
 ---
 
