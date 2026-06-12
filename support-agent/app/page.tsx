@@ -49,7 +49,7 @@ export default function AgentSuite() {
         try {
           const redirectUrl = new URL(data.authorizationUrl);
           const allowedOrigins = process.env.NEXT_PUBLIC_ALLOWED_ORIGINS?.split(',') || [window.location.origin];
-          if (allowedOrigins.some(origin => redirectUrl.origin === origin || redirectUrl.origin.startsWith(origin))) {
+          if (allowedOrigins.some(origin => redirectUrl.origin === origin)) {
             window.location.href = data.authorizationUrl;
           } else {
             console.error('Blocked redirect to untrusted origin:', redirectUrl.origin);
