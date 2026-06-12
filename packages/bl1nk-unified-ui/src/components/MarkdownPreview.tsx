@@ -1,5 +1,6 @@
 import { marked } from "marked";
 import { useEffect, useRef } from "react";
+import DOMPurify from "dompurify";
 
 marked.setOptions({ breaks: true, gfm: true });
 
@@ -12,7 +13,8 @@ export function MarkdownPreview({ content }: MarkdownPreviewProps) {
 
 	useEffect(() => {
 		if (ref.current) {
-			ref.current.innerHTML = marked.parse(content) as string;
+			const parsed = marked.parse(content) as string;
+			ref.current.innerHTML = DOMPurify.sanitize(parsed);
 		}
 	}, [content]);
 

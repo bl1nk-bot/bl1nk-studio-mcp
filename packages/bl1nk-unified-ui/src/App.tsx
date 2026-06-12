@@ -60,7 +60,8 @@ function App(): React.ReactElement {
 	useEffect(() => {
 		const loadedNotes = notesStore.load();
 		setNotes(loadedNotes);
-		if (loadedNotes.length > 0) setActiveNoteId(loadedNotes[0].id);
+		const firstNote = loadedNotes[0];
+		if (firstNote) setActiveNoteId(firstNote.id);
 
 		const loadedTasks = notesStore.tasksLoad();
 		if (loadedTasks.length === 0) {
@@ -92,9 +93,43 @@ function App(): React.ReactElement {
 	}
 
 	function handleToggleTask(id: string) {
-		const next = tasks.map(t => t.id === id ? { ...t, done: !t.done } : t);
-		setTasks(next);
-		notesStore.tasksSave(next);
+		const task = tasks.find(t => t.id === id);
+		if (!task) return;
+
+		if (task.noteId) {
+			let currentGlobalIndex = 0;
+			const updatedNotes = notes.map(note => {
+				const lines = note.content.split("\n");
+				const newLines = lines.map(line => {
+					const match = line.match(/^- \[(x| )\] (.+)/);
+					if (match) {
+						const isTarget = `${note.id}-${currentGlobalIndex}` === id;
+						currentGlobalIndex++;
+						if (isTarget) {
+							const newDone = match[1] === " " ? "x" : " ";
+							return `- [${newDone}] ${match[2]}`;
+						}
+					}
+					return line;
+				});
+				return {
+					...note,
+					content: newLines.join("\n"),
+					updatedAt: Date.now(),
+				};
+			});
+
+			setNotes(updatedNotes);
+			notesStore.save(updatedNotes);
+
+			const updatedTasks = extractTasksFromNotes(updatedNotes);
+			setTasks(updatedTasks);
+			notesStore.tasksSave(updatedTasks);
+		} else {
+			const next = tasks.map(t => t.id === id ? { ...t, done: !t.done } : t);
+			setTasks(next);
+			notesStore.tasksSave(next);
+		}
 	}
 
 	function handleAddTask(text: string, priority: Task["priority"]) {
@@ -148,10 +183,8 @@ function App(): React.ReactElement {
 				<Sidebar 
 					notes={notes} 
 					activeNoteId={activeNoteId} 
-					activePanel="files"
 					onSelectNote={setActiveNoteId} 
 					onNewNote={handleCreateNote} 
-					onPanelChange={() => {}} // Not used in unified view
 				/>
 			)}
 
@@ -297,7 +330,7 @@ function DashboardView({
 
 function InsightsView({
 	graph,
-	validation,
+	validation: _validation,
 }: {
 	graph: typeof mockStoryGraph;
 	validation: typeof mockValidationResult;

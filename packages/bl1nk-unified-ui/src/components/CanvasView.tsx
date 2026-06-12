@@ -76,7 +76,9 @@ export function CanvasView() {
 			ctx.lineWidth = s.strokeWidth;
 			ctx.lineCap = "round";
 			ctx.lineJoin = "round";
-			const [first, last] = [s.points[0], s.points[s.points.length - 1]];
+			const first = s.points[0];
+			const last = s.points[s.points.length - 1];
+			if (!first || !last) return;
 			ctx.beginPath();
 			if (s.tool === "pen") {
 				ctx.moveTo(first.x, first.y);
@@ -231,9 +233,11 @@ export function CanvasView() {
 					onMouseMove={(e) => {
 						if (!drawing) return;
 						const pos = getPos(e);
-						setCurrent((prev) =>
-							tool === "pen" ? [...prev, pos] : [prev[0], pos],
-						);
+						setCurrent((prev) => {
+							const first = prev[0];
+							if (!first) return [pos];
+							return tool === "pen" ? [...prev, pos] : [first, pos];
+						});
 					}}
 					onMouseUp={() => {
 						if (current.length > 0) {

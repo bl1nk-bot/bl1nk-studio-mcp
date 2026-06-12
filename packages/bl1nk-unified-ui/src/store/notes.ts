@@ -87,7 +87,7 @@ export function extractTasksFromNotes(notes: Note[]): Task[] {
 			if (match) {
 				tasks.push({
 					id: `${note.id}-${tasks.length}`,
-					text: match[2].trim(),
+					text: (match[2] ?? "").trim(),
 					done: match[1] === "x",
 					noteId: note.id,
 					priority: "medium",

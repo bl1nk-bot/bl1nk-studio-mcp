@@ -16,9 +16,23 @@ export function Editor({ note, onChange }: EditorProps) {
 	const [localContent, setLocalContent] = useState("");
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const saveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const lastNoteId = useRef<string | null>(null);
+	const latestContent = useRef("");
+	latestContent.current = localContent;
 
 	useEffect(() => {
-		if (note) setLocalContent(note.content);
+		if (saveTimeout.current && lastNoteId.current && (!note || lastNoteId.current !== note.id)) {
+			clearTimeout(saveTimeout.current);
+			saveTimeout.current = null;
+			onChange(lastNoteId.current, latestContent.current);
+		}
+
+		if (note) {
+			setLocalContent(note.content);
+			lastNoteId.current = note.id;
+		} else {
+			lastNoteId.current = null;
+		}
 	}, [note?.id]);
 
 	function handleChange(val: string) {

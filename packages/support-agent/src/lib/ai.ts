@@ -1,4 +1,4 @@
-import { OpenAI } from '@ai-sdk/openai';
+import { createOpenAI } from '@ai-sdk/openai';
 import { streamText, StreamTextResult } from 'ai';
 import { SUPPORT_SYSTEM_PROMPT } from '@/lib/agents/skills-data';
 
@@ -15,14 +15,14 @@ export interface ChatOptions {
 }
 
 export function createOpenAIProvider(apiKey?: string) {
-  return new OpenAI({
+  return createOpenAI({
     apiKey: apiKey || process.env.OPENAI_API_KEY,
   });
 }
 
 export async function streamChatResponse(
   options: ChatOptions
-): Promise<StreamTextResult<any, any>> {
+): Promise<StreamTextResult<any>> {
   const openai = createOpenAIProvider(options.apiKey);
 
   const systemPrompt = options.systemPrompt || SUPPORT_SYSTEM_PROMPT;
