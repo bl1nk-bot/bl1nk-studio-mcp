@@ -53,6 +53,11 @@ export function Editor({ note, onChange }: EditorProps) {
 				"  " +
 				localContent.slice(selectionEnd);
 			setLocalContent(next);
+			// Persist tab indentation immediately
+			if (saveTimeout.current) clearTimeout(saveTimeout.current);
+			saveTimeout.current = setTimeout(() => {
+				if (note) onChange(note.id, next);
+			}, 400);
 			requestAnimationFrame(() => {
 				ta.selectionStart = ta.selectionEnd = selectionStart + 2;
 			});
