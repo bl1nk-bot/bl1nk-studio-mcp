@@ -83,12 +83,12 @@ export function extractTasksFromNotes(notes: Note[]): Task[] {
 	for (const note of notes) {
 		const lines = note.content.split("\n");
 		for (const line of lines) {
-			const match = line.match(/^- \[(x| )\] (.+)/);
+			const match = line.match(/^- \[(x|X| )\] (.+)/);
 			if (match) {
 				tasks.push({
 					id: `${note.id}-${tasks.length}`,
 					text: (match[2] ?? "").trim(),
-					done: match[1] === "x",
+					done: match[1].toLowerCase() === "x",
 					noteId: note.id,
 					priority: "medium",
 				});
