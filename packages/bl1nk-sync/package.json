@@ -11,9 +11,9 @@
 	},
 	"dependencies": {
 		"@bl1nk-core/visual-mcp": "workspace:*",
-		"@octokit/webhooks": "^13.0.0",
-		"@notionhq/client": "^2.2.15",
-		"gray-matter": "^4.0.3",
-		"csv-parse": "^5.5.0"
+		"@notionhq/client": "^5.22.0",
+		"@octokit/webhooks": "^14.2.0",
+		"csv-parse": "^6.2.1",
+		"gray-matter": "^4.0.3"
 	}
 }
