@@ -64,6 +64,7 @@ export class McpOAuthService {
       },
       body: new URLSearchParams({
         grant_type: 'authorization_code',
+        client_id: process.env.CLIENT_ID!,
         code,
         redirect_uri: process.env.REDIRECT_URI!,
         code_verifier: stored.pkceVerifier!,
