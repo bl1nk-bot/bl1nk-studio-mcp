@@ -46,7 +46,7 @@
 		"@types/react-dom": "^19.2.0",
 		"@vitejs/plugin-react": "^6.0.2",
 		"autoprefixer": "^10.4.20",
-		"esbuild": "^0.28.0",
+		"esbuild": "^0.28.1",
 		"jsdom": "^25.0.1",
 		"markdownlint-cli2": "^0.21.0",
 		"postcss": "^8.5.15",
