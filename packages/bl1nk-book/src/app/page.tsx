@@ -81,6 +81,12 @@ export default function Home() {
 					</div>
 					<div className="flex items-center gap-2">
 						<a
+							href="/customer-support"
+							className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
+						>
+							Customer Support
+						</a>
+						<a
 							href="https://craft.do"
 							target="_blank"
 							rel="noopener noreferrer"
