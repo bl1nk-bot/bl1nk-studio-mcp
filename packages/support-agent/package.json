@@ -16,7 +16,7 @@
     "zod": "^3.22.4",
     "crypto-js": "^4.2.0",
     "resend": "^3.5.0",
-    "frimousse": "^0.1.0",
+    "frimousse": "^0.3.0",
     "lucide-react": "^0.468.0",
     "class-variance-authority": "^0.7.1",
     "@radix-ui/react-slot": "^1.1.1",
