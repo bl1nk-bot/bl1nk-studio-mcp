@@ -1,4 +1,6 @@
-import { defineConfig } from '@vercel/config/v1';
+import pkg from '@vercel/config/v1';
+
+const { defineConfig } = pkg;
 
 export default defineConfig({
   framework: 'nextjs',
