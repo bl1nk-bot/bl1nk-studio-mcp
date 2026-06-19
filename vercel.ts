@@ -1,13 +1,7 @@
-import pkg from '@vercel/config/v1';
+import type { VercelConfig } from '@vercel/config/v1';
 
-const { defineConfig } = pkg;
-
-export default defineConfig({
+export const config: VercelConfig = {
   framework: 'nextjs',
-  rootDirectory: 'packages/support-agent',
   buildCommand: 'pnpm --filter=!bl1nk-desktop build',
   installCommand: 'pnpm install',
-  ignoredRoutes: [
-    '/packages/bl1nk-desktop/(.*)',
-  ],
-});
+};
