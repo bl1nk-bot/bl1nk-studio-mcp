@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
-    branches: [main]
+    branches: [main, dev]
 
 jobs:
   quality:
@@ -35,6 +35,9 @@ jobs:
         
       - name: Type Check
         run: pnpm run typecheck
+        
+      - name: Test Audit
+        run: pnpm run test:audit
         
       - name: Test
         run: pnpm run test

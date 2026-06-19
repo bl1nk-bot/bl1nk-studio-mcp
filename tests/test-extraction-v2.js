@@ -11,7 +11,7 @@ import {
 	extractCharacters,
 	extractLocations,
 	extractScenes,
-} from "../packages/bl1nk/tools/search-entries.js";
+} from "../packages/bl1nk-core/src/tools/search-entries.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
