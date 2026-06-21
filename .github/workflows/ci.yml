@@ -15,7 +15,7 @@ jobs:
       
       # ใช้ action ที่มีอยู่จริง
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           run_install: false
 
