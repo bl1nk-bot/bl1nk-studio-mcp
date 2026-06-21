@@ -1,33 +1,40 @@
 # PROJECT_SUMMARY.md — bl1nk-visual-mcp
 
 > Project history and high-level milestones
-> Last updated: 2026-05-14
+> Last updated: 2026-06-22
 
 ---
 
-## 📅 Project History
+## Project History
 
-### v3.0.0 (Current) - "Monorepo Consolidation"
+### v3.0.0 (Current) — "Restoration Sync"
 
-- **Migration**: Moved from separate repositories to a pnpm monorepo structure.
-- **Packages**:
-  - `bl1nk-core`: The main MCP server (Node.js).
-  - `bl1nk-desktop`: Desktop client using Tauri 2.0 + React.
-  - `bl1nk-ide`: Web-based editor using Vite + React 19.
-  - `bl1nk-sync`: GitHub to Notion synchronization tool.
-- **Major Features**:
-  - 16 MCP tools (11 granular, 4 legacy, 1 standalone).
-  - Multi-theme Dashboard (Classic & Modern).
-  - Exa AI integration for external story research.
-  - Comprehensive 3-act structure validation (50+ rules).
+- Consolidated mobile-first-layout, Vercel config fixes, and restoration feature into `feature/restoration-sync`.
+- pnpm upgraded to 11.8.0.
+- Cleaned up duplicate/legacy branches and orphaned documentation.
 
-### v2.0.0 - "Granular Tools & Better UX"
+### v3.0.0 — "Monorepo Consolidation"
+
+- Migrated from separate repositories to a pnpm monorepo structure.
+- Packages:
+  - `bl1nk-core`: main MCP server (Node.js)
+  - `bl1nk-desktop`: desktop client using Tauri 2.0 + React
+  - `ai-ide`: web-based editor using Vite + React
+  - `bl1nk-unified-ui`: shared React UI shell
+  - `bl1nk-book`: Next.js book publishing app
+  - `bl1nk-sync`: GitHub to Notion synchronization tool
+  - `support-agent`: Next.js support chat app
+- 16 MCP tools (11 granular, 4 legacy, 1 standalone).
+- Exa AI integration for external story research.
+- Comprehensive 3-act structure validation (50+ rules).
+
+### v2.0.0 — "Granular Tools & Better UX"
 
 - Split monolithic tools into granular operations (`analyze_story`, `export_*`).
 - Introduced Mermaid diagram shapes based on event importance.
 - Added Canvas JSON export for Obsidian integration.
 
-### v1.0.0 - "Initial Release"
+### v1.0.0 — "Initial Release"
 
 - Basic story text analysis.
 - Mermaid diagram generation.
@@ -35,19 +42,23 @@
 
 ---
 
-## 🎯 Active Goals
+## Active Goals
 
-1. **Stability**: Achieving zero warnings and resolving Vercel deployment issues.
-2. **Integration**: Strengthening the connection between the MCP server and UI clients (Desktop/IDE).
-3. **Capability**: Expanding the story analysis engine to handle deeper narrative patterns.
+1. Merge `feature/restoration-sync` into `main` (PR #90).
+2. Resolve remaining GitHub security advisories.
+3. Continue integration between MCP server and UI clients.
 
 ---
 
-## 🛠️ Maintenance Status
+## Maintenance Status
 
-- **@bl1nk-core**: Active
-- **bl1nk-desktop**: Active
-- **bl1nk-ide**: Active
-- **bl1nk-sync**: Active
-- **bl1nk-book**: In development
-- **craft-blog-cms**: Orphaned/Legacy
+| Package | Status |
+|---------|--------|
+| `@bl1nk-core/visual-mcp` | Active |
+| `bl1nk-desktop` | Active |
+| `ai-ide` | Active |
+| `bl1nk-unified-ui` | Active |
+| `bl1nk-book` | In development |
+| `bl1nk-sync` | Active |
+| `support-agent` | Active |
+| `craft-blog-cms` | Removed / archived |

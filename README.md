@@ -63,7 +63,7 @@ cd packages/bl1nk-desktop
 npm run tauri:dev
 \`\`\`
 
-### 3. **bl1nk-ide** (\`packages/bl1nk-ide/\`)
+### 3. **ai-ide** (\`packages/ai-ide/\`)
 
 Web IDE สำหรับ story writing และ analysis (Vite + React)
 
@@ -75,15 +75,15 @@ Web IDE สำหรับ story writing และ analysis (Vite + React)
 - Task tracking
 
 **Usage:**
+
 \`\`\`bash
-cd packages/bl1nk-ide
+cd packages/ai-ide
 npm run dev
 \`\`\`
 
 ### 4. **@bl1nk/github-sync** (\`packages/bl1nk-sync/\`)
 
 GitHub App สำหรับ sync markdown/CSV files ไป Notion อัตโนมัติ
-
 **Usage:**
 \`\`\`bash
 cd packages/bl1nk-sync
@@ -122,9 +122,11 @@ visual-story-extension/
 ├── packages/
 │   ├── bl1nk-core/               # Core MCP Server & Story Analysis
 │   ├── bl1nk-desktop/            # Desktop UI (Tauri + React)
-│   ├── bl1nk-ide/                # Web IDE (Vite + React)
+│   ├── ai-ide/                   # Web IDE (Vite + React)
+│   ├── bl1nk-unified-ui/         # Unified React UI shell
+│   ├── bl1nk-book/               # Book publishing platform
 │   ├── bl1nk-sync/               # GitHub → Notion sync
-│   └── bl1nk-book/               # Book publishing platform (dev)
+│   └── support-agent/            # Support chat app
 │
 ├── docs/                         # Documentation
 ├── AGENTS.md                     # Centralized AI Agent reference

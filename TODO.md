@@ -20,12 +20,13 @@
 ## 🟡 Core Development (VSP3)
 - [x] **Actual Implementation:** Corrected 25-50-25 Act Distribution logic in `analyzer.ts`.
 - [x] **Actual Implementation:** Fixed Character Deduplication in `analyzer.ts`.
-- [ ] `type:feat` `label:core` Implement live MCP connection for bl1nk-desktop/bl1nk-ide
+- [ ] `type:feat` `label:core` Implement live MCP connection for bl1nk-desktop/ai-ide
 - [ ] `type:feat` `label:core` Add persistent storage for StoryGraph JSON
 
 ---
 
 ## ✅ Recently Completed (Verified)
+- [x] **Architecture Cleanup:** Removed duplicate `support-agent/` root directory, deleted orphaned `docs/CRAFT-BLOG-CMS.md`, rewrote `docs/TOOL_MAPPING.md`, and updated README/docs index to match current packages.
 - [x] **Self-Management Lockdown:** Created `.gemini/setting.json` and updated `GEMINI.md` with strict operational protocols.
 - [x] **Fidelity Restoration:** Reverted unauthorized property name changes (`metadata` back to `meta`).
 - [x] **Test Recovery:** Restored deleted test files from Git history.
