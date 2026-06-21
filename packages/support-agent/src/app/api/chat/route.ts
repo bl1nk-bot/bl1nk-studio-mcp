@@ -1,5 +1,5 @@
 import { StreamingTextResponse, streamText } from 'ai';
-import { OpenAI } from '@ai-sdk/openai';
+import { openai } from '@ai-sdk/openai';
 import { McpOAuthService } from '@/lib/mcp/oauth-service';
 import { SandboxManager } from '@/lib/sandbox/manager';
 import { SUPPORT_SYSTEM_PROMPT, ORDER_LOOKUP_SKILL, BILLING_SKILL, TECHNICAL_SKILL } from '@/lib/agents/skills-data';
@@ -7,10 +7,6 @@ import { getAgentModeById, parseSlashCommand } from '@/lib/agents/cli-bridge';
 
 export const runtime = 'edge';
 export const maxDuration = 60;
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
 
 const oauthService = new McpOAuthService();
 const sandboxManager = new SandboxManager();

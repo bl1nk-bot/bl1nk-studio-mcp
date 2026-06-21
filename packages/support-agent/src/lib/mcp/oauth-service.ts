@@ -18,7 +18,7 @@ export class McpOAuthService {
       wwwAuthenticateHeader || ''
     );
 
-    const { verifier, challenge } = generatePKCE();
+    const { verifier, challenge } = await generatePKCE();
     const state = generateState();
 
     // Store PKCE verifier and state for later verification

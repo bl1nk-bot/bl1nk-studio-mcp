@@ -1,23 +1,36 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
+  - package-ecosystem: "pnpm"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Bangkok"
     open-pull-requests-limit: 10
-    labels:
-      - "dependencies"
-    commit-message:
-      prefix: "deps"
-      include: "scope"
+    groups:
+      nextjs:
+        patterns:
+          - "next"
+          - "react"
+          - "react-dom"
+      tailwindcss:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+      ai-sdk:
+        patterns:
+          - "ai"
+          - "@ai-sdk/*"
+          - "openai"
     ignore:
       - dependency-name: "next"
-        update-types: ["version-update:semver-major"]
+        update-types: ["major"]
+commit-message:
+  prefix: "deps"
+  include: "scope"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
-    commit-message:
-      prefix: "deps"
-      include: "scope"

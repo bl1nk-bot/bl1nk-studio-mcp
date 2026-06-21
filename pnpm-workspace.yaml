@@ -1,7 +1,7 @@
 packages:
   - 'packages/*'
 allowBuilds:
-  '@biomejs/biome': set this to true or false
-  esbuild: false
-  sharp: set this to true or false
-  unrs-resolver: set this to true or false
+  '@biomejs/biome': true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
