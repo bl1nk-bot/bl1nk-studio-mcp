@@ -17,12 +17,12 @@
 
 - Migrated from separate repositories to a pnpm monorepo structure.
 - Packages:
-  - `bl1nk-core`: main MCP server (Node.js)
-  - `bl1nk-desktop`: desktop client using Tauri 2.0 + React
+  - `core`: main MCP server (Node.js)
+  - `desktop`: desktop client using Tauri 2.0 + React
   - `ai-ide`: web-based editor using Vite + React
-  - `bl1nk-unified-ui`: shared React UI shell
-  - `bl1nk-book`: Next.js book publishing app
-  - `bl1nk-sync`: GitHub to Notion synchronization tool
+  - `ui`: shared React UI shell
+  - `book`: Next.js book publishing app
+  - `sync`: GitHub to Notion synchronization tool
   - `support-agent`: Next.js support chat app
 - 16 MCP tools (11 granular, 4 legacy, 1 standalone).
 - Exa AI integration for external story research.
@@ -54,11 +54,11 @@
 
 | Package | Status |
 |---------|--------|
-| `@bl1nk-core/visual-mcp` | Active |
-| `bl1nk-desktop` | Active |
+| `@bl1nk/core` | Active |
+| `desktop` | Active |
 | `ai-ide` | Active |
-| `bl1nk-unified-ui` | Active |
-| `bl1nk-book` | In development |
-| `bl1nk-sync` | Active |
+| `ui` | Active |
+| `book` | In development |
+| `sync` | Active |
 | `support-agent` | Active |
 | `craft-blog-cms` | Removed / archived |

@@ -1,32 +1,32 @@
 {
 	"outputDirectory": ".",
 	"functions": {
-		"packages/bl1nk-core/api/mcp.ts": {
+		"packages/core/api/mcp.ts": {
 			"maxDuration": 60
 		}
 	},
 	"builds": [
 		{
-			"src": "packages/bl1nk-core/api/mcp.ts",
+			"src": "packages/core/api/mcp.ts",
 			"use": "@vercel/node"
 		}
 	],
 	"routes": [
 		{
 			"src": "/api/mcp",
-			"dest": "packages/bl1nk-core/api/mcp.ts"
+			"dest": "packages/core/api/mcp.ts"
 		},
 		{
 			"src": "/mcp",
-			"dest": "packages/bl1nk-core/api/mcp.ts"
+			"dest": "packages/core/api/mcp.ts"
 		},
 		{
 			"src": "/mcp/oauth",
-			"dest": "packages/bl1nk-core/api/mcp.ts"
+			"dest": "packages/core/api/mcp.ts"
 		},
 		{
 			"src": "/mcp-oauth",
-			"dest": "packages/bl1nk-core/api/mcp.ts"
+			"dest": "packages/core/api/mcp.ts"
 		}
 	],
 	"headers": [

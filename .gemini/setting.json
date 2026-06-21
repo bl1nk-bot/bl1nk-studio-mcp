@@ -15,7 +15,7 @@
     ]
   },
   "projectIntegrity": {
-    "sourceOfTruth": "packages/bl1nk-core/src/types.ts",
+    "sourceOfTruth": "packages/core/src/types.ts",
     "requiredProperties": ["meta", "tags"],
     "actDistributionRule": "25-50-25"
   },

@@ -1,13 +1,13 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { ZodRawShape } from "zod";
-import { Schemas } from "./schemas.js";
+import { Schemas } from "../schemas.js";
 import {
 	BL1NK_VISUAL_TOOLS,
 	GRANULAR_TOOLS,
 	executeGranularTool,
 	executeStoryTool,
-} from "./tools/index.js";
-import { searchEntriesTool } from "./tools/search-entries.js";
+} from "./index.js";
+import { searchEntriesTool } from "../features/search-entries.js";
 
 export function registerBl1nkTools(
 	server: McpServer,

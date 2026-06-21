@@ -1,5 +1,5 @@
 [package]
-name = "tauri-app"
+name = "desktop"
 version = "0.1.0"
 description = "Visual Story Planner - Tauri Desktop App"
 authors = []

@@ -35,14 +35,14 @@ npm run check          # Biome lint + format (auto-fix)
 
 - \`node scripts/build.js build\` - Build with proper status reporting
 - \`node scripts/build.js check\` - Quality checks with logging
-- Build must run from \`packages/bl1nk-core/\` directory
+- Build must run from \`packages/core/\` directory
 
 ---
 
 ## 📂 Project Structure
 
 \`\`\`
-packages/bl1nk-core/    # Core MCP Server & Story Analysis
+packages/core/    # Core MCP Server & Story Analysis
   src/
     index.ts            # MCP server entry, tool registration, Zod schemas
     tools/              # Tool definitions & executors
@@ -51,11 +51,12 @@ packages/bl1nk-core/    # Core MCP Server & Story Analysis
     validators.ts       # Structural validation logic
     types.ts            # TypeScript interfaces (StoryGraph, Character, etc.)
   tests/                # Integration tests
-packages/bl1nk-sync/    # GitHub webhook → Notion sync
-packages/bl1nk-desktop/ # Desktop app (React + Tauri)
-packages/bl1nk-ide/     # Web IDE (Vite + React)
-packages/bl1nk-book/    # Book publishing platform (development)
-packages/craft-blog-cms/# ⚠️ Orphaned (Next.js blog/CMS)
+packages/sync/    # GitHub webhook → Notion sync
+packages/desktop/ # Desktop app (React + Tauri)
+packages/ide/     # Web IDE (Vite + React)
+packages/ui/      # Unified React UI shell
+packages/book/    # Book publishing platform (development)
+packages/support/ # Support chat app (Next.js)
 \`\`\`
 
 ---

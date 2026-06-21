@@ -1,5 +1,5 @@
 {
-  "name": "ai-ide",
+  "name": "@bl1nk/ide",
   "version": "0.1.0",
   "private": true,
   "type": "module",

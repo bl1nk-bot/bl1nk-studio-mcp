@@ -11,7 +11,7 @@
 ┌─────────────────────────────────────────────────────────────────┐
 │                        CONSUMERS                                 │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────┐  │
-│  │  bl1nk-desktop│  │  bl1nk-ide   │  │   AI Agents (MCP)    │  │
+│  │  desktop│  │  bl1nk-ide   │  │   AI Agents (MCP)    │  │
 │  │   (Tauri)    │  │   (Web)      │  │  (Claude, Qwen, etc) │  │
 │  └──────┬───────┘  └──────┬───────┘  └──────────┬───────────┘  │
 │         │                 │                      │              │
@@ -19,7 +19,7 @@
           │                 │                      │
           ▼                 ▼                      ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                MCP SERVER (bl1nk-core)                           │
+│                MCP SERVER (core)                           │
 │                                                                  │
 │  ┌──────────────────────────────────────────────────────────┐   │
 │  │                   TOOL REGISTRATION                       │   │
@@ -66,19 +66,19 @@ Skills are modular capabilities that extend agent functionality. They are centra
 
 ```
 bl1nk-visual-mcp-monorepo (root)
-├── packages/bl1nk-core (v3.0.0)
+├── packages/core (v3.0.0)
 │   ├── Core MCP server with story analysis and export tools
 │   └── Shared logic for all consumers
 │
-├── packages/bl1nk-desktop
+├── packages/desktop
 │   ├── Desktop UI for story visualization
 │   └── React + Vite + Tauri 2.0
 │
-├── packages/bl1nk-ide
+├── packages/ide
 │   ├── Web IDE for story writing
 │   └── Vite + React 19
 │
-└── packages/bl1nk-sync
+└── packages/sync
     └── GitHub webhook → Notion sync
 ```
 
@@ -86,7 +86,7 @@ bl1nk-visual-mcp-monorepo (root)
 
 ## Tool Registration Flow
 
-1. **Server Start**: `packages/bl1nk-core/src/index.ts`
+1. **Server Start**: `packages/core/src/index.ts`
 2. **Register Granular**: Loops 11 tools with full Zod schemas.
 3. **Register Legacy**: Loops 4 tools with empty schemas for backward compat.
 4. **Register Standalone**: Adds `search_entries` with template support.
@@ -114,7 +114,7 @@ Consume **StoryGraph JSON** output from the server to render interactive React c
 
 | File | Purpose |
 |------|---------|
-| `packages/bl1nk-core/src/index.ts` | Entry point & Tool registration |
-| `packages/bl1nk-core/src/analyzer.ts` | Narrative parsing logic |
-| `packages/bl1nk-core/src/validators.ts` | 3-act structure validation |
-| `packages/bl1nk-core/src/exporters/` | Output formatters |
+| `packages/core/src/index.ts` | Entry point & Tool registration |
+| `packages/core/src/analyzer.ts` | Narrative parsing logic |
+| `packages/core/src/validators.ts` | 3-act structure validation |
+| `packages/core/src/exporters/` | Output formatters |

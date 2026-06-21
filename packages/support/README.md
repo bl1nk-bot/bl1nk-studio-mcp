@@ -13,7 +13,7 @@
 ## Project Structure
 
 ```
-packages/support-agent/
+packages/support/
 ├── src/
 │   ├── app/
 │   │   ├── api/chat/route.ts    # API Route สำหรับ Chat Streaming
@@ -56,7 +56,7 @@ pnpm install
 คัดลอก `.env.example` เป็น `.env.local`:
 
 ```bash
-cp packages/support-agent/.env.example packages/support-agent/.env.local
+cp packages/support/.env.example packages/support/.env.local
 ```
 
 แก้ไขค่าใน `.env.local`:
@@ -81,7 +81,7 @@ OPENAI_API_KEY=sk-your-openai-key-here
 ### 3. Run Development Server
 
 ```bash
-cd packages/support-agent
+cd packages/support
 pnpm dev
 ```
 

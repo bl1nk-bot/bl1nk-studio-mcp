@@ -11,10 +11,10 @@
 - `moduleResolution: "bundler"` in root tsconfig
 
 ## Build Tools
-- esbuild — primary bundler for `packages/bl1nk/` (single-file bundle, `--packages=bundle`)
+- esbuild — primary bundler for `packages/core/` (single-file bundle, `--packages=bundle`)
 - `build.mjs` — custom Node.js build script for web template assets
 - tsc — type checking only (`build:tsc` script), not used for emit in bl1nk package
-- Vite — bundler for `packages/tauri-app/` (React frontend)
+- Vite — bundler for `packages/desktop/` (React frontend)
 
 ## Package Manager
 - pnpm with workspaces (`pnpm-workspace.yaml`)
@@ -43,7 +43,7 @@
 
 ## Testing
 - Vitest with `globals: true`, `environment: 'node'`
-- Test files: `src/**/*.test.ts`, `tests/**/*.test.ts`, `packages/bl1nk/**/*.test.ts`
+- Test files: `src/**/*.test.ts`, `tests/**/*.test.ts`, `packages/core/**/*.test.ts`
 - Coverage: v8 provider, reporters: text + json + html
 - Pre-test hook runs build (`"pretest": "npm run build"` in bl1nk package)
 
@@ -67,11 +67,11 @@
 
 ## Environment Variables
 ```bash
-# packages/bl1nk/.env
+# packages/core/.env
 EXA_API_KEY=          # Exa AI search API key
 GOOGLE_API_KEY=       # Gemini API key (for @google/genai)
 
-# packages/github-sync/.env
+# packages/sync/.env
 GITHUB_WEBHOOK_SECRET=
 NOTION_API_KEY=
 NOTION_DATABASE_ID=
@@ -91,6 +91,6 @@ npm start            # build + run MCP server
 npm run dev          # esbuild watch mode
 npm test             # build + vitest run
 
-# packages/tauri-app
+# packages/desktop
 npm run tauri:dev    # Vite + Tauri dev mode
 ```

@@ -41,12 +41,12 @@
 ```
 bl1nk-visual-mcp/
 ├── packages/                 # Source code
-│   ├── bl1nk-core/          # MCP Server (16 tools)
-│   ├── bl1nk-desktop/       # Tauri Desktop App
+│   ├── core/          # MCP Server (16 tools)
+│   ├── desktop/       # Tauri Desktop App
 │   ├── ai-ide/              # Web IDE (Vite + React)
-│   ├── bl1nk-unified-ui/    # Unified React UI shell
-│   ├── bl1nk-book/          # Next.js book publishing app
-│   ├── bl1nk-sync/          # GitHub Sync Service
+│   ├── ui/    # Unified React UI shell
+│   ├── book/          # Next.js book publishing app
+│   ├── sync/          # GitHub Sync Service
 │   └── support-agent/       # Next.js support chat app
 ├── docs/                    # Central Documentation
 ├── templates/               # Handlebars/Nunjucks templates

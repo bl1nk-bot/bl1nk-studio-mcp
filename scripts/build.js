@@ -59,7 +59,7 @@ async function runBuild() {
 
 	try {
 		// Change to the correct directory
-		const packageDir = join(__dirname, "..", "packages", "bl1nk-core");
+		const packageDir = join(__dirname, "..", "packages", "core");
 		process.chdir(packageDir);
 		logStatus("Changed to package directory", { dir: packageDir });
 

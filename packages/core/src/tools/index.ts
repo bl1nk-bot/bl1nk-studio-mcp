@@ -100,5 +100,5 @@ export {
 } from "./execute.js";
 
 // Individual tool exports (legacy)
-export { searchEntriesTool } from "./search-entries.js";
+export { searchEntriesTool } from "../features/search-entries.js";
 export { generateArtifactsTool } from "./generate-artifacts.js";

@@ -1,6 +1,6 @@
-# @bl1nk/unified-ui
+# @bl1nk/ui
 
-The unified user interface for Visual Story Planner (VSP). This package combines the features of the former `bl1nk-desktop` and `bl1nk-ide` into a single, high-fidelity application.
+The unified user interface for Visual Story Planner (VSP). This package combines the features of the former `desktop` and `bl1nk-ide` into a single, high-fidelity application.
 
 ## 🎯 Features
 
@@ -38,15 +38,15 @@ The unified user interface for Visual Story Planner (VSP). This package combines
 ### Start Development Server
 ```bash
 # From the project root
-pnpm --filter @bl1nk/unified-ui run dev
+pnpm --filter @bl1nk/ui run dev
 
 # For Tauri (Desktop) mode
-pnpm --filter @bl1nk/unified-ui run tauri:dev
+pnpm --filter @bl1nk/ui run tauri:dev
 ```
 
 ### Build
 ```bash
-pnpm --filter @bl1nk/unified-ui run build
+pnpm --filter @bl1nk/ui run build
 ```
 
 ## 🎨 Theme

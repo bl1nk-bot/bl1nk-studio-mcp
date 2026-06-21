@@ -1,5 +1,5 @@
 {
-	"name": "@bl1nk/unified-ui",
+	"name": "@bl1nk/ui",
 	"version": "3.0.0",
 	"private": true,
 	"type": "module",
@@ -14,7 +14,7 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@bl1nk-core/visual-mcp": "workspace:*",
+		"@bl1nk/core": "workspace:*",
 		"@tauri-apps/api": "^2.11.0",
 		"@tauri-apps/plugin-shell": "^2.2.0",
 		"clsx": "^2.1.1",

@@ -1,5 +1,5 @@
 {
-	"name": "@bl1nk/github-sync",
+	"name": "@bl1nk/sync",
 	"version": "3.0.0",
 	"type": "module",
 	"main": "dist/index.js",
@@ -10,7 +10,7 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@bl1nk-core/visual-mcp": "workspace:*",
+		"@bl1nk/core": "workspace:*",
 		"@notionhq/client": "^5.22.0",
 		"@octokit/webhooks": "^14.2.0",
 		"csv-parse": "^6.2.1",

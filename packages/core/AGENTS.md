@@ -1,14 +1,14 @@
-# AGENTS.md — bl1nk-core Package
+# AGENTS.md — core Package
 
 ## Build Notes
-- Build from `packages/bl1nk-core/` directory, not root
+- Build from `packages/core/` directory, not root
 - `node scripts/build.js build` provides better error reporting than npm scripts
 
 ## Template System
 
 ### Path Resolution
 - Templates resolved at runtime using `process.cwd()`, not bundled `__dirname`
-- Check `templates/` (root), `packages/bl1nk-core/templates/` (fallback)
+- Check `templates/` (root), `packages/core/templates/` (fallback)
 
 ### Config-Based Templates
 - Templates configured in `bl1nk-config.json` (root)

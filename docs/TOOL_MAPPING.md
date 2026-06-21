@@ -1,6 +1,6 @@
 # Tool Mapping — bl1nk-visual-mcp
 
-> Source of truth for the 16 MCP tools exposed by `@bl1nk-core/visual-mcp`.
+> Source of truth for the 16 MCP tools exposed by `@bl1nk/core`.
 > Last updated: 2026-06-22
 
 ---
@@ -46,7 +46,7 @@ The MCP server registers 16 tools across three categories:
 
 ## Registration Flow
 
-1. `packages/bl1nk-core/src/tools/server.ts` creates an `McpServer`
+1. `packages/core/src/tools/server.ts` creates an `McpServer`
 2. `registerBl1nkTools` loops `GRANULAR_TOOLS` and binds Zod schemas + executors
 3. Legacy `BL1NK_VISUAL_TOOLS` are registered with empty schemas for compat
 4. `search_entries` is registered as a standalone tool with its own schema
@@ -59,7 +59,7 @@ The MCP server registers 16 tools across three categories:
 | Consumer | Tools Used | Notes |
 |----------|------------|-------|
 | AI Agents (Claude, Qwen, etc.) | All granular tools | Primary API surface |
-| `bl1nk-desktop` | `analyze_story`, exports, validation | Tauri + React UI |
+| `desktop` | `analyze_story`, exports, validation | Tauri + React UI |
 | `ai-ide` | `analyze_story`, note/task integration | Vite + React IDE |
-| `bl1nk-unified-ui` | dashboard, editor, graph exports | Shared React shell |
-| `bl1nk-sync` | — | GitHub webhook → Notion sync |
+| `ui` | dashboard, editor, graph exports | Shared React shell |
+| `sync` | — | GitHub webhook → Notion sync |

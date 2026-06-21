@@ -91,7 +91,129 @@ importers:
         specifier: ^4.1.8
         version: 4.1.8(@opentelemetry/api@1.9.1)(@types/node@25.9.3)(jsdom@29.1.1)(vite@8.0.16(@types/node@25.9.3)(esbuild@0.27.7)(jiti@2.7.0))
 
-  packages/ai-ide:
+  packages/book:
+    dependencies:
+      '@radix-ui/react-slot':
+        specifier: ^1.2.5
+        version: 1.2.5(@types/react@19.2.17)(react@19.2.7)
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      js-cookie:
+        specifier: ^3.0.8
+        version: 3.0.8
+      lucide-react:
+        specifier: ^1.17.0
+        version: 1.17.0(react@19.2.7)
+      next:
+        specifier: ^16.2.9
+        version: 16.2.9(@opentelemetry/api@1.9.1)(@playwright/test@1.60.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      react:
+        specifier: ^19.2.7
+        version: 19.2.7
+      react-dom:
+        specifier: ^19.2.7
+        version: 19.2.7(react@19.2.7)
+      sonner:
+        specifier: ^2.0.7
+        version: 2.0.7(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      tailwind-merge:
+        specifier: ^3.6.0
+        version: 3.6.0
+    devDependencies:
+      '@tailwindcss/postcss':
+        specifier: ^4.3.0
+        version: 4.3.0
+      '@types/js-cookie':
+        specifier: ^3.0.6
+        version: 3.0.6
+      '@types/node':
+        specifier: ^25.9.3
+        version: 25.9.3
+      '@types/react':
+        specifier: ^19.2.17
+        version: 19.2.17
+      tailwindcss:
+        specifier: ^4.3.0
+        version: 4.3.0
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+
+  packages/core:
+    dependencies:
+      '@modelcontextprotocol/sdk':
+        specifier: ^1.29.0
+        version: 1.29.0(zod@4.4.3)
+      '@upstash/ratelimit':
+        specifier: ^2.0.8
+        version: 2.0.8(@upstash/redis@1.38.0)
+      '@upstash/redis':
+        specifier: ^1.38.0
+        version: 1.38.0
+      fs-extra:
+        specifier: ^11.3.5
+        version: 11.3.5
+      handlebars:
+        specifier: ^4.7.9
+        version: 4.7.9
+      jose:
+        specifier: ^6.2.3
+        version: 6.2.3
+      nunjucks:
+        specifier: ^3.2.4
+        version: 3.2.4(chokidar@3.6.0)
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+
+  packages/desktop:
+    dependencies:
+      '@bl1nk/core':
+        specifier: workspace:*
+        version: link:../core
+      '@tauri-apps/api':
+        specifier: ^2.0.0
+        version: 2.11.0
+      '@tauri-apps/plugin-shell':
+        specifier: ^2.0.0
+        version: 2.3.5
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@tailwindcss/postcss':
+        specifier: ^4.0.0
+        version: 4.3.0
+      '@tauri-apps/cli':
+        specifier: ^2.0.0
+        version: 2.11.2
+      '@types/react-dom':
+        specifier: ^18.3.1
+        version: 18.3.7(@types/react@19.2.17)
+      '@vitejs/plugin-react':
+        specifier: ^6.0.0
+        version: 6.0.2(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(jiti@2.7.0))
+      autoprefixer:
+        specifier: ^10.4.0
+        version: 10.5.0(postcss@8.5.15)
+      tailwindcss:
+        specifier: ^4.0.0
+        version: 4.3.0
+      vite:
+        specifier: ^8.0.0
+        version: 8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(jiti@2.7.0)
+      zod:
+        specifier: ^3.22.0
+        version: 3.25.76
+
+  packages/ide:
     dependencies:
       '@tauri-apps/api':
         specifier: ^2.0.0
@@ -152,214 +274,7 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@25.9.3)(jsdom@25.0.1)(lightningcss@1.32.0)
 
-  packages/bl1nk-book:
-    dependencies:
-      '@radix-ui/react-slot':
-        specifier: ^1.2.5
-        version: 1.2.5(@types/react@19.2.17)(react@19.2.7)
-      class-variance-authority:
-        specifier: ^0.7.1
-        version: 0.7.1
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      js-cookie:
-        specifier: ^3.0.8
-        version: 3.0.8
-      lucide-react:
-        specifier: ^1.17.0
-        version: 1.17.0(react@19.2.7)
-      next:
-        specifier: ^16.2.9
-        version: 16.2.9(@opentelemetry/api@1.9.1)(@playwright/test@1.60.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      react:
-        specifier: ^19.2.7
-        version: 19.2.7
-      react-dom:
-        specifier: ^19.2.7
-        version: 19.2.7(react@19.2.7)
-      sonner:
-        specifier: ^2.0.7
-        version: 2.0.7(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      tailwind-merge:
-        specifier: ^3.6.0
-        version: 3.6.0
-    devDependencies:
-      '@tailwindcss/postcss':
-        specifier: ^4.3.0
-        version: 4.3.0
-      '@types/js-cookie':
-        specifier: ^3.0.6
-        version: 3.0.6
-      '@types/node':
-        specifier: ^25.9.3
-        version: 25.9.3
-      '@types/react':
-        specifier: ^19.2.17
-        version: 19.2.17
-      tailwindcss:
-        specifier: ^4.3.0
-        version: 4.3.0
-      typescript:
-        specifier: ^6.0.3
-        version: 6.0.3
-
-  packages/bl1nk-core:
-    dependencies:
-      '@modelcontextprotocol/sdk':
-        specifier: ^1.29.0
-        version: 1.29.0(zod@4.4.3)
-      '@upstash/ratelimit':
-        specifier: ^2.0.8
-        version: 2.0.8(@upstash/redis@1.38.0)
-      '@upstash/redis':
-        specifier: ^1.38.0
-        version: 1.38.0
-      fs-extra:
-        specifier: ^11.3.5
-        version: 11.3.5
-      handlebars:
-        specifier: ^4.7.9
-        version: 4.7.9
-      jose:
-        specifier: ^6.2.3
-        version: 6.2.3
-      nunjucks:
-        specifier: ^3.2.4
-        version: 3.2.4(chokidar@3.6.0)
-      zod:
-        specifier: ^4.4.3
-        version: 4.4.3
-
-  packages/bl1nk-desktop:
-    dependencies:
-      '@bl1nk-core/visual-mcp':
-        specifier: workspace:*
-        version: link:../bl1nk-core
-      '@tauri-apps/api':
-        specifier: ^2.0.0
-        version: 2.11.0
-      '@tauri-apps/plugin-shell':
-        specifier: ^2.0.0
-        version: 2.3.5
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.3.1
-        version: 18.3.1(react@18.3.1)
-    devDependencies:
-      '@tailwindcss/postcss':
-        specifier: ^4.0.0
-        version: 4.3.0
-      '@tauri-apps/cli':
-        specifier: ^2.0.0
-        version: 2.11.2
-      '@types/react-dom':
-        specifier: ^18.3.1
-        version: 18.3.7(@types/react@19.2.17)
-      '@vitejs/plugin-react':
-        specifier: ^6.0.0
-        version: 6.0.2(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(jiti@2.7.0))
-      autoprefixer:
-        specifier: ^10.4.0
-        version: 10.5.0(postcss@8.5.15)
-      tailwindcss:
-        specifier: ^4.0.0
-        version: 4.3.0
-      vite:
-        specifier: ^8.0.0
-        version: 8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(jiti@2.7.0)
-      zod:
-        specifier: ^3.22.0
-        version: 3.25.76
-
-  packages/bl1nk-sync:
-    dependencies:
-      '@bl1nk-core/visual-mcp':
-        specifier: workspace:*
-        version: link:../bl1nk-core
-      '@notionhq/client':
-        specifier: ^5.22.0
-        version: 5.22.0
-      '@octokit/webhooks':
-        specifier: ^14.2.0
-        version: 14.2.0
-      csv-parse:
-        specifier: ^6.2.1
-        version: 6.2.1
-      gray-matter:
-        specifier: ^4.0.3
-        version: 4.0.3
-
-  packages/bl1nk-unified-ui:
-    dependencies:
-      '@bl1nk-core/visual-mcp':
-        specifier: workspace:*
-        version: link:../bl1nk-core
-      '@tauri-apps/api':
-        specifier: ^2.11.0
-        version: 2.11.0
-      '@tauri-apps/plugin-shell':
-        specifier: ^2.2.0
-        version: 2.3.5
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      dompurify:
-        specifier: ^3.4.9
-        version: 3.4.9
-      lucide-react:
-        specifier: ^0.479.0
-        version: 0.479.0(react@19.2.7)
-      marked:
-        specifier: ^15.0.0
-        version: 15.0.12
-      react:
-        specifier: ^19.2.5
-        version: 19.2.7
-      react-dom:
-        specifier: ^19.2.5
-        version: 19.2.7(react@19.2.7)
-      tailwind-merge:
-        specifier: ^3.6.0
-        version: 3.6.0
-    devDependencies:
-      '@tailwindcss/vite':
-        specifier: ^4.3.0
-        version: 4.3.0(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(jiti@2.7.0))
-      '@tauri-apps/cli':
-        specifier: ^2.11.1
-        version: 2.11.2
-      '@types/dompurify':
-        specifier: ^3.2.0
-        version: 3.2.0
-      '@types/react':
-        specifier: ^19.2.14
-        version: 19.2.17
-      '@types/react-dom':
-        specifier: ^19.2.3
-        version: 19.2.3(@types/react@19.2.17)
-      autoprefixer:
-        specifier: ^10.5.0
-        version: 10.5.0(postcss@8.5.15)
-      postcss:
-        specifier: ^8.5.15
-        version: 8.5.15
-      tailwindcss:
-        specifier: ^4.3.0
-        version: 4.3.0
-      typescript:
-        specifier: ^6.0.3
-        version: 6.0.3
-      vite:
-        specifier: ^8.0.13
-        version: 8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(jiti@2.7.0)
-      vitest:
-        specifier: ^4.1.6
-        version: 4.1.8(@opentelemetry/api@1.9.1)(@types/node@25.9.3)(jsdom@29.1.1)(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(jiti@2.7.0))
-
-  packages/support-agent:
+  packages/support:
     dependencies:
       '@ai-sdk/openai':
         specifier: ^1.0.0
@@ -425,6 +340,91 @@ importers:
       typescript:
         specifier: ^5.3.3
         version: 5.9.3
+
+  packages/sync:
+    dependencies:
+      '@bl1nk/core':
+        specifier: workspace:*
+        version: link:../core
+      '@notionhq/client':
+        specifier: ^5.22.0
+        version: 5.22.0
+      '@octokit/webhooks':
+        specifier: ^14.2.0
+        version: 14.2.0
+      csv-parse:
+        specifier: ^6.2.1
+        version: 6.2.1
+      gray-matter:
+        specifier: ^4.0.3
+        version: 4.0.3
+
+  packages/ui:
+    dependencies:
+      '@bl1nk/core':
+        specifier: workspace:*
+        version: link:../core
+      '@tauri-apps/api':
+        specifier: ^2.11.0
+        version: 2.11.0
+      '@tauri-apps/plugin-shell':
+        specifier: ^2.2.0
+        version: 2.3.5
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      dompurify:
+        specifier: ^3.4.9
+        version: 3.4.9
+      lucide-react:
+        specifier: ^0.479.0
+        version: 0.479.0(react@19.2.7)
+      marked:
+        specifier: ^15.0.0
+        version: 15.0.12
+      react:
+        specifier: ^19.2.5
+        version: 19.2.7
+      react-dom:
+        specifier: ^19.2.5
+        version: 19.2.7(react@19.2.7)
+      tailwind-merge:
+        specifier: ^3.6.0
+        version: 3.6.0
+    devDependencies:
+      '@tailwindcss/vite':
+        specifier: ^4.3.0
+        version: 4.3.0(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(jiti@2.7.0))
+      '@tauri-apps/cli':
+        specifier: ^2.11.1
+        version: 2.11.2
+      '@types/dompurify':
+        specifier: ^3.2.0
+        version: 3.2.0
+      '@types/react':
+        specifier: ^19.2.14
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.17)
+      autoprefixer:
+        specifier: ^10.5.0
+        version: 10.5.0(postcss@8.5.15)
+      postcss:
+        specifier: ^8.5.15
+        version: 8.5.15
+      tailwindcss:
+        specifier: ^4.3.0
+        version: 4.3.0
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+      vite:
+        specifier: ^8.0.13
+        version: 8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(jiti@2.7.0)
+      vitest:
+        specifier: ^4.1.6
+        version: 4.1.8(@opentelemetry/api@1.9.1)(@types/node@25.9.3)(jsdom@29.1.1)(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(jiti@2.7.0))
 
 packages:
 

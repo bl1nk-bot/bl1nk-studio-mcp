@@ -44,7 +44,7 @@
 				}
 			}
 		],
-		"fallbackLocations": ["packages/bl1nk-core/templates", "src/templates"]
+		"fallbackLocations": ["packages/core/templates", "src/templates"]
 	},
 	"buildConfig": {
 		"entryPoint": "src/index.ts",

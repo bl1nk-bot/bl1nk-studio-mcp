@@ -2,21 +2,21 @@
 
 ## Overview
 
-A pnpm monorepo containing four packages:
-- **`packages/ai-ide`** — Obsidian-style markdown editor + task tracker (active, port 5000)
-- **`packages/bookshelf`** — Next.js 15 Bookshelf / Reading Tracker (Craft-connected, port 3000)
-- **`packages/bl1nk`** — Core MCP server (Visual Story Planner tools)
-- **`packages/tauri-app`** — Desktop Tauri app (Vite + React)
-- **`packages/github-sync`** — GitHub ↔ Notion sync integration
+A pnpm monorepo containing five packages:
+- **`packages/ide`** — Obsidian-style markdown editor + task tracker (active, port 5000)
+- **`packages/book`** — Next.js 15 Bookshelf / Reading Tracker (Craft-connected, port 3000)
+- **`packages/core`** — Core MCP server (Visual Story Planner tools)
+- **`packages/desktop`** — Desktop Tauri app (Vite + React)
+- **`packages/sync`** — GitHub ↔ Notion sync integration
 
 ## Active Workflow
 
-**"Start application"** → `packages/ai-ide` on port 5000 (webview)
-**"Bookshelf"** → `packages/bookshelf` on port 3000 (console, start manually)
+**"Start application"** → `packages/ide` on port 5000 (webview)
+**"Bookshelf"** → `packages/book` on port 3000 (console, start manually)
 
 ---
 
-## AI IDE (`packages/ai-ide`)
+## AI IDE (`packages/ide`)
 
 A lightweight, local-first Obsidian-style editor. Tauri-ready for desktop.
 
@@ -59,17 +59,17 @@ src/
 
 ### Running
 ```bash
-cd packages/ai-ide && pnpm run dev   # port 5000
+cd packages/ide && pnpm run dev   # port 5000
 ```
 
 ### Tauri (Desktop)
 ```bash
-cd packages/ai-ide && pnpm run tauri:dev   # opens native window
+cd packages/ide && pnpm run tauri:dev   # opens native window
 ```
 
 ---
 
-## Bookshelf (`packages/bookshelf`)
+## Bookshelf (`packages/book`)
 
 A reading tracker connected to the Craft note-taking app via OAuth.
 
@@ -87,7 +87,7 @@ A reading tracker connected to the Craft note-taking app via OAuth.
 
 ### Running
 ```bash
-cd packages/bookshelf && pnpm run dev   # port 3000
+cd packages/book && pnpm run dev   # port 3000
 ```
 
 ---

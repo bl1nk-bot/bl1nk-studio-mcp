@@ -8,11 +8,11 @@
 ## 🛠️ Phase 1: Stabilization & Unification (Current)
 *Focus: ปรับปรุงโครงสร้างพื้นฐานให้แน่นหนาและเป็นหนึ่งเดียว*
 
-- [x] **UI Unification**: รวม `bl1nk-desktop` และ `bl1nk-ide` เป็น `bl1nk-unified-ui` (React 19 + Tauri 2)
+- [x] **UI Unification**: รวม `desktop` และ `bl1nk-ide` เป็น `ui` (React 19 + Tauri 2)
 - [x] **Omni-Critic Audit**: ระบบตรวจสอบคุณภาพโค้ดและเทสแบบอัตโนมัติ
 - [x] **Dependency Cleanup**: ลบแพ็กเกจที่ไม่ได้ใช้งาน (Qwen, Legacy UI)
 - [x] **Documentation Refresh**: ปรับปรุง `README`, `SPEC`, `AGENTS` ให้สอดคล้องกัน
-- [ ] **Type Safety**: แก้ไข Type Errors ที่ค้างอยู่ใน `bl1nk-core` tests
+- [ ] **Type Safety**: แก้ไข Type Errors ที่ค้างอยู่ใน `core` tests
 
 ---
 
@@ -29,7 +29,7 @@
 ## 🌐 Phase 3: External Connectivity
 *Focus: ขยายขอบเขตการใช้งานไปยังแพลตฟอร์มภายนอก*
 
-- [ ] **Notion Connector**: พัฒนา `bl1nk-sync` ให้สมบูรณ์เพื่อดัน StoryGraph เข้า Notion
+- [ ] **Notion Connector**: พัฒนา `sync` ให้สมบูรณ์เพื่อดัน StoryGraph เข้า Notion
 - [ ] **Vercel Deployment**: ปล่อยระบบ Dashboard ออนไลน์สำหรับ Web Preview
 - [ ] **Plugin System**: รองรับ Custom Handlebars Templates สำหรับผู้ใช้ทั่วไป
 

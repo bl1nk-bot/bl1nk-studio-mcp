@@ -12,7 +12,7 @@ import {
 	toMarkdown,
 	toMermaid,
 	validateGraph,
-} from "../packages/bl1nk-core/dist/index.js";
+} from "../packages/core/dist/index.js";
 
 const SAMPLE = `
 Title: Dragon's Heir
