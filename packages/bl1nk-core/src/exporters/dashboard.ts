@@ -10,8 +10,8 @@
  * - "modern":  Slate/indigo gradient, bordered cards, rose accents (MCP-UI)
  */
 
-import type { StoryGraph, Character, Conflict, ValidationIssue } from "./types.js";
-import { validateGraph } from "./validators.js";
+import type { StoryGraph, Character, Conflict, ValidationIssue } from "../types.js";
+import { validateGraph } from "../core/validators.js";
 
 export type DashboardTheme = "classic" | "modern";
 

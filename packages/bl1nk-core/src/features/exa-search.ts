@@ -7,7 +7,7 @@
  * Requires EXA_API_KEY environment variable.
  */
 
-import { ExaError, retryWithBackoff } from "./utils/error-handler.js";
+import { ExaError, retryWithBackoff } from "../utils/error-handler.js";
 
 const EXA_API_URL = "https://api.exa.ai/search";
 const EXA_TIMEOUT_MS = 15_000;
