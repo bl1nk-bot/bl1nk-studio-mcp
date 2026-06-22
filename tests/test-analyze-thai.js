@@ -1,4 +1,4 @@
-import { writeFileSync, mkdirSync, existsSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import Handlebars from "handlebars";
 
@@ -10,9 +10,12 @@ const storyFile = "tests/test-input/combined-story.md";
 
 // Create output directories
 if (!existsSync(outputDir)) mkdirSync(outputDir, { recursive: true });
-if (!existsSync(join(outputDir, "characters"))) mkdirSync(join(outputDir, "characters"));
-if (!existsSync(join(outputDir, "scenes"))) mkdirSync(join(outputDir, "scenes"));
-if (!existsSync(join(outputDir, "locations"))) mkdirSync(join(outputDir, "locations"));
+if (!existsSync(join(outputDir, "characters")))
+	mkdirSync(join(outputDir, "characters"));
+if (!existsSync(join(outputDir, "scenes")))
+	mkdirSync(join(outputDir, "scenes"));
+if (!existsSync(join(outputDir, "locations")))
+	mkdirSync(join(outputDir, "locations"));
 
 // ============================================================================
 // Helper Functions
@@ -20,19 +23,19 @@ if (!existsSync(join(outputDir, "locations"))) mkdirSync(join(outputDir, "locati
 function slug(text) {
 	if (!text) return "";
 	const map = {
-		"อิกนัส": "ignis",
-		"เบลซ": "belz",
-		"ลูฟัส": "lufus",
-		"อีริก": "eric",
-		"ซาเบล": "zabel",
-		"โนเอล": "noel",
-		"การ์ดภารกิจ": "quest-card",
-		"เมืองไวท์ชาโดว์": "whiteshadow-city",
-		"ทุ่งหญ้า": "grass-field",
-		"กำแพงเมือง": "city-wall",
-		"การ์ดภารกิจและการตัดสินใจ": "quest-card-and-decision",
-		"คนแปลกหน้า": "stranger",
-		"สงครามสัตว์อสูร 9": "war-of-monsters-9"
+		อิกนัส: "ignis",
+		เบลซ: "belz",
+		ลูฟัส: "lufus",
+		อีริก: "eric",
+		ซาเบล: "zabel",
+		โนเอล: "noel",
+		การ์ดภารกิจ: "quest-card",
+		เมืองไวท์ชาโดว์: "whiteshadow-city",
+		ทุ่งหญ้า: "grass-field",
+		กำแพงเมือง: "city-wall",
+		การ์ดภารกิจและการตัดสินใจ: "quest-card-and-decision",
+		คนแปลกหน้า: "stranger",
+		"สงครามสัตว์อสูร 9": "war-of-monsters-9",
 	};
 	if (map[text]) return map[text];
 	return text
@@ -93,7 +96,7 @@ for (const char of characters) {
 	const templateData = {
 		id: `char_${safeName}`,
 		canonicalName: char.name,
-		summary: `${char.name} appears in the story.`
+		summary: `${char.name} appears in the story.`,
 	};
 	writeFileSync(filename, charTemplateFn(templateData));
 	console.log(`   ✅ characters/${safeName}.md`);
@@ -106,7 +109,7 @@ for (const scene of scenes) {
 	const templateData = {
 		id: `scene_${safeName}`,
 		title: scene.name,
-		summary: `Scene: ${scene.name}`
+		summary: `Scene: ${scene.name}`,
 	};
 	writeFileSync(filename, sceneTemplateFn(templateData));
 	console.log(`   ✅ scenes/${safeName}.md`);
@@ -119,7 +122,7 @@ for (const loc of locations) {
 	const templateData = {
 		id: `loc_${safeName}`,
 		canonicalName: loc.name,
-		content: { description: `Location: ${loc.name}` }
+		content: { description: `Location: ${loc.name}` },
 	};
 	writeFileSync(filename, locationTemplateFn(templateData));
 	console.log(`   ✅ locations/${safeName}.md`);
@@ -137,15 +140,19 @@ console.log("\n✅ Done! Files generated in tests/test-output/\n");
 // ============================================================================
 function searchCharacters(text) {
 	const names = ["อิกนัส", "เบลซ", "ลูฟัส", "อีริก", "ซาเบล", "โนเอล", "การ์ดภารกิจ"];
-	return names.filter(n => text.includes(n)).map(n => ({ name: n, aliases: [], mentions: [] }));
+	return names
+		.filter((n) => text.includes(n))
+		.map((n) => ({ name: n, aliases: [], mentions: [] }));
 }
 
 function searchScenes(text) {
 	const scenes = ["การ์ดภารกิจและการตัดสินใจ", "คนแปลกหน้า", "สงครามสัตว์อสูร 9"];
-	return scenes.filter(s => text.includes(s)).map(s => ({ name: s }));
+	return scenes.filter((s) => text.includes(s)).map((s) => ({ name: s }));
 }
 
 function searchLocations(text) {
 	const locs = ["เมืองไวท์ชาโดว์", "ทุ่งหญ้า", "กำแพงเมือง"];
-	return locs.filter(l => text.includes(l)).map(l => ({ name: l, aliases: [] }));
+	return locs
+		.filter((l) => text.includes(l))
+		.map((l) => ({ name: l, aliases: [] }));
 }

@@ -15,24 +15,32 @@ status: {{status}}
 # {{canonicalName}}
 
 ## Name Variations
+
 {% for alias in aliases %}
+
 - **{{alias.name}}** — used by {{alias.usedBy|join(', ')}} ({{alias.context}})
 {% endfor %}
 
 ## Mentions
+
 {% for mention in mentions %}
+
 - **Chapter {{mention.chapter}}**: "{{mention.name}}"{% if mention.speaker %} ({{mention.speaker}}){% endif %}
 {% endfor %}
 
 ## Relationships
+
 {% for relationship in relationships %}
+
 - [[characters/{{relationship.target}}]] — {{relationship.type}}
 {% endfor %}
 
 ## Summary
+
 {{summary}}
 
 ## Essence
+
 {{essence}}
 
 ---

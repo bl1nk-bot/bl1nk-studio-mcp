@@ -7,8 +7,8 @@
  * Validate story structure against 3-act rules.
  */
 
-import type { StoryGraph } from "../types.js";
 import { validateGraph as validate } from "../core/validators.js";
+import type { StoryGraph } from "../types.js";
 
 export interface ValidateStoryStructureArgs {
 	graph: StoryGraph;
@@ -17,5 +17,8 @@ export interface ValidateStoryStructureArgs {
 }
 
 export function validateStoryStructure(args: ValidateStoryStructureArgs) {
-	return validate(args.graph);
+	return validate(args.graph, {
+		strict: args.strict,
+		includeRecommendations: args.includeRecommendations,
+	});
 }

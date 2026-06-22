@@ -6,7 +6,7 @@ The unified user interface for Visual Story Planner (VSP). This package combines
 
 - **Dashboard**: High-level overview of story stats, act distribution, and health checks.
 - **Writer (Editor)**: A lightweight, Obsidian-style Markdown editor with live preview and scene management.
-- **Visualizations**: 
+- **Visualizations**:
   - **Graph View**: Real-time Mermaid diagram rendering of story structure.
   - **Timeline**: Chronological event tracking grouped by story acts.
 - **Task Tracking**: Integrated todo management that can sync with your manuscript notes.
@@ -31,11 +31,13 @@ The unified user interface for Visual Story Planner (VSP). This package combines
 ## 🚀 Development
 
 ### Prerequisites
+
 - Node.js 22+
 - pnpm 10+
 - Rust (for Tauri development)
 
 ### Start Development Server
+
 ```bash
 # From the project root
 pnpm --filter @bl1nk/ui run dev
@@ -45,12 +47,15 @@ pnpm --filter @bl1nk/ui run tauri:dev
 ```
 
 ### Build
+
 ```bash
 pnpm --filter @bl1nk/ui run build
 ```
 
 ## 🎨 Theme
+
 The UI uses a **Teal Metallic** theme with:
+
 - `bg-base`: `#0a1114`
 - `teal`: `#00bcd4`
 - `border`: `rgba(0, 188, 212, 0.15)`

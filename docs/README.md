@@ -16,19 +16,23 @@
 ## เอกสารเฉพาะทาง
 
 ### AI Agent Architecture
+
 - [`ARCHITECTURE.md`](ARCHITECTURE.md) - สถาปัตยกรรมระบบ, Dataflow และ Agent Skills Architecture
 - [`prompt-assembly.md`](prompt-assembly.md) - แนวคิดและการนำระบบประกอบ prompt ไปใช้
 
 ### Project Documentation
+
 - [`TOOL_MAPPING.md`](TOOL_MAPPING.md) - การ mapping ทุก tools (16 tools)
 - [`PROJECT_SUMMARY.md`](PROJECT_SUMMARY.md) - ประวัติโปรเจคและสถานะปัจจุบัน
 
 ### Component Documentation
+
 - [`TAURI-APP.md`](TAURI-APP.md) - Desktop app (Tauri) role and setup
 - [`GITHUB-SYNC.md`](GITHUB-SYNC.md) - GitHub webhook sync service
 - [`VERCEL_DEPLOYMENT.md`](VERCEL_DEPLOYMENT.md) - Vercel deployment guide
 
 ### Learning & References
+
 - [`quick-start.md`](quick-start.md) - Quick start guide
 - [`INSTRUCTIONS_TH.md`](INSTRUCTIONS_TH.md) - คำแนะนำการพัฒนา (ภาษาไทย)
 - [`./reference/`](./reference/) - คลังข้อมูลอ้างอิงทางเทคนิค

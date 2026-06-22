@@ -1996,7 +1996,7 @@ text
 ---
 
 name: agent-creator
-description:
+description
 ---
 
 You are an industrial-grade agent architect...
@@ -4546,12 +4546,15 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 // --------------- Data Structures -----------------
+
 # [derive(Serialize, Deserialize, Debug, Clone)]
+
 pub struct MemoryEntry {
     pub content: String,
 }
 
 # [derive(Serialize, Deserialize, Debug, Clone)]
+
 pub struct PromptAssemblyData {
     pub identity: String,
     pub tool_guidance: String,
@@ -4752,6 +4755,7 @@ fn strip_yaml_frontmatter(content: &str) -> String {
 // --------------- Tauri Command -----------------
 
 # [tauri::command]
+
 pub async fn get_prompt_assembly_data(
     cwd: Option<String>,
     session_id: Option<String>,
@@ -4797,6 +4801,7 @@ mod prompt_api;
 use prompt_api::get_prompt_assembly_data;
 
 # [cfg_attr(mobile, tauri::mobile_entry_point)]
+
 pub fn run() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![get_prompt_assembly_data])
@@ -7277,6 +7282,7 @@ Security scan + truncation
 แล้ว อันนี้ ละ ต้อง เขียน เป็น rs tauri หรือ ts
 
 # !/usr/bin/env python3
+
 """
 Memory Tool Module - Persistent Curated Memory
 
@@ -8019,6 +8025,7 @@ fn get_memory_dir() -> PathBuf {
 // ---------------------------------------------------------------------------
 
 # [derive(Serialize, Deserialize, Clone, Debug)]
+
 pub struct MemoryToolResponse {
     pub success: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -8457,6 +8464,7 @@ pub struct AppState {
 }
 
 # [tauri::command]
+
 fn memory_action(
     state: State<AppState>,
     action: String,
@@ -8486,6 +8494,7 @@ fn memory_action(
 }
 
 # [tauri::command]
+
 fn memory_get_snapshots(state: State<AppState>) -> Result<serde_json::Value, String> {
     let store = state.memory_store.lock().map_err(|e| e.to_string())?;
     Ok(serde_json::json!({
@@ -8668,11 +8677,13 @@ rust
 mod provider;
 
 # [tauri::command]
+
 fn detect_hermes_provider() -> Option<String> {
     provider::detect_provider()
 }
 
 # [tauri::command]
+
 fn has_hermes_provider() -> bool {
     provider::has_provider()
 }
@@ -8873,18 +8884,21 @@ All slash commands are defined in a central `COMMAND_REGISTRY` list of `CommandD
 CommandDef("mycommand", "Description of what it does", "Session",
            aliases=("mc",), args_hint="[arg]"),
 ```
+
 1. Add handler in `HermesCLI.process_command()` in `cli.py`:
 
 ```python
 elif canonical == "mycommand":
     self._handle_mycommand(cmd_original)
 ```
+
 1. If the command is available in the gateway, add a handler in `gateway/run.py`:
 
 ```python
 if canonical == "mycommand":
     return await self._handle_mycommand(event)
 ```
+
 1. For persistent settings, use `save_config_value()` in `cli.py`
 
 __CommandDef fields:__
@@ -9585,7 +9599,9 @@ Implement SessionManager ด้วย SQLite
 
 1. ตัวอย่างโค้ด Rust สั้น ๆ (Agent Loop ภาค call)
 rust
+
 # [tauri::command]
+
 async fn send_message(
     state: State<'_, AppState>,
     message: String,
@@ -9855,13 +9871,17 @@ GeminiProvider — เพิ่ม guidance พิเศษ (absolute paths, etc
 การทำงานร่วมกับ Frontend (React ↔ Rust IPC)
 Tauri Commands (คำสั่งที่ React เรียก)
 rust
+
 # [tauri::command]
+
 async fn send_message(state: State<'_, AppState>, message: String) -> Result<String, String>;
 
 # [tauri::command]
+
 async fn execute_slash_command(state: State<'_, AppState>, command: String) -> Result<String, String>;
 
 # [tauri::command]
+
 fn get_system_prompt(state: State<'_, AppState>) -> Result<String, String>;
 
 // ... memory actions, get snapshots, list sessions, etc.
@@ -10275,7 +10295,9 @@ mcp – เชื่อมต่อกับ Model Context Protocol servers
 Trait LlmProvider:
 
 rust,ignore
+
 # [async_trait]
+
 pub trait LlmProvider: Send + Sync {
     async fn chat(
         &self,
@@ -10397,9 +10419,9 @@ agent/prompt_builder.py prompt/builder.rs, constants.rs, context.rs แยกเ
 tools/memory_tool.py memory/store.rs เดี่ยวนี้อยู่ระดับเดียวกับ agent
 hermes_state.py sessions/manager.rs ใช้ rusqlite
 agent/skill_utils.py skills/manager.rs ปรับให้อ่าน dir โดยตรง
-hermes_cli/config.py config/loader.rs 
+hermes_cli/config.py config/loader.rs
 hermes_cli/auth.py config/loader.rs (detect_provider) รวมอยู่ใน config
-UI ทั้งหมด (cli.py, ui-tui/) React components 
+UI ทั้งหมด (cli.py, ui-tui/) React components
 เอกสารนี้เป็นการออกแบบสถาปัตยกรรมที่สมบูรณ์และไม่ขึ้นกับเอกสารหรือโค้ดเก่าใด ๆ
 ผู้อ่านสามารถใช้เป็นพิมพ์เขียวในการพัฒนาทั้งหมดได้โดยไม่ต้องอ้างอิงถึงเอกสารอื่น
 
@@ -11071,18 +11093,21 @@ All slash commands are defined in a central `COMMAND_REGISTRY` list of `CommandD
 CommandDef("mycommand", "Description of what it does", "Session",
            aliases=("mc",), args_hint="[arg]"),
 ```
+
 1. Add handler in `HermesCLI.process_command()` in `cli.py`:
 
 ```python
 elif canonical == "mycommand":
     self._handle_mycommand(cmd_original)
 ```
+
 1. If the command is available in the gateway, add a handler in `gateway/run.py`:
 
 ```python
 if canonical == "mycommand":
     return await self._handle_mycommand(event)
 ```
+
 1. For persistent settings, use `save_config_value()` in `cli.py`
 
 __CommandDef fields:__

@@ -1,5 +1,5 @@
-import { CraftApp } from "@/lib/craft-api/CraftApp";
 import { CraftAuthProvider } from "@/lib/craft-api/auth/CraftAuthProvider";
+import { CraftApp } from "@/lib/craft-api/CraftApp";
 import type { AppConfig } from "@/lib/craft-api/types";
 
 const BOOK_SHELF_CONFIG: AppConfig = {

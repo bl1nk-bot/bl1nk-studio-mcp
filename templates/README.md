@@ -27,12 +27,14 @@ templates/
 ## Template Types
 
 ### Human Templates (Markdown)
+
 - Use Jinja2-like syntax with Handlebars engine
 - Include frontmatter metadata (YAML)
 - Human-readable content with formatting
 - Embedded machine-readable JSON block
 
 ### Machine Templates (JSON)
+
 - Pure JSON structure for programmatic processing
 - Optimized for machine reading and validation
 - Used for data interchange and API responses
@@ -49,6 +51,7 @@ templates/
 ## Usage
 
 The system automatically detects which template structure to use:
+
 1. Checks for `human/` directory first (preferred)
 2. Falls back to legacy `characters/`, `scene/`, `world/` structure
 

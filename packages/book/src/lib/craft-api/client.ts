@@ -1,6 +1,7 @@
 // Typed REST client for the Craft API
 // Uses the global connect endpoint: /my/api/...
 
+import { getConnectBaseUrl } from "./config";
 import type {
 	CollectionItem,
 	CollectionSchema,
@@ -13,8 +14,6 @@ import type {
 	SearchResult,
 	TaskScope,
 } from "./types";
-
-import { getConnectBaseUrl } from "./config";
 
 const API_BASE = `${getConnectBaseUrl()}/my/api`;
 

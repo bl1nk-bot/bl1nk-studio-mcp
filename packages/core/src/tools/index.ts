@@ -92,13 +92,12 @@ export const BL1NK_VISUAL_TOOLS = [
 	},
 ];
 
-// Tool executor
-export {
-	executeStoryTool,
-	executeGranularTool,
-	formatErrorResult,
-} from "./execute.js";
-
 // Individual tool exports (legacy)
 export { searchEntriesTool } from "../features/search-entries.js";
+// Tool executor
+export {
+	executeGranularTool,
+	executeStoryTool,
+	formatErrorResult,
+} from "./execute.js";
 export { generateArtifactsTool } from "./generate-artifacts.js";

@@ -3,8 +3,8 @@ import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
 
 import {
-	OAuthValidationError,
 	applyNoStoreHeaders,
+	OAuthValidationError,
 	validateOAuthRedirectUri,
 } from "@/lib/craft-api/auth/server";
 

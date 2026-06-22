@@ -35,7 +35,7 @@ function createMcpServerConfig(pathVariable = "${extensionPath}") {
 	return {
 		[SERVER_NAME]: {
 			command: source.mcpServer.command,
-			args: [`${pathVariable}${/}${entryPoint}`],
+			args: [`${pathVariable}/${entryPoint}`],
 			cwd: pathVariable,
 		},
 	};

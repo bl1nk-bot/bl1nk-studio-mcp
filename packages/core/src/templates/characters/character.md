@@ -19,15 +19,20 @@ status: {{status}}
 # {{canonicalName}}
 
 {{#if hasAliases}}
+
 ## Name Variations
+
 {{#each aliases}}
+
 - **{{this.name}}** — used by {{this.usedBy}} ({{this.context}})
 {{/each}}
 {{/if}}
 
 ## Mentions
+
 {{#if hasMentions}}
 {{#each mentions}}
+
 - **{{this.chapter}}**: "{{this.nameUsed}}"
   - Context: {{this.context}}
   {{#if this.speaker}}
@@ -39,29 +44,40 @@ _No mentions recorded._
 {{/if}}
 
 {{#if hasRelationships}}
+
 ## Relationships
+
 {{#each relationships}}
+
 - [[{{this.target}}]] — {{this.type}}{{#if this.description}} ({{this.description}}){{/if}}
 {{/each}}
 {{/if}}
 
 ## Summary
+
 {{content.summary}}
 
 {{#if hasPersonality}}
+
 ## Personality Traits
+
 {{#each content.personality}}
+
 - {{this}}
 {{/each}}
 {{/if}}
 
 {{#if hasMotivation}}
+
 ## Motivation
+
 {{content.motivation}}
 {{/if}}
 
 {{#if hasArc}}
+
 ## Character Arc
+
 - **Start:** {{content.arc.start}}
 {{#if content.arc.midpoint}}
 - **Midpoint:** {{content.arc.midpoint}}
@@ -75,7 +91,9 @@ _No mentions recorded._
 {{/if}}
 
 {{#if hasKeyQuotes}}
+
 ## Key Quotes
+
 {{#each content.keyQuotes}}
 > "{{this.quote}}"
 > — {{this.chapter}}{{#if this.context}}, {{this.context}}{{/if}}
@@ -84,6 +102,7 @@ _No mentions recorded._
 {{/if}}
 
 ## Essence
+
 {{content.essence}}
 
 ---

@@ -52,9 +52,9 @@ Skills are modular capabilities that extend agent functionality. They are centra
 
 ### Three Levels of Skill Loading
 
-1.  **Level 1: Metadata (Always loaded)**: YAML frontmatter in `SKILL.md` (Name, Description).
-2.  **Level 2: Instructions (Triggered)**: Procedural knowledge and workflows in `SKILL.md`.
-3.  **Level 3: Resources (As needed)**: Scripts, templates, and reference materials.
+1. **Level 1: Metadata (Always loaded)**: YAML frontmatter in `SKILL.md` (Name, Description).
+2. **Level 2: Instructions (Triggered)**: Procedural knowledge and workflows in `SKILL.md`.
+3. **Level 3: Resources (As needed)**: Scripts, templates, and reference materials.
 
 | Level | When Loaded | Token Cost | Content |
 | :--- | :--- | :--- | :--- |

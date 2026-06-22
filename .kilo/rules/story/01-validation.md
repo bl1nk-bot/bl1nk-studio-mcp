@@ -3,6 +3,7 @@
 ## Validation Checklist
 
 ### Structure Integrity
+
 - [ ] Story has a title (non-empty)
 - [ ] All three acts have events (Act 1, 2, 3)
 - [ ] Events are distributed across acts
@@ -10,17 +11,20 @@
 - [ ] Midpoint event exists (importance: midpoint in Act 2)
 
 ### Character Consistency
+
 - [ ] At least one protagonist exists
 - [ ] All characters have names
 - [ ] Character arcs are defined (start, end)
 - [ ] Characters appear in events
 
 ### Conflict Management
+
 - [ ] At least one conflict exists
 - [ ] Conflicts have descriptions
 - [ ] Related characters exist
 
 ### Event Quality
+
 - [ ] Events have labels
 - [ ] Event sequence is logical
 - [ ] Character appearances tracked
@@ -28,6 +32,7 @@
 ## Issue Severity
 
 ### Error (Blocking)
+
 - MISSING_TITLE: Story must have a title
 - NO_CHARACTERS: At least one character required
 - NO_PROTAGONIST: Protagonist is required
@@ -37,6 +42,7 @@
 - MISSING_CLIMAX: Climax in Act 3 required
 
 ### Warning
+
 - NO_MIDPOINT: Midpoint in Act 2 recommended
 - NO_CONFLICTS: At least one conflict recommended
 - ACT1_IMBALANCE: Act 1 should be ~25% of events
@@ -46,6 +52,7 @@
 - NO_MOTIVATION: Character motivation recommended
 
 ### Info
+
 - Story pacing suggestions
 - Character development tips
 - Export format recommendations

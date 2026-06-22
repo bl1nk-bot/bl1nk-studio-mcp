@@ -51,6 +51,7 @@ Args: {
 **User**: "Analyze this story: Once upon a time, a young knight named Arthur..."
 
 **Response**:
+
 - Calls `analyze_story` with the text
 - Shows extracted characters, conflicts, events by act
 - Runs validation and reports any structural issues

@@ -1,16 +1,10 @@
 {
-  "$schema": "https://turborepo.com/schema.json",
-  "pipeline": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**",
-        "dist/**"
-      ]
-    }
-  },
-  "globalEnv": [
-    "VERCEL"
-  ]
+	"$schema": "https://turborepo.com/schema.json",
+	"pipeline": {
+		"build": {
+			"dependsOn": ["^build"],
+			"outputs": [".next/**", "!.next/cache/**", "dist/**"]
+		}
+	},
+	"globalEnv": ["VERCEL"]
 }

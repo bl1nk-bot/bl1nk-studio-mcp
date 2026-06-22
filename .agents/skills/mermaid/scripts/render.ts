@@ -140,7 +140,7 @@ Examples:
 			result = mermaid.renderMermaidAscii(mermaidCode);
 		} else {
 			// SVG output - theme must be an object, not a string
-			let themeColors = undefined;
+			let themeColors;
 			if (options.theme && mermaid.THEMES) {
 				themeColors = mermaid.THEMES[options.theme];
 				if (!themeColors) {

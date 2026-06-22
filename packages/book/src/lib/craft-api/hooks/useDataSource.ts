@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { CraftApiClient } from "../client";
-import { type ResolvedResources, fetchDataSource } from "../data-sources";
+import { fetchDataSource, type ResolvedResources } from "../data-sources";
 import type { DataSourceConfig, DataSourceResult, InitConfig } from "../types";
 
 export function useDataSource(

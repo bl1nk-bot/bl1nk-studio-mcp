@@ -6,28 +6,39 @@ import { z } from "zod";
  */
 
 export const ThemeSchema = z.object({
-    coreTheme: z.string(),
-    motifs: z.array(z.string()).default([]),
-    symbolism: z.array(z.object({
-        object: z.string(),
-        meaning: z.string()
-    })).default([]),
-    metadata: z.record(z.string(), z.any()).optional()
+	coreTheme: z.string(),
+	motifs: z.array(z.string()).default([]),
+	symbolism: z
+		.array(
+			z.object({
+				object: z.string(),
+				meaning: z.string(),
+			}),
+		)
+		.default([]),
+	metadata: z.record(z.string(), z.any()).optional(),
 });
 
 export const StyleSchema = z.object({
-    tone: z.string(),
-    voice: z.string(),
-    complexity: z.string().optional(),
-    pacingDescription: z.string().optional().describe("e.g., 'Frantic and breathless', 'Slow burn'"),
-    styleNotes: z.array(z.string()).default([])
+	tone: z.string(),
+	voice: z.string(),
+	complexity: z.string().optional(),
+	pacingDescription: z
+		.string()
+		.optional()
+		.describe("e.g., 'Frantic and breathless', 'Slow burn'"),
+	styleNotes: z.array(z.string()).default([]),
 });
 
 export const OutlineSchema = z.object({
-    logline: z.string(),
-    premise: z.string(),
-    majorBeats: z.array(z.object({
-        label: z.string(),
-        intent: z.string()
-    })).default([])
+	logline: z.string(),
+	premise: z.string(),
+	majorBeats: z
+		.array(
+			z.object({
+				label: z.string(),
+				intent: z.string(),
+			}),
+		)
+		.default([]),
 });

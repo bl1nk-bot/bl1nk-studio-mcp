@@ -17,8 +17,8 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import Handlebars from "handlebars";
 import { z } from "zod";
-import entitiesConfig from "../known/entities.json" with { type: "json" };
 import { STORY_PATTERNS } from "../core/parser.js";
+import entitiesConfig from "../known/entities.json" with { type: "json" };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -481,10 +481,7 @@ const SearchEntriesInputSchema = z.object({
 				.default(true)
 				.describe("Extract characters (including name variations)"),
 			scenes: z.boolean().default(true).describe("Extract scenes/chapters"),
-			locations: z
-				.boolean()
-				.default(true)
-				.describe("Extract locations/places"),
+			locations: z.boolean().default(true).describe("Extract locations/places"),
 			creatures: z
 				.boolean()
 				.default(false)

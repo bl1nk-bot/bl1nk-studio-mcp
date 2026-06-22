@@ -1,12 +1,7 @@
 {
 	"name": "bl1nk-visual-mcp",
 	"version": "3.0.0",
-	"contextFiles": [
-		"AGENTS.md",
-		"SPEC.md",
-		"TODO.md",
-		"PLAN.md"
-	],
+	"contextFiles": ["AGENTS.md", "SPEC.md", "TODO.md", "PLAN.md"],
 	"settings": [
 		{
 			"name": "Default Mode",

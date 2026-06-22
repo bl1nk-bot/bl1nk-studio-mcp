@@ -5,6 +5,7 @@
 ---
 
 ## 🚨 EMERGENCY: Technical Debt & Restoration
+
 - [x] **Restore System-wide Integrity:** Fixed broken `types.ts` and re-synchronized property names (`meta`, `tags`).
 - [ ] `fix: [label:emergency][size/XL]` **Rebuild Test Suite:** Fixing type errors in restored tests (`validators.test.ts` fixed, others pending).
 - [ ] `fix: [label:emergency][size/XL]` **Resolve Dependency Hell:** Fix `mcp-handler` module resolution.
@@ -12,12 +13,14 @@
 ---
 
 ## 🔴 Critical & High Priority
+
 - [ ] `type:feat` `label:high-priority` Add startup validation for Exa API key in core
 - [ ] `type:fix` `label:high-priority` Resolve Vercel deployment issues
 
 ---
 
 ## 🟡 Core Development (VSP3)
+
 - [x] **Actual Implementation:** Corrected 25-50-25 Act Distribution logic in `analyzer.ts`.
 - [x] **Actual Implementation:** Fixed Character Deduplication in `analyzer.ts`.
 - [ ] `type:feat` `label:core` Implement live MCP connection for desktop/ai-ide
@@ -26,6 +29,7 @@
 ---
 
 ## ✅ Recently Completed (Verified)
+
 - [x] **Package Rename:** Renamed all packages to consistent `@bl1nk/<name>` scope with short folder names: `core`, `desktop`, `ide`, `ui`, `book`, `sync`, `support`.
 - [x] **Architecture Cleanup:** Removed duplicate `support-agent/` root directory, deleted orphaned `docs/CRAFT-BLOG-CMS.md`, rewrote `docs/TOOL_MAPPING.md`, and updated README/docs index to match current packages.
 - [x] **Self-Management Lockdown:** Created `.gemini/setting.json` and updated `GEMINI.md` with strict operational protocols.
