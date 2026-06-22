@@ -60,7 +60,7 @@ function findFolderByName(
 	return undefined;
 }
 
-function collectBlockIds(block: {
+function _collectBlockIds(block: {
 	id: string;
 	children?: Array<{ id: string; children?: unknown[] }>;
 }): Set<string> {

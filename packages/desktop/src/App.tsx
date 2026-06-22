@@ -2,28 +2,40 @@ import { useState } from "react";
 
 type View = "editor" | "graph" | "timeline" | "insights";
 
-// packages/desktop/src/App.test.tsx
-import { render, screen } from "`@testing-library/react`";
-import userEvent from "`@testing-library/user-event`";
-import App from "./App.js";
+export default function App() {
+	const [activeView, setActiveView] = useState<View>("editor");
 
-describe("App view navigation", () => {
-	it("shows editor by default", () => {
-		render(<App />);
-		expect(screen.getByRole("heading", { name: "Characters" })).toBeInTheDocument();
-	});
-
-	it("switches views from nav buttons", async () => {
-		const user = userEvent.setup();
-		render(<App />);
-
-		await user.click(screen.getByRole("button", { name: "Graph" }));
-		expect(screen.getByText("Graph View")).toBeInTheDocument();
-
-		await user.click(screen.getByRole("button", { name: "Timeline" }));
-		expect(screen.getByText("Timeline View")).toBeInTheDocument();
-
-		await user.click(screen.getByRole("button", { name: "Insights" }));
-		expect(screen.getByRole("heading", { name: "Insights" })).toBeInTheDocument();
-	});
-});
+	return (
+		<div>
+			<h1>Visual Story Planner</h1>
+			<nav>
+				<button type="button" onClick={() => setActiveView("editor")}>
+					Editor
+				</button>
+				<button type="button" onClick={() => setActiveView("graph")}>
+					Graph
+				</button>
+				<button type="button" onClick={() => setActiveView("timeline")}>
+					Timeline
+				</button>
+				<button type="button" onClick={() => setActiveView("insights")}>
+					Insights
+				</button>
+			</nav>
+			<main>
+				{activeView === "editor" && (
+					<div>
+						<h2>Characters</h2>
+					</div>
+				)}
+				{activeView === "graph" && <div>Graph View</div>}
+				{activeView === "timeline" && <div>Timeline View</div>}
+				{activeView === "insights" && (
+					<div>
+						<h2>Insights</h2>
+					</div>
+				)}
+			</main>
+		</div>
+	);
+}
