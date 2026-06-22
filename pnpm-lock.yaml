@@ -75,6 +75,9 @@ importers:
       markdownlint-cli2:
         specifier: ^0.22.1
         version: 0.22.1
+      playwright-core:
+        specifier: ^1.61.0
+        version: 1.61.0
       postcss:
         specifier: 8.5.15
         version: 8.5.15

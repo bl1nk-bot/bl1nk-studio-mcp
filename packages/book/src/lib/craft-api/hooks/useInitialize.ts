@@ -135,7 +135,7 @@ async function resolveSeedItems(
 	}));
 }
 
-async function seedCollectionIfEmpty(
+async function _seedCollectionIfEmpty(
 	client: CraftApiClient,
 	collectionId: string,
 	collectionConfig: CollectionInitConfig,

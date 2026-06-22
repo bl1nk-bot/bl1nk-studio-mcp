@@ -1,25 +1,56 @@
-# Article Workspace
+# @bl1nk/book
 
-A standalone app built on the [Craft API](https://developer.craft.do).
+Article Workspace — สร้างบน [Craft API](https://developer.craft.do) ด้วย Next.js
+
+## Overview
+
+Web application สำหรับ read และ manage articles จาก Craft workspace รองรับทั้ง demo mode (browser storage) และ live mode (Craft OAuth)
+
+## Features
+
+- **Demo mode** — ทดลองใช้งานได้ทันทีโดยไม่ต้อง login (ข้อมูลเก็บใน browser)
+- **Craft Integration** — เชื่อมต่อ Craft workspace ผ่าน OAuth 2.0 + PKCE
+- **Auto token refresh** — Refresh token อัตโนมัติโดยไม่ต้อง re-authenticate
+- **Secure** — Access token เก็บใน memory only, refresh token เก็บใน HTTP-only cookie
+
+## Tech Stack
+
+- **Framework:** Next.js 16
+- **Runtime:** React 19
+- **Styling:** Tailwind CSS 4
+- **UI:** Radix UI, Lucide React, shadcn-style components
+- **Language:** TypeScript 6
+- **Analytics:** Vercel Speed Insights
+
+## Development
+
+```bash
+# Install (จาก root)
+pnpm install
+
+# Dev server (port 3000)
+pnpm --filter @bl1nk/book run dev
+
+# Build
+pnpm --filter @bl1nk/book run build
+
+# Start production (port 5000)
+pnpm --filter @bl1nk/book run start
+
+# Typecheck
+pnpm --filter @bl1nk/book run typecheck
+```
 
 ## Setup
 
 ```bash
-npm install
-cp .env.example .env.local
-npm run dev
+cp packages/book/.env.example packages/book/.env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to try the app with demo data.
+| Variable | Description |
+|----------|-------------|
+| `CRAFT_CLIENT_ID` | Craft OAuth client ID |
+| `CRAFT_CLIENT_SECRET` | Craft OAuth client secret |
+| `CRAFT_REDIRECT_URI` | OAuth callback URL |
 
-To use your own data, switch **Storage Location** to **In Craft** and connect your workspace.
-
-## How it works
-
-- By default, the app runs with demo data stored in your browser (no setup needed).
-- Switch to "In Craft" to connect your Craft workspace via OAuth.
-- The app exchanges the authorization code for tokens (server-side, with PKCE).
-- Your workspace data is fetched via the Craft REST API and rendered in the UI.
-- Access tokens are refreshed automatically when they expire (no re-authentication needed).
-
-All secrets are kept server-side in HTTP-only cookies — access tokens are memory-only in the browser and refresh tokens never touch JavaScript.
+เปิด [http://localhost:3000](http://localhost:3000) — ใช้งาน demo mode ได้ทันทีโดยไม่ต้องตั้งค่า environment variables
