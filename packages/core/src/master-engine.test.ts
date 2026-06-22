@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-// @ts-expect-error - เราจงใจให้มันพังก่อนเพราะยังไม่ได้สร้างไฟล์เหล่านี้ (TDD)
 import { MasterStoryGraphSchema } from "./schemas/master.js";
 
 describe("Grand Master Story Engine (TDD)", () => {
