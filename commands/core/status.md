@@ -6,13 +6,13 @@ description = Displays the current progress of the project
 
 ## 1.0 SYSTEM DIRECTIVE
 
-You are an AI agent. Your primary function is to provide a status overview of the current tracks file. This involves reading the **Tracks Registry** file, parsing its content, and summarizing the progress of tasks. CRITICAL: You must validate the success of every tool call. If any tool call fails, you MUST halt the current operation immediately, announce the failure to the user, and await further instructions.
+You are an AI agent. Your primary function is to provide a status overview of the current books file. This involves reading the **Books Registry** file, parsing its content, and summarizing the progress of tasks. CRITICAL: You must validate the success of every tool call. If any tool call fails, you MUST halt the current operation immediately, announce the failure to the user, and await further instructions.
 
 ---
 
 ## 1.1 SETUP CHECK
 
-**PROTOCOL: Verify that the Conductor environment is properly set up.** 1. **Verify Core Context:** Using the **Universal File Resolution Protocol**, resolve and verify the existence of: - **Tracks Registry** - **Product Definition** - **Tech Stack** - **Workflow** 2. **Handle Failure:**
+**PROTOCOL: Verify that the Conductor environment is properly set up.** 1. **Verify Core Context:** Using the **Universal File Resolution Protocol**, resolve and verify the existence of: - **Books Registry** - **Product Definition** - **Tech Stack** - **Workflow** 2. **Handle Failure:**
 
 - If ANY of
 these files are missing, you MUST halt the operation immediately.
@@ -29,12 +29,12 @@ proceed to Status Overview Protocol.
 
 ### 2.1 Read Project Plan
 
-1. **Locate and Read:** Read the content of the **Tracks Registry** (resolved via **Universal File Resolution Protocol**). 2. **Locate and Read Tracks:**
+1. **Locate and Read:** Read the content of the **Books Registry** (resolved via **Universal File Resolution Protocol**). 2. **Locate and Read Books:**
 
 - Parse
-the **Tracks Registry** to identify all registered tracks and their paths. * **Parsing Logic:** When reading the **Tracks Registry** to identify tracks, look for lines matching either the new standard format `- [ ] **Track:` or the legacy format `## [ ] Track:`.
-- For each track, resolve
-and read its **Implementation Plan** (using **Universal File Resolution Protocol** via the track's index file).
+the **Books Registry** to identify all registered books and their paths. * **Parsing Logic:** When reading the **Books Registry** to identify books, look for lines matching either the new standard format `- [ ] **Book:` or the legacy format `## [ ] Book:`.
+- For each book, resolve
+and read its **Implementation Plan** (using **Universal File Resolution Protocol** via the book's index file).
 
 ### 2.2 Parse
 
@@ -49,4 +49,4 @@ and their current status (e.g., bullet points under headings, looking for keywor
 
 ### 2.3 Present Status Overview 1
 
-**Output Summary:** Present the generated summary to the user in a clear, readable format. The status report must include: - **Current Date/Time:** The current timestamp. - **Project Status:** A high-level summary of progress (e.g., "On Track", "Behind Schedule", "Blocked"). - **Current Phase and Task:** The specific phase and task currently marked as "IN PROGRESS". - **Next Action Needed:** The next task listed as "PENDING". - **Blockers:** Any items explicitly marked as blockers in the plan. - **Phases (total):** The total number of major phases. - **Tasks (total):** The total number of tasks. - **Progress:** The overall progress of the plan, presented as tasks_completed/tasks_total (percentage_completed%).
+**Output Summary:** Present the generated summary to the user in a clear, readable format. The status report must include: - **Current Date/Time:** The current timestamp. - **Project Status:** A high-level summary of progress (e.g., "On Book", "Behind Schedule", "Blocked"). - **Current Phase and Task:** The specific phase and task currently marked as "IN PROGRESS". - **Next Action Needed:** The next task listed as "PENDING". - **Blockers:** Any items explicitly marked as blockers in the plan. - **Phases (total):** The total number of major phases. - **Tasks (total):** The total number of tasks. - **Progress:** The overall progress of the plan, presented as tasks_completed/tasks_total (percentage_completed%).

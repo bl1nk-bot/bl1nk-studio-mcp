@@ -54,7 +54,7 @@ Escalation health score = clamp((stages_count × intensity_slope_avg) / 10, 0.0,
 
 Show how conflicts relate to each other:
 
-```
+```text
 [External: Aria vs Shadow King] ──feeds──> [Internal: Aria's self-doubt]
                                  └──affects──> [Relational: Aria & Kael tension]
 ```
@@ -80,7 +80,7 @@ For each gap found, provide a ranked suggestion:
 
 ## Output Format
 
-```
+```text
 ## Conflict Analysis: [Title]
 
 **Conflict Balance Score: [X]/10**

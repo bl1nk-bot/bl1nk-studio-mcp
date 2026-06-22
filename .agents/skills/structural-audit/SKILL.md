@@ -17,6 +17,8 @@ description: >
   seemingly simple structure questions.
 ---
 
+# Structural Audit
+
 ## Pre-Export Validation Gate
 
 **Before any export tool is called**, this skill must:

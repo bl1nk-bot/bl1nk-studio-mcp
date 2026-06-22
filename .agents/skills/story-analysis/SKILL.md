@@ -32,7 +32,7 @@ When analyzing stories, focus on:
 
 ### Step 1: Parse the Story
 
-```
+```text
 Tool: analyze_story
 Args: {
   text: "<story text>",
@@ -43,7 +43,7 @@ Args: {
 
 ### Step 2: Validate Structure
 
-```
+```text
 Tool: validate_story_structure
 Args: {
   graph: <result>,
