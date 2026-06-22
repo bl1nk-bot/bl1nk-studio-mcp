@@ -1,65 +1,58 @@
-# @bl1nk/ui
+# @bl1nk/desktop
 
-The unified user interface for Visual Story Planner (VSP). This package combines the features of the former `desktop` and `bl1nk-ide` into a single, high-fidelity application.
+Desktop Application สำหรับ Visual Story Planner — สร้างด้วย React 19 + Tauri 2
 
-## 🎯 Features
+## Features
 
-- **Dashboard**: High-level overview of story stats, act distribution, and health checks.
-- **Writer (Editor)**: A lightweight, Obsidian-style Markdown editor with live preview and scene management.
-- **Visualizations**:
-  - **Graph View**: Real-time Mermaid diagram rendering of story structure.
-  - **Timeline**: Chronological event tracking grouped by story acts.
-- **Task Tracking**: Integrated todo management that can sync with your manuscript notes.
-- **Insights**: Detailed structural validation and character roster analysis.
+- **Editor** — Character & scene management
+- **Graph View** — Real-time Mermaid diagram ของโครงสร้างเรื่องราว
+- **Timeline** — Chronological event tracking แยกตาม story acts
+- **Insights** — Act distribution, health checks, structural validation
 
-## 🏗️ Technology Stack
+## Tech Stack
 
-- **Framework**: React 19
-- **Build Tool**: Vite 8
-- **Styling**: Tailwind CSS 4
-- **Icons**: Lucide React
-- **Runtime**: Tauri 2 (for Desktop support)
-- **Language**: TypeScript 6
+- **Framework:** React 19
+- **Build Tool:** Vite 8
+- **Styling:** Tailwind CSS 4
+- **Runtime:** Tauri 2 (Rust backend)
+- **Language:** TypeScript 6
+- **Testing:** Vitest + @testing-library/react
 
-## 📁 Structure
+## Structure
 
-- `src/components`: UI building blocks (Cards, Charts, Panels).
-- `src/store`: State management (Notes, Tasks).
-- `src/lib`: Utility functions and mock data.
-- `src-tauri`: Rust backend for desktop integration.
+```
+packages/desktop/
+├── src/
+│   ├── App.tsx              # Root component with view routing
+│   ├── main.tsx             # Entry point
+│   ├── components/          # UI components (StatCard, CharacterCard, etc.)
+│   ├── features/            # Feature modules
+│   ├── lib/                 # Utilities
+│   └── test/                # Vitest tests
+└── src-tauri/               # Rust backend (Tauri)
+```
 
-## 🚀 Development
+## Development
+
+```bash
+# Web dev server
+pnpm --filter @bl1nk/desktop run dev
+
+# Tauri desktop app
+pnpm --filter @bl1nk/desktop run tauri:dev
+
+# Tests
+pnpm --filter @bl1nk/desktop run test
+
+# Build web
+pnpm --filter @bl1nk/desktop run build
+
+# Build desktop binary
+pnpm --filter @bl1nk/desktop run tauri:build
+```
 
 ### Prerequisites
 
 - Node.js 22+
-- pnpm 10+
-- Rust (for Tauri development)
-
-### Start Development Server
-
-```bash
-# From the project root
-pnpm --filter @bl1nk/ui run dev
-
-# For Tauri (Desktop) mode
-pnpm --filter @bl1nk/ui run tauri:dev
-```
-
-### Build
-
-```bash
-pnpm --filter @bl1nk/ui run build
-```
-
-## 🎨 Theme
-
-The UI uses a **Teal Metallic** theme with:
-
-- `bg-base`: `#0a1114`
-- `teal`: `#00bcd4`
-- `border`: `rgba(0, 188, 212, 0.15)`
-- Custom iOS-style glassmorphism and blurs.
-
----
-*Part of the bl1nk-visual-mcp ecosystem.*
+- pnpm 11+
+- Rust (สำหรับ Tauri — ดู [tauri.app](https://tauri.app/start/prerequisites/))

@@ -1,4 +1,4 @@
-# bl1nk Support Agent
+# @bl1nk/support
 
 เทมเพลตที่รวมระบบ Support Agent โดยใช้ Vercel AI SDK ร่วมกับระบบ MCP OAuth Authorization, การรองรับ CLI Agent Mode, แนวคิด Runtime Agent Skills และระบบจัดการ Sandbox Runtime เต็มรูปแบบ
 
