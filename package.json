@@ -12,6 +12,7 @@
 		"build": "pnpm -r run build",
 		"dev": "pnpm -r --parallel run dev",
 		"test": "pnpm -r run test",
+		"test:audit": "node scripts/audit-tests.js",
 		"test:watch": "pnpm -r run test:watch",
 		"lint": "biome check . && markdownlint-cli2 \"**/*.md\" \"!**/node_modules/**\" \"!**/dist/**\" \"!**/out/**\" \"!**/.next/**\" \"!**/coverage/**\"",
 		"lint:fix": "biome check --write . && markdownlint-cli2 --fix \"**/*.md\"",
