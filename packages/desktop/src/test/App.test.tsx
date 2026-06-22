@@ -26,7 +26,7 @@ describe("App", () => {
 		const insightsButton = screen.getByText("Insights");
 		fireEvent.click(insightsButton);
 		expect(
-			screen.getByRole("heading", { name: "insights" }),
+			screen.getByRole("heading", { name: "Insights" }),
 		).toBeInTheDocument();
 	});
 });
