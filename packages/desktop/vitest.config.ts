@@ -14,6 +14,7 @@ export default defineConfig({
 		setupFiles: ["./src/test/setup.ts"],
 		include: ["src/**/*.{test,spec}.{ts,tsx}"],
 		exclude: ["src/test/playwright/**"],
+		passWithNoTests: true,
 		mode: "development",
 		coverage: {
 			reporter: ["text", "json", "html"],
