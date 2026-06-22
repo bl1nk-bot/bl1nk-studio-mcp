@@ -19,6 +19,11 @@ export default async function handler(request: Request) {
         result: { status: "operational", version: "3.0.0" }
     }), {
         status: 200,
-        headers: { "Content-Type": "application/json" }
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type",
+        }
     });
 }

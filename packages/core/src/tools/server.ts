@@ -1,5 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import type { ZodRawShape } from "zod";
+import { z } from "zod";
 import { Schemas } from "../schemas.js";
 import {
 	BL1NK_VISUAL_TOOLS,
@@ -34,13 +34,20 @@ export function registerBl1nkTools(
 			);
 		}
 
+		const legacySchemas: Record<string, Record<string, z.ZodTypeAny>> = {
+			search_entries: { text: z.string().describe("Story text to extract entities from") },
+			validate_story: { graph: z.any().describe("StoryGraph JSON object") },
+			generate_artifacts: { graph: z.any().describe("StoryGraph JSON object") },
+			sync_github: { graph: z.any().describe("StoryGraph JSON object"), repo: z.string().optional().describe("GitHub repository name") },
+		};
+
 		for (const tool of BL1NK_VISUAL_TOOLS) {
 			if (enabled && !enabled.has(tool.name)) continue;
 
 			server.tool(
 				tool.name,
 				tool.description,
-				{},
+				legacySchemas[tool.name] ?? {},
 				async (args) =>
 					executeStoryTool(tool.name, args as Record<string, unknown>, apiKey),
 			);

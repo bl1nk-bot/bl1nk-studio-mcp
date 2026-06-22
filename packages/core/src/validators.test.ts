@@ -44,7 +44,11 @@ describe("validateGraph", () => {
 			},
 		],
 		relationships: [],
-		events: [],
+		events: [
+			{ id: "e1", label: "Setup", description: "", act: 1, importance: "rising", sequenceInAct: 1, characterIds: [], conflictIds: [], emotionalTone: "neutral" },
+			{ id: "e2", label: "Rising action", description: "", act: 2, importance: "midpoint", sequenceInAct: 1, characterIds: [], conflictIds: [], emotionalTone: "neutral" },
+			{ id: "e3", label: "Final battle", description: "", act: 3, importance: "climax", sequenceInAct: 1, characterIds: [], conflictIds: [], emotionalTone: "neutral" },
+		],
 		tags: [],
 	});
 
@@ -990,7 +994,7 @@ describe("validateGraph", () => {
 		it("should error when character has no motivations in strict mode", () => {
 			const graph = createBaseGraph();
 			graph.characters[0].motivations = [];
-			const result = validateGraph(graph);
+			const result = validateGraph(graph, { strict: true });
 
 			expect(result.isValid).toBe(false);
 			expect(result.issues.some((i) => i.code === "NO_MOTIVATION")).toBe(true);
@@ -998,7 +1002,7 @@ describe("validateGraph", () => {
 
 		it("should not error when character has motivations in strict mode", () => {
 			const graph = createBaseGraph();
-			const result = validateGraph(graph);
+			const result = validateGraph(graph, { strict: true });
 
 			expect(result.issues.some((i) => i.code === "NO_MOTIVATION")).toBe(false);
 		});
@@ -1006,7 +1010,7 @@ describe("validateGraph", () => {
 		it("should warn when character has no transformation in strict mode", () => {
 			const graph = createBaseGraph();
 			graph.characters[0].arc.transformation = "";
-			const result = validateGraph(graph);
+			const result = validateGraph(graph, { strict: true });
 
 			expect(
 				result.issues.some(
@@ -1406,6 +1410,7 @@ describe("validateGraph", () => {
 		it("should handle mixed case importance values", () => {
 			const graph = createBaseGraph();
 			// Note: This tests current behavior - the code is case-sensitive
+			// Using uppercase values to show they do NOT match the lowercase checks
 			graph.events = [
 				{
 					id: "e1",
@@ -1423,7 +1428,7 @@ describe("validateGraph", () => {
 					label: "E2",
 					description: "",
 					act: 2,
-					importance: "midpoint",
+					importance: "MIDPOINT",
 					sequenceInAct: 1,
 					characterIds: [],
 					conflictIds: [],
@@ -1434,7 +1439,7 @@ describe("validateGraph", () => {
 					label: "E3",
 					description: "",
 					act: 3,
-					importance: "climax",
+					importance: "CLIMAX",
 					sequenceInAct: 1,
 					characterIds: [],
 					conflictIds: [],

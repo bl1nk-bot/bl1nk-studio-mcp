@@ -29,5 +29,5 @@ export const ConflictSchema = z.object({
         affectedCharacters: z.array(z.string())
     })).default([]),
     resolution: z.string().optional(),
-    actIntroduced: z.number().min(1).max(3)
+    actIntroduced: z.number().int().min(1)
 });

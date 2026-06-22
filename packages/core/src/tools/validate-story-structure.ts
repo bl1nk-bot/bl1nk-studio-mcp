@@ -17,5 +17,5 @@ export interface ValidateStoryStructureArgs {
 }
 
 export function validateStoryStructure(args: ValidateStoryStructureArgs) {
-	return validate(args.graph);
+	return validate(args.graph, { strict: args.strict, includeRecommendations: args.includeRecommendations });
 }

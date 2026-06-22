@@ -17,3 +17,7 @@ export * from "./features/exa-search.js";
 // Exporters
 export * from "./exporters/dashboard.js";
 export * from "./exporters/csv-generator.js";
+
+// Tools API
+export * from "./tools/index.js";
+export * from "./tools/server.js";
