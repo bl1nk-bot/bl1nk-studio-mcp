@@ -32,7 +32,7 @@ export default function App() {
 				{activeView === "timeline" && <div>Timeline View</div>}
 				{activeView === "insights" && (
 					<div>
-						<h2>insights</h2>
+						<h2>Insights</h2>
 					</div>
 				)}
 			</main>
