@@ -10,8 +10,8 @@
  * - "modern":  Slate/indigo gradient, bordered cards, rose accents (MCP-UI)
  */
 
-import type { StoryGraph } from "../types.js";
-import { validateGraph } from "../validators.js";
+import type { StoryGraph, Character, Conflict, ValidationIssue } from "./types.js";
+import { validateGraph } from "./validators.js";
 
 export type DashboardTheme = "classic" | "modern";
 
@@ -26,15 +26,13 @@ export function toDashboard(
 	const theme = options.theme ?? "classic";
 	const isModern = theme === "modern";
 	const v = validateGraph(graph);
-	const htmlMap: Record<string, string> = {
-		"&": "&amp;",
-		"<": "&lt;",
-		">": "&gt;",
-		'"': "&quot;",
-		"'": "&#39;",
-	};
 	const escapeHtml = (s: string) =>
-		s.replace(/[&<>"']/g, (m) => htmlMap[m] || m);
+		s
+			.replace(/&/g, "&amp;")
+			.replace(/</g, "&lt;")
+			.replace(/>/g, "&gt;")
+			.replace(/"/g, "&quot;")
+			.replace(/'/g, "&#39;");
 
 	// Theme-dependent color tokens
 	const colors = {
@@ -215,7 +213,7 @@ export function toDashboard(
                     <div class="space-y-3">
                         ${v.issues
 													.map(
-														(i) => `
+														(i: ValidationIssue) => `
                             <div class="p-3 rounded-lg border-l-4 ${i.severity === "error" ? `${colors.issuesBg} ${colors.issuesBorder} ${colors.issuesText}` : `${colors.issueBgAlt} ${colors.issueBorderAlt} ${colors.issueTextAlt}`}">
                                 <p class="text-sm font-bold uppercase text-xs mb-1">${escapeHtml(i.code)}</p>
                                 <p class="text-sm">${escapeHtml(i.message)}</p>
@@ -236,7 +234,7 @@ export function toDashboard(
                 <ul class="space-y-3">
                     ${v.recommendations
 											.map(
-												(r) => `
+												(r: string) => `
                         <li class="flex items-start">
                             <svg class="w-5 h-5 ${colors.recIcon} mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             <span class="${colors.recText} text-sm">${escapeHtml(r)}</span>
@@ -258,7 +256,7 @@ export function toDashboard(
                 <div class="divide-y ${colors.divideColor}">
                     ${graph.characters
 											.map(
-												(c) => `
+												(c: Character) => `
                         <div class="py-3 flex justify-between items-center">
                             <div>
                                 <p class="font-bold ${colors.cardTextPrimary}">${escapeHtml(c.name)}</p>
@@ -276,7 +274,7 @@ export function toDashboard(
                 <div class="space-y-4">
                     ${graph.conflicts
 											.map(
-												(c) => `
+												(c: Conflict) => `
                         <div class="p-4 ${colors.conflictBg} rounded-xl">
                             <div class="flex justify-between mb-2">
                                 <span class="text-xs font-bold ${colors.recIcon} uppercase">${escapeHtml(c.type)}</span>

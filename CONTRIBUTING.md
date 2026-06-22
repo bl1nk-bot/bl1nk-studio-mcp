@@ -88,11 +88,11 @@ pnpm run check
 ```
 
 ### 5. Commit
-Write clear, descriptive commit messages:
+Write clear, descriptive commit messages in Hybrid format:
 ```
-feat: add CSV injection prevention to escapeCSV()
-fix: resolve regex race condition in search-entries.ts
-docs: update ARCHITECTURE.md with new exporter flow
+feat: [label:security][size/M] add CSV injection prevention to escapeCSV()
+fix: [label:high-priority][size/S] resolve regex race condition in search-entries.ts
+docs: [label:documentation][size/S] update ARCHITECTURE.md with new exporter flow
 ```
 
 ### 6. Update TODO.md

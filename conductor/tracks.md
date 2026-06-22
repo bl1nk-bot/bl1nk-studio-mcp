@@ -2,15 +2,15 @@
 
 ## 🛠️ Active Tracks
 
-| Track ID | Title | Status | Labels |
-|----------|-------|--------|--------|
-| `TRK-001` | StoryGraph Core Integration | `DONE` | `type:feat`, `label:core` |
-| `TRK-002` | UI Unification (Desktop + IDE) | `DONE` | `type:chore`, `label:core` |
-| `TRK-003` | Legacy Cleanup & Slugification | `DONE` | `type:chore`, `label:cleanup` |
+  <table>
+  <tr><th>Track ID</th><th>Title</th><th>Status</th><th>Labels</th></tr>
+  <tr><td>`BLK-001`</td><td>Admin Panel Theme Customization</td><td>`DONE`</td><td>`feat: [label:admin][size/M]`</td></tr>
+  <tr><td>`BLK-002`</td><td>Interactive Image Filter</td><td>`DONE`</td><td>`feat: [label:game][size/XS]`</td></tr>
+  </table>
 
 ## 🚀 Future Tracks
 
-| Track ID | Title | Status | Labels |
-|----------|-------|--------|--------|
-| `TRK-004` | Live MCP Persistence | `PENDING` | `type:feat`, `label:high-priority` |
-| `TRK-005` | Vercel Deployment Fix | `PENDING` | `type:fix`, `label:high-priority` |
+  <table>
+  <tr><th>Track ID</th><th>Title</th><th>Status</th><th>Labels</th></tr>
+  <tr><td>`BLK-003`</td><td>TBD Example</td><td>`PENDING`</td><td>`feat: [label:TBD][size/]`</td></tr>
+  </table>
