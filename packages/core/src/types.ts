@@ -1,44 +1,62 @@
 import { z } from "zod";
-import * as Master from "./schemas/master.js";
 
 /**
  * @license bl1nk-visual-mcp
- * The Source of Truth (Inferred from Master Schema)
+ * Runtime StoryGraph types.
+ *
+ * StoryGraph is the flat runtime structure used by analyzers, validators,
+ * exporters, and tests. The modular schemas in ./schemas/ describe the
+ * canonical entity shapes.
  */
 
-export type StoryGraph = Master.MasterStoryGraph;
+export interface StoryMeta {
+	title: string;
+	createdAt: string;
+	updatedAt: string;
+	version?: string;
+	genre?: string;
+}
 
-// --- Derived Entity Types ---
-export type Project = z.infer<typeof import("./schemas/project.js").ProjectSchema>;
 export type Character = z.infer<typeof import("./schemas/entities.js").CharacterSchema>;
+export type Relationship = z.infer<typeof import("./schemas/entities.js").RelationshipSchema>;
 export type EventNode = z.infer<typeof import("./schemas/backbone.js").EventNodeSchema>;
+export type Conflict = z.infer<typeof import("./schemas/logic.js").ConflictSchema>;
 export type Causality = z.infer<typeof import("./schemas/logic.js").CausalitySchema>;
 export type PlotThread = z.infer<typeof import("./schemas/logic.js").PlotThreadSchema>;
-export type Conflict = z.infer<typeof import("./schemas/logic.js").ConflictSchema>;
-export type Relationship = z.infer<typeof import("./schemas/entities.js").RelationshipSchema>;
-
-// --- Narrative Branches ---
 export type Theme = z.infer<typeof import("./schemas/narrative.js").ThemeSchema>;
 export type Style = z.infer<typeof import("./schemas/narrative.js").StyleSchema>;
 export type Outline = z.infer<typeof import("./schemas/narrative.js").OutlineSchema>;
 
-// --- Missing Exports (ทำให้ตรงกัน) ---
-export type StoryMeta = StoryGraph["project"];
+export interface StoryGraph {
+	meta: StoryMeta;
+	characters: Character[];
+	events: EventNode[];
+	conflicts: Conflict[];
+	relationships: Relationship[];
+	tags: string[];
+	causality?: Causality[];
+	plotThreads?: PlotThread[];
+	style?: Style;
+	theme?: Theme;
+	outline?: Outline;
+}
+
+// --- Convenience aliases ---
+export type Project = StoryMeta;
 export type CharacterArc = Character["arc"];
 export type Power = z.infer<typeof import("./schemas/entities.js").PowerSchema>;
 export type CharacterRole = Character["role"];
 export type EventImportance = EventNode["importance"];
 
 export interface ToolContentItem {
-	type: "text" | "image" | "resource";
-	text?: string;
-	data?: string;
-	mimeType?: string;
+	type: "text";
+	text: string;
 }
 
 export interface ToolResult {
 	content: ToolContentItem[];
 	isError?: boolean;
+	[key: string]: unknown;
 }
 
 export interface CharacterExtractionResult {
@@ -82,19 +100,27 @@ export interface ValidationResult {
 }
 
 export interface CanvasNode {
-    id: string;
-    type: string;
-    text: string;
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-    color?: string;
+	id: string;
+	type: string;
+	text?: string;
+	x?: number;
+	y?: number;
+	width?: number;
+	height?: number;
+	color?: string;
+	data?: Record<string, unknown>;
+	position?: { x: number; y: number };
+	style?: Record<string, any>;
 }
 
 export interface CanvasEdge {
-    id: string;
-    fromNode: string;
-    toNode: string;
-    label?: string;
+	id: string;
+	fromNode?: string;
+	toNode?: string;
+	label?: string;
+	source?: string;
+	target?: string;
+	animated?: boolean;
+	type?: string;
+	style?: Record<string, any>;
 }

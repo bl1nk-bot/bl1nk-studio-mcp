@@ -35,6 +35,7 @@ export const CharacterSchema = z.object({
     powers: z.array(PowerSchema).default([]),
     ghost: z.string().optional().describe("Internal trauma"),
     wantVsNeed: z.string().optional(),
+    actAppearances: z.array(z.number()).default([]),
     tags: z.array(z.string()).default([])
 });
 

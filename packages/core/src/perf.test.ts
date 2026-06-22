@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildInitialGraph } from "./analyzer.js";
+import { buildInitialGraph } from "./core/analyzer.js";
 
 describe("Performance Benchmark", () => {
 	it("buildInitialGraph performance with large input", () => {
@@ -34,7 +34,7 @@ describe("Performance Benchmark", () => {
 
 		// Verify that characters were assigned
 		const totalAssignments = graph.events.reduce(
-			(acc, e) => acc + e.characters.length,
+			(acc, e) => acc + e.characterIds.length,
 			0,
 		);
 		console.log(`Total character-to-event assignments: ${totalAssignments}`);

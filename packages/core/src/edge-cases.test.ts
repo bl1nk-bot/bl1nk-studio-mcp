@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { buildInitialGraph } from "./analyzer.js";
+import { buildInitialGraph } from "./core/analyzer.js";
 import { extractStoryEntities } from "./core/parser.js";
 import { toDashboard } from "./exporters/dashboard.js";
 import type { StoryGraph } from "./types.js";
-import { generateCSV } from "./utils/csv-generator.js";
+import { generateCSV } from "./exporters/csv-generator.js";
 
 // Minimal graph builder for edge case tests
 const createMinimalGraph = (events = 3): StoryGraph => {
@@ -16,10 +16,9 @@ const createMinimalGraph = (events = 3): StoryGraph => {
 			act: 1,
 			importance: "normal" as const,
 			sequenceInAct: 1,
-			characters: [],
-			conflicts: [],
+			characterIds: [],
+			conflictIds: [],
 			emotionalTone: "",
-			consequence: "",
 		});
 	}
 	if (events >= 2) {
@@ -30,10 +29,9 @@ const createMinimalGraph = (events = 3): StoryGraph => {
 			act: 2,
 			importance: "midpoint" as const,
 			sequenceInAct: 1,
-			characters: [],
-			conflicts: [],
+			characterIds: [],
+			conflictIds: [],
 			emotionalTone: "",
-			consequence: "",
 		});
 	}
 	if (events >= 3) {
@@ -44,10 +42,9 @@ const createMinimalGraph = (events = 3): StoryGraph => {
 			act: 3,
 			importance: "climax" as const,
 			sequenceInAct: 1,
-			characters: [],
-			conflicts: [],
+			characterIds: [],
+			conflictIds: [],
 			emotionalTone: "",
-			consequence: "",
 		});
 	}
 	return {
@@ -70,15 +67,16 @@ const createMinimalGraph = (events = 3): StoryGraph => {
 					transformation: "growth",
 					emotionalJourney: [],
 				},
-				relationships: [],
 				motivations: ["save the world"],
 				fears: [],
 				secretsOrLies: [],
 				actAppearances: [1, 2, 3],
+				powers: [],
+				tags: [],
 			},
 		],
-		conflicts: [],
 		events: eventsList,
+		conflicts: [],
 		relationships: [],
 		tags: [],
 	};

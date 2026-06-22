@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { ExaSearchResponse } from "./exa-search.js";
-import { formatSearchResults } from "./exa-search.js";
+import type { ExaSearchResponse } from "./features/exa-search.js";
+import { formatSearchResults } from "./features/exa-search.js";
 
 describe("formatSearchResults", () => {
 	const baseResponse: ExaSearchResponse = {

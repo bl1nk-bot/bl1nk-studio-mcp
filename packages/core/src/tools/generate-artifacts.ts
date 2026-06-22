@@ -15,7 +15,11 @@ import { toDashboard } from "../exporters/dashboard.js";
 import { toMarkdown } from "../exporters/markdown.js";
 import { toMermaid } from "../exporters/mermaid.js";
 import type { StoryGraph } from "../types.js";
-import { generateCSV } from "../utils/csv-generator.js";
+import { generateCSV } from "../exporters/csv-generator.js";
+
+const GenerateArtifactsInputSchema = z.object({
+	graph: z.any().describe("StoryGraph JSON object"),
+});
 
 export const generateArtifactsTool = {
 	name: "generate_artifacts",
@@ -30,11 +34,9 @@ GENERATES ALL FORMATS:
 
 NO FORMAT SELECTION NEEDED - generates everything automatically.`,
 
-	inputSchema: z.object({
-		graph: z.any().describe("StoryGraph JSON object"),
-	}),
+	inputSchema: GenerateArtifactsInputSchema,
 
-	async execute(args: z.infer<(typeof generateArtifactsTool)["inputSchema"]>) {
+	async execute(args: z.infer<typeof GenerateArtifactsInputSchema>) {
 		const graph: StoryGraph = args.graph;
 
 		// Generate ALL formats automatically

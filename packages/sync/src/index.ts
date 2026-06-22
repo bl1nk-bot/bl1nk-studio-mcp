@@ -12,7 +12,7 @@
 import { createHmac } from "node:crypto";
 import { createServer } from "node:http";
 import { parse as parseCSV } from "csv-parse/sync";
-import { parse } from "gray-matter";
+import matter from "gray-matter";
 
 // Environment variables
 const PORT = process.env.PORT || "3000";
@@ -87,7 +87,7 @@ async function syncMarkdownToNotion(file: string, commit: any) {
 	const content = await fetchFileContent(file);
 
 	// Parse frontmatter
-	const { data, content: body } = parse(content);
+	const { data, content: body } = matter(content);
 
 	// Create/update Notion page based on type
 	if (data.type === "character") {

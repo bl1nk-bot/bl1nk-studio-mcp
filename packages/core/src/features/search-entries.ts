@@ -17,7 +17,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import Handlebars from "handlebars";
 import { z } from "zod";
-import entitiesConfig from "../../known/entities.json" assert { type: "json" };
+import entitiesConfig from "../known/entities.json" with { type: "json" };
 import { STORY_PATTERNS } from "../core/parser.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -440,7 +440,7 @@ function generateEssence(entry: RawEntry, type: string): string {
 }
 
 function generateTags(entry: RawEntry): string[] {
-	const tags = [entry.type];
+	const tags: string[] = [entry.type];
 	if (entry.mentions.length > 5) tags.push("frequent");
 	return tags;
 }
@@ -468,6 +468,35 @@ function extractEvents(entry: RawEntry): Record<string, unknown>[] {
 // Tool Definition
 // ============================================================================
 
+const SearchEntriesInputSchema = z.object({
+	text: z.string().describe("Story text to search for entities"),
+	chapterNumber: z
+		.number()
+		.optional()
+		.describe("Chapter number for organization (1, 2, 3...)"),
+	extractOptions: z
+		.object({
+			characters: z
+				.boolean()
+				.default(true)
+				.describe("Extract characters (including name variations)"),
+			scenes: z.boolean().default(true).describe("Extract scenes/chapters"),
+			locations: z
+				.boolean()
+				.default(true)
+				.describe("Extract locations/places"),
+			creatures: z
+				.boolean()
+				.default(false)
+				.describe("Extract monsters/creatures"),
+			objects: z
+				.boolean()
+				.default(false)
+				.describe("Extract important objects/items"),
+		})
+		.optional(),
+});
+
 export const searchEntriesTool = {
 	name: "search_entries",
 	description: `Search and extract ALL entities from story text.
@@ -494,36 +523,9 @@ BEST FOR:
 - Tracking name variations for same character
 - Creating searchable story database`,
 
-	inputSchema: z.object({
-		text: z.string().describe("Story text to search for entities"),
-		chapterNumber: z
-			.number()
-			.optional()
-			.describe("Chapter number for organization (1, 2, 3...)"),
-		extractOptions: z
-			.object({
-				characters: z
-					.boolean()
-					.default(true)
-					.describe("Extract characters (including name variations)"),
-				scenes: z.boolean().default(true).describe("Extract scenes/chapters"),
-				locations: z
-					.boolean()
-					.default(true)
-					.describe("Extract locations/places"),
-				creatures: z
-					.boolean()
-					.default(false)
-					.describe("Extract monsters/creatures"),
-				objects: z
-					.boolean()
-					.default(false)
-					.describe("Extract important objects/items"),
-			})
-			.optional(),
-	}),
+	inputSchema: SearchEntriesInputSchema,
 
-	async execute(args: z.infer<(typeof searchEntriesTool)["inputSchema"]>) {
+	async execute(args: z.infer<typeof SearchEntriesInputSchema>) {
 		const entityManager = new EntityManager();
 
 		// 1. FIND - Extract entries

@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { buildInitialGraph } from "./analyzer.js";
+import { buildInitialGraph } from "./core/analyzer.js";
 import { extractStoryEntities } from "./core/parser.js";
 import { toMermaid } from "./exporters/mermaid.js";
-import { validateGraph } from "./validators.js";
+import { validateGraph } from "./core/validators.js";
 
 describe("bl1nk-visual-mcp", () => {
 	const storyText = `
@@ -266,7 +266,7 @@ Event: The adventure continues
 		const aliceEvent = graph.events.find((e) => e.label.includes("Alice"));
 		const bobEvent = graph.events.find((e) => e.label.includes("Bob"));
 
-		expect(aliceEvent?.characters).toContain("char_0");
-		expect(bobEvent?.characters).toContain("char_1");
+		expect(aliceEvent?.characterIds).toContain("char_0");
+		expect(bobEvent?.characterIds).toContain("char_1");
 	});
 });

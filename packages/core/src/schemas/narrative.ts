@@ -12,12 +12,13 @@ export const ThemeSchema = z.object({
         object: z.string(),
         meaning: z.string()
     })).default([]),
-    metadata: z.record(z.any()).default({})
+    metadata: z.record(z.string(), z.any()).optional()
 });
 
 export const StyleSchema = z.object({
     tone: z.string(),
     voice: z.string(),
+    complexity: z.string().optional(),
     pacingDescription: z.string().optional().describe("e.g., 'Frantic and breathless', 'Slow burn'"),
     styleNotes: z.array(z.string()).default([])
 });

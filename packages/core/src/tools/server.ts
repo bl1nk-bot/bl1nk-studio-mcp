@@ -29,8 +29,8 @@ export function registerBl1nkTools(
 				tool.name,
 				tool.description,
 				schema.shape,
-				async (args) =>
-					executeGranularTool(tool.name, args as Record<string, unknown>, apiKey),
+				async (args: Record<string, unknown>) =>
+					executeGranularTool(tool.name, args, apiKey),
 			);
 		}
 

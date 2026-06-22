@@ -6,7 +6,7 @@
  * CSV Generator for StoryGraph data.
  */
 
-import type { Character, Conflict, EventNode, StoryGraph } from "./types.js";
+import type { Character, Conflict, EventNode, StoryGraph } from "../types.js";
 
 /**
  * Escape a value for safe CSV output.
@@ -51,7 +51,7 @@ export function generateCSV(graph: StoryGraph): string {
 	lines.push("id,label,act,importance,characters");
 	for (const event of graph.events) {
 		lines.push(
-			`${event.id},${escapeCSV(event.label)},${event.act},${event.importance || "normal"},${escapeCSV(event.characters?.join(", ") || "")}`,
+			`${event.id},${escapeCSV(event.label)},${event.act},${event.importance || "normal"},${escapeCSV(event.characterIds?.join(", ") || "")}`,
 		);
 	}
 
@@ -91,7 +91,7 @@ function generateEventsCSV(events: EventNode[]): string {
 		escapeCSV(event.label),
 		event.act,
 		event.importance || "normal",
-		escapeCSV(event.characters?.join(", ") || ""),
+		escapeCSV(event.characterIds?.join(", ") || ""),
 	]);
 
 	return [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");

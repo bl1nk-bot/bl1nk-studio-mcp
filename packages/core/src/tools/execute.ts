@@ -15,6 +15,7 @@ import { toMermaid } from "../exporters/mermaid.js";
 import type {
 	Character,
 	CharacterExtractionResult,
+	Conflict,
 	ConflictExtractionResult,
 	RelationshipGraphResult,
 	StoryGraph,
@@ -210,7 +211,7 @@ export async function executeGranularTool(
 				const characters = graph.characters;
 				const characterList: CharacterExtractionResult["characters"] = detailed
 					? characters
-					: characters.map((c) => ({
+					: characters.map((c: Character) => ({
 							id: c.id,
 							name: c.name,
 							role: c.role,
@@ -244,11 +245,15 @@ export async function executeGranularTool(
 				const conflictList: ConflictExtractionResult["conflicts"] =
 					includeEscalation
 						? conflicts
-						: conflicts.map((c) => ({
+						: conflicts.map((c: Conflict) => ({
 								id: c.id,
 								type: c.type,
 								description: c.description,
 								relatedCharacters: c.relatedCharacters,
+								rootCause: c.rootCause,
+								escalations: c.escalations,
+								actIntroduced: c.actIntroduced,
+								resolution: c.resolution,
 							}));
 				const output: ConflictExtractionResult = {
 					count: conflictList.length,
@@ -385,7 +390,7 @@ export async function executeStoryTool(
 		const granularResult = await executeGranularTool(toolName, args, exaApiKey);
 		if (
 			!granularResult.isError ||
-			!granularResult.content[0].text.includes("Error: Unknown tool")
+			!granularResult.content[0]?.text?.includes("Error: Unknown tool")
 		) {
 			return granularResult;
 		}

@@ -1,15 +1,15 @@
-import type { StoryGraph, ValidationResult, ValidationIssue, StoryAnalysis } from "../types.js";
+import type { StoryGraph, ValidationResult, ValidationIssue, StoryAnalysis, EventNode } from "../types.js";
 
 /**
  * Validates the StoryGraph structure against the modular schema rules.
  */
 export function validateStoryStructure(graph: StoryGraph): ValidationResult {
 	const issues: ValidationIssue[] = [];
-	const events = graph.branches.timeline.events;
-	const characters = graph.branches.entities.characters;
-    
+	const events = graph.events;
+	const characters = graph.characters;
+
 	// 1. Basic Metadata Checks
-	if (!graph.project.name) {
+	if (!graph.meta.title) {
 		issues.push({ severity: "error", code: "NO_TITLE", message: "Story has no title." });
 	}
 
@@ -20,9 +20,9 @@ export function validateStoryStructure(graph: StoryGraph): ValidationResult {
 
 	// 3. Act Balance (Rule 25-50-25)
 	const totalEvents = events.length;
-	const act1 = events.filter(e => e.act === 1).length;
-	const act2 = events.filter(e => e.act === 2).length;
-	const act3 = events.filter(e => e.act === 3).length;
+	const act1 = events.filter((e: EventNode) => e.act === 1).length;
+	const act2 = events.filter((e: EventNode) => e.act === 2).length;
+	const act3 = events.filter((e: EventNode) => e.act === 3).length;
 
 	if (totalEvents > 0) {
 		const act1Ratio = act1 / totalEvents;
@@ -34,10 +34,10 @@ export function validateStoryStructure(graph: StoryGraph): ValidationResult {
 	const analysis: StoryAnalysis = {
 		actBalance: { act1, act2, act3, balance: 1.0 },
 		characterCount: characters.length,
-		conflictCount: graph.branches.logic.conflicts.length,
+		conflictCount: graph.conflicts.length,
 		eventCount: totalEvents,
-		hasMidpoint: events.some(e => e.importance === "midpoint"),
-		hasClimax: events.some(e => e.importance === "climax"),
+		hasMidpoint: events.some((e: EventNode) => e.importance === "midpoint"),
+		hasClimax: events.some((e: EventNode) => e.importance === "climax"),
 		pacing: "balanced"
 	};
 
@@ -48,3 +48,7 @@ export function validateStoryStructure(graph: StoryGraph): ValidationResult {
 		recommendations: []
 	};
 }
+
+/** Alias for backward compatibility. */
+export const validateGraph = validateStoryStructure;
+

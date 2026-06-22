@@ -13,7 +13,7 @@ export const MasterStoryGraphSchema = z.object({
     project: ProjectSchema,
     spec: SpecSchema.optional(),
     activeDraft: DraftSchema.optional(),
-    
+
     // กิ่งหลัก (Branches)
     branches: z.object({
         narrative: z.object({
@@ -21,19 +21,19 @@ export const MasterStoryGraphSchema = z.object({
             style: StyleSchema,
             outline: OutlineSchema
         }).optional(),
-        
+
         entities: z.object({
             characters: z.array(CharacterSchema).default([]),
             relationships: z.array(RelationshipSchema).default([])
-        }).default({}),
-        
-        timeline: TimelineSchema.default({}),
-        
+        }).default({ characters: [], relationships: [] }),
+
+        timeline: TimelineSchema.default({ events: [], plotPoints: [] }),
+
         logic: z.object({
             causality: z.array(CausalitySchema).default([]),
             plots: z.array(PlotThreadSchema).default([]),
             conflicts: z.array(ConflictSchema).default([])
-        }).default({})
+        }).default({ causality: [], plots: [], conflicts: [] })
     })
 });
 

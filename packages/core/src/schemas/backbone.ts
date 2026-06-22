@@ -16,7 +16,7 @@ export const EventNodeSchema = z.object({
     characterIds: z.array(z.string()).default([]),
     conflictIds: z.array(z.string()).default([]),
     emotionalTone: z.string().default("neutral"),
-    metadata: z.record(z.any()).default({}) // รองรับการขยายกิ่งแบบอิสระ
+    metadata: z.record(z.string(), z.any()).optional() // รองรับการขยายกิ่งแบบอิสระ
 });
 
 export const PlotPointSchema = z.object({

@@ -42,7 +42,7 @@ export function toMermaid(
 	const validationResult = StoryGraphSchema.safeParse(graph);
 	if (!validationResult.success) {
 		throw new Error(
-			`Invalid story graph data for mermaid generation: ${validationResult.error.errors
+			`Invalid story graph data for mermaid generation: ${validationResult.error.issues
 				.map((e) => `${e.path.join(".")}: ${e.message}`)
 				.join(", ")}`,
 		);

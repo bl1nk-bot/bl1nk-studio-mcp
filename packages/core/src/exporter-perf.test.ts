@@ -15,10 +15,9 @@ describe("Exporter Performance Benchmark", () => {
 				act,
 				importance: i % 10 === 0 ? "climax" : "rising",
 				sequenceInAct: Math.floor(i / 3) + 1,
-				characters: ["char_1"],
-				conflicts: [],
+				characterIds: ["char_1"],
+				conflictIds: [],
 				emotionalTone: "neutral",
-				consequence: "",
 			});
 		}
 
@@ -42,15 +41,16 @@ describe("Exporter Performance Benchmark", () => {
 						transformation: "",
 						emotionalJourney: [],
 					},
-					relationships: [],
 					motivations: [],
 					fears: [],
 					secretsOrLies: [],
 					actAppearances: [1, 2, 3],
+					powers: [],
+					tags: [],
 				},
 			],
 			conflicts: [],
-			events,
+			events: events,
 			relationships: [],
 			tags: [],
 		};

@@ -1,40 +1,23 @@
 import type { StoryGraph, Character, EventNode } from "../types.js";
 
 /**
- * Builds an initial MasterStoryGraph structure.
+ * Builds an initial flat StoryGraph structure.
  */
 export function buildInitialGraph(title: string = "New Story"): StoryGraph {
-    const projectId = crypto.randomUUID();
-    const now = new Date().toISOString();
-    
+	const now = new Date().toISOString();
+
 	return {
-		project: {
-			id: projectId,
-			name: title,
-			status: "active",
+		meta: {
+			title,
 			createdAt: now,
-			updatedAt: now
+			updatedAt: now,
+			version: "1.0.0",
 		},
-		branches: {
-			narrative: {
-				theme: { coreTheme: "Universal Truth", motifs: [], symbolism: [] },
-				style: { tone: "Neutral", voice: "Omniscient", complexity: "standard" },
-				outline: { logline: "", premise: "", majorBeats: [] }
-			},
-			entities: {
-				characters: [],
-				relationships: []
-			},
-			timeline: {
-				events: [],
-				plotPoints: []
-			},
-			logic: {
-				causality: [],
-				plots: [],
-				conflicts: []
-			}
-		}
+		characters: [],
+		events: [],
+		conflicts: [],
+		relationships: [],
+		tags: [],
 	};
 }
 
@@ -44,43 +27,42 @@ export function buildInitialGraph(title: string = "New Story"): StoryGraph {
 export async function analyzeStory(text: string): Promise<StoryGraph> {
 	const graph = buildInitialGraph();
 
-	// Mock extraction 
+	// Mock extraction
 	const extracted = {
-		characters: ["Ignis", "Belz"], 
+		characters: ["Ignis", "Belz"],
 		events: [{ name: "The Beginning", index: 0 }],
 	};
 
-	// Fill entities branch
-	graph.branches.entities.characters = extracted.characters.map((name, i) => ({
+	graph.characters = extracted.characters.map((name, i) => ({
 		id: `char_${i}`,
 		name,
 		role: "supporting",
 		traits: [],
-		arc: { 
-			start: "Normal life", 
-			midpoint: "Change", 
-			end: "New state", 
+		arc: {
+			start: "Normal life",
+			midpoint: "Change",
+			end: "New state",
 			transformation: "Growth",
-			emotionalJourney: [] 
+			emotionalJourney: [],
 		},
 		motivations: [],
 		fears: [],
 		secretsOrLies: [],
 		powers: [],
-		tags: []
+		actAppearances: [],
+		tags: [],
 	}));
 
-	// Fill timeline branch
-	graph.branches.timeline.events = extracted.events.map((event) => ({
+	graph.events = extracted.events.map((event) => ({
 		id: `event_${event.index}`,
 		label: event.name,
-		description: `Auto-generated description`,
+		description: "Auto-generated description",
 		act: 1,
 		importance: "rising",
 		sequenceInAct: event.index + 1,
 		characterIds: [],
 		conflictIds: [],
-		emotionalTone: "neutral"
+		emotionalTone: "neutral",
 	}));
 
 	return graph;

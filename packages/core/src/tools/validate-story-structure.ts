@@ -8,7 +8,7 @@
  */
 
 import type { StoryGraph } from "../types.js";
-import { validateGraph as validate } from "../validators.js";
+import { validateGraph as validate } from "../core/validators.js";
 
 export interface ValidateStoryStructureArgs {
 	graph: StoryGraph;

@@ -17,14 +17,14 @@ describe("extractTasksFromNotes", () => {
     const tasks = extractTasksFromNotes([makeNote()]);
     const undone = tasks.filter((t) => !t.done);
     expect(undone).toHaveLength(1);
-    expect(undone[0].text).toBe("todo");
+    expect(undone[0]?.text).toBe("todo");
   });
 
   it("extracts checked tasks as done=true", () => {
     const tasks = extractTasksFromNotes([makeNote()]);
     const done = tasks.filter((t) => t.done);
     expect(done).toHaveLength(1);
-    expect(done[0].text).toBe("done");
+    expect(done[0]?.text).toBe("done");
   });
 
   it("ignores non-task lines", () => {
@@ -51,8 +51,8 @@ describe("extractTasksFromNotes", () => {
     const b = makeNote({ id: "b", content: "- [x] beta\n" });
     const tasks = extractTasksFromNotes([a, b]);
     expect(tasks).toHaveLength(2);
-    expect(tasks[0].noteId).toBe("a");
-    expect(tasks[1].noteId).toBe("b");
+    expect(tasks[0]?.noteId).toBe("a");
+    expect(tasks[1]?.noteId).toBe("b");
   });
 
   it("defaults priority to medium", () => {
@@ -104,7 +104,7 @@ describe("notesStore load/save round-trip", () => {
     notesStore.save([note]);
     const loaded = notesStore.load();
     expect(loaded).toHaveLength(1);
-    expect(loaded[0].title).toBe("Persisted");
+    expect(loaded[0]?.title).toBe("Persisted");
   });
 
   it("round-trips tasks through localStorage", () => {
@@ -112,6 +112,6 @@ describe("notesStore load/save round-trip", () => {
     notesStore.tasksSave([task]);
     const loaded = notesStore.tasksLoad();
     expect(loaded).toHaveLength(1);
-    expect(loaded[0].text).toBe("Do it");
+    expect(loaded[0]?.text).toBe("Do it");
   });
 });

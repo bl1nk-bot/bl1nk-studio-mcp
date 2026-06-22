@@ -92,10 +92,9 @@ describe("Tool Registration Validation", () => {
 			const schema = Schemas.export_mermaid;
 			const mockGraph = {
 				meta: { title: "Test", createdAt: "", updatedAt: "", version: "1.0.0" },
-				characters: [],
-				conflicts: [],
+				characterIds: [],
+				conflictIds: [],
 				events: [],
-				relationships: [],
 				tags: [],
 			};
 			const result = schema.safeParse({ graph: mockGraph });
@@ -106,10 +105,9 @@ describe("Tool Registration Validation", () => {
 			const schema = Schemas.validate_story_structure;
 			const mockGraph = {
 				meta: { title: "Test", createdAt: "", updatedAt: "", version: "1.0.0" },
-				characters: [],
-				conflicts: [],
+				characterIds: [],
+				conflictIds: [],
 				events: [],
-				relationships: [],
 				tags: [],
 			};
 			const result = schema.safeParse({ graph: mockGraph });
