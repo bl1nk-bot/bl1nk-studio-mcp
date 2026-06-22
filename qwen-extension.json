@@ -75,10 +75,6 @@
 		{
 			"name": "generate_artifacts",
 			"description": "Generate ALL formats at once (legacy)"
-		},
-		{
-			"name": "sync_github",
-			"description": "Push generated files to GitHub repository (not implemented)"
 		}
 	]
 }

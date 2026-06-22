@@ -124,9 +124,9 @@ questions:
     multiSelect: false
     options:
       - label: "[Task] Update user model"
-        description: "Book: track_20251208_user_profile"
+        description: "Book: user_profile_20251208"
       - label: "[Phase] Implement Backend"
-        description: "Book: track_20251208_user_profile"
+        description: "Book: user_profile_20251208"
 ```
 
 **CRITICAL:** You MUST limit this array to a maximum of 4 items.
@@ -169,7 +169,7 @@ For each validated implementation commit, use `git log` to find the correspondin
 
 **IF** the user's intent is to revert an entire book, you MUST perform this additional step.
 
-**Method:** Use `git log -- <path_to_tracks_registry>` (resolved via protocol) and search for the commit that first introduced the book entry.
+**Method:** Resolve the **Books Registry** path via the **Universal File Resolution Protocol** and use `git log -- <Books Registry path>` to search for the commit that first introduced the book entry.
 
 Look for lines matching either:
 

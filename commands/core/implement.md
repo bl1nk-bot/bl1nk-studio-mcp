@@ -76,7 +76,7 @@ questions:
 ```yaml
 questions:
   - header: "Clarify"
-    question: "I couldn't find a unique book matching the name you provided. Did you mean '<next_available_track>'? Or please type the exact book name."
+    question: "I couldn't find a unique book matching the name you provided. Please type the exact book name."
     type: "text"
 ```
 

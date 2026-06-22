@@ -47,7 +47,7 @@ the **Books Registry**.
 - Look
 for a book marked as `[~] In Progress`.
 - If one exists, immediately
-call the `ask_user` tool to confirm (do not repeat the question in the chat): - **questions:** - **header:** "Review Book" - **question:** "Do you want to review the in-progress book '<track_name>'?" - **type:** "yesno"
+call the `ask_user` tool to confirm (do not repeat the question in the chat): - **questions:** - **header:** "Review Book" - **question:** "Do you want to review the in-progress book '<book_name>'?" - **type:** "yesno"
 - If no book is in progress, or user says "no", immediately
 call the `ask_user` tool to ask for the scope (do not repeat the question in the chat): - **questions:** - **header:** "Select Scope" - **question:** "What would you like to review?" - **type:** "text" - **placeholder:** "Enter book name, or 'current' for uncommitted changes" 3. **Confirm Scope:** Ensure you and the user agree on what is being reviewed by immediately calling the `ask_user` tool (do not repeat the question in the chat): - **questions:** - **header:** "Confirm Scope" - **question:** "I will review: '<identified_scope>'. Is this correct?" - **type:** "yesno"
 
@@ -185,7 +185,7 @@ it doesn't exist) and task to the end of the file. - **Format:** ```markdown
 - Stage all code changes related
 to the book (excluding `plan.md`).
 - Commit with message: `fix(conductor): Apply review suggestions
-for book '<track_name>'`. - **Record SHA:**
+for book '<book_name>'`. - **Record SHA:**
 - Get
 the short SHA (first 7 characters) of the commit.
 - Update
@@ -196,11 +196,11 @@ the task in `plan.md` to: `- [x] Task: Apply review suggestions <sha>`. - **Comm
 
 ### 3.3 Book Cleanup
 
-**PROTOCOL: Offer to archive or delete the reviewed book.** 1. **Context Check:** If you are NOT reviewing a specific book (e.g., just reviewing current changes without a book context), SKIP this entire section. 2. **Ask for User Choice:** Immediately call the `ask_user` tool to prompt the user (do not repeat the question in the chat): - **questions:** - **header:** "Book Cleanup" - **question:** "Review complete. What would you like to do with book '<track_name>'?" - **type:** "choice" - **multiSelect:** false - **options:**
+**PROTOCOL: Offer to archive or delete the reviewed book.** 1. **Context Check:** If you are NOT reviewing a specific book (e.g., just reviewing current changes without a book context), SKIP this entire section. 2. **Ask for User Choice:** Immediately call the `ask_user` tool to prompt the user (do not repeat the question in the chat): - **questions:** - **header:** "Book Cleanup" - **question:** "Review complete. What would you like to do with book '<book_name>'?" - **type:** "choice" - **multiSelect:** false - **options:**
 
 - Label: "Archive", Description: "Move
 the book's folder to `conductor/archive/` and remove it from the books file."
 - Label: "Delete", Description: "Permanently delete
 the book's folder and remove it from the books file."
 - Label: "Skip", Description: "Do nothing
-and leave it in the books file." 3. **Handle User Response:** ***If "Archive":** i. **Setup:** Ensure `conductor/archive/` exists. ii. **Move:** Move book folder to `conductor/archive/<book_id>`. iii. **Update Registry:** Remove book section from **Books Registry**. iv. **Commit:** Stage registry and archive. Commit: `chore(conductor): Archive book '<track_name>'`. v. **Announce:** "Book '<track_name>' archived."* **If "Delete":** i. **Confirm:** Immediately call the `ask_user` tool to ask for final confirmation (do not repeat the warning in the chat): - **questions:** - **header:** "Confirm" - **question:** "WARNING: This is an irreversible deletion. Do you want to proceed?" - **type:** "yesno" ii. **If yes:** Delete book folder, remove from **Books Registry**, commit (`chore(conductor): Delete book '<track_name>'`), announce success. iii. **If no:** Cancel. * **If "Skip":** Leave book as is.
+and leave it in the books file." 3. **Handle User Response:** ***If "Archive":** i. **Setup:** Ensure `conductor/archive/` exists. ii. **Move:** Move book folder to `conductor/archive/<book_id>`. iii. **Update Registry:** Remove book section from **Books Registry**. iv. **Commit:** Stage registry and archive. Commit: `chore(conductor): Archive book '<book_name>'`. v. **Announce:** "Book '<book_name>' archived."* **If "Delete":** i. **Confirm:** Immediately call the `ask_user` tool to ask for final confirmation (do not repeat the warning in the chat): - **questions:** - **header:** "Confirm" - **question:** "WARNING: This is an irreversible deletion. Do you want to proceed?" - **type:** "yesno" ii. **If yes:** Delete book folder, remove from **Books Registry**, commit (`chore(conductor): Delete book '<book_name>'`), announce success. iii. **If no:** Cancel. * **If "Skip":** Leave book as is.

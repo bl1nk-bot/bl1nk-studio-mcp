@@ -32,7 +32,13 @@ proceed to Status Overview Protocol.
 1. **Locate and Read:** Read the content of the **Books Registry** (resolved via **Universal File Resolution Protocol**). 2. **Locate and Read Books:**
 
 - Parse
-the **Books Registry** to identify all registered books and their paths. * **Parsing Logic:** When reading the **Books Registry** to identify books, look for lines matching either the new standard format `- [ ] **Book:` or the legacy format `## [ ] Book:`.
+the **Books Registry** to identify all registered books and their paths. * **Parsing Logic:** When reading the **Books Registry** to identify books, look for lines matching either the new standard format `- [ ] **Book:` or the legacy format `## [ ] Book:`. * **Handle Empty Registry:** If no books are found after parsing, announce:
+
+```
+The books registry exists but contains no books. Please run `/conductor:newBook` to create your first book.
+```
+
+Then **HALT**.
 - For each book, resolve
 and read its **Implementation Plan** (using **Universal File Resolution Protocol** via the book's index file).
 

@@ -464,7 +464,7 @@ The format MUST be:
 
 **Announce:** Inform the user you are committing the **Books Registry** changes.
 
-**Commit Changes:** Stage the **Books Registry** files and commit with the message:
+**Commit Changes:** Stage the **Books Registry** file and the entire book directory at `<Books Directory>/<book_id>/` (containing spec.md, plan.md, index.md, and metadata.json), then commit with the message:
 
 ```
 chore(conductor): Add new book '<book_description>'
