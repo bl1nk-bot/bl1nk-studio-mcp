@@ -39,13 +39,24 @@ export default function AgentSuite() {
     checkAuth();
   }, []);
 
-  // Handle OAuth initiation
+  // Handle OAuth initiation with safe URL validation
   const handleOAuth = async () => {
     try {
       const res = await fetch('/api/oauth/authorize?resource=' + encodeURIComponent(process.env.NEXT_PUBLIC_DOCS_URL || ''));
       const data = await res.json();
       if (data.authorizationUrl) {
-        window.location.href = data.authorizationUrl;
+        // Validate URL origin to prevent open redirect
+        try {
+          const redirectUrl = new URL(data.authorizationUrl);
+          const allowedOrigins = process.env.NEXT_PUBLIC_ALLOWED_ORIGINS?.split(',') || [window.location.origin];
+          if (allowedOrigins.some(origin => redirectUrl.origin === origin)) {
+            window.location.href = data.authorizationUrl;
+          } else {
+            console.error('Blocked redirect to untrusted origin:', redirectUrl.origin);
+          }
+        } catch {
+          console.error('Invalid authorization URL:', data.authorizationUrl);
+        }
       }
     } catch (error) {
       console.error('OAuth initiation failed:', error);

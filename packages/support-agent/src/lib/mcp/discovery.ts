@@ -1,4 +1,3 @@
-import { generatePKCE, generateState } from './pkce';
 
 interface AuthorizationServerMetadata {
   authorization_endpoint: string;
