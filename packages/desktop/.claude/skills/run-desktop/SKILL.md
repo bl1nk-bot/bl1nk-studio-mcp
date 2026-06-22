@@ -55,6 +55,7 @@ xvfb-run --server-args="-screen 0 1280x800x24" \
 ```
 
 Screenshots land at:
+
 - `.claude/skills/run-desktop/editor.png`
 - `.claude/skills/run-desktop/graph.png`
 - `.claude/skills/run-desktop/timeline.png`
