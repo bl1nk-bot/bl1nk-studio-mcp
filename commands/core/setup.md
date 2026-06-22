@@ -64,6 +64,7 @@ the **Target Section** (from 1.2) is anything other than "Section 2.0":
 the story maturity (Greenfield/Brownfield) and **briefly state the reason** (e.g., "A Greenfield project was detected because no story content exists"). Then announce the target section. - **IMMEDIATELY JUMP** to the Target Section. Do not execute the rest of Section 2.0.
 - If
 the Target Section is "Section 2.0", proceed to step
+
 1. 1.
 
 **Execute Workflow based on Maturity:** - **If Brownfield:**
@@ -231,6 +232,7 @@ to the next step."
 to modify the drafted content." 8. **Continue:** Once approved, retain these requirements in your context and immediately proceed to propose a book in the next section.
 
 ### 3.2 Propose a Single Initial Book (Automated
+
 - Approval) 1.
 **State Your Goal:** Announce that you will now propose an initial book to get the story started. Briefly explain that a "book" is a high-level unit of work (like a novel or short story) used to organize the story. 2. **Generate Book Title:** Analyze the story context (`story-universe.md`, `world-building.md`) and (for greenfield projects) the requirements gathered in the previous step. Generate a single book title that summarizes the entire initial book. - **Greenfield:** Focus on the core story (e.g., "The Dragon's Heir
 
