@@ -20,6 +20,9 @@ importers:
       handlebars:
         specifier: ^4.7.9
         version: 4.7.9
+      playwright-core:
+        specifier: ^1.61.0
+        version: 1.61.0
       zod:
         specifier: ^4.4.3
         version: 4.4.3

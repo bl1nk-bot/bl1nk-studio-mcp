@@ -32,6 +32,7 @@
 		"@vercel/analytics": "^2.0.1",
 		"fs-extra": "^11.3.5",
 		"handlebars": "^4.7.9",
+		"playwright-core": "^1.61.0",
 		"zod": "^4.4.3"
 	},
 	"devDependencies": {
