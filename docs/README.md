@@ -2,7 +2,9 @@
 
 เอกสารทั้งหมดสำหรับโปรเจค bl1nk-visual-mcp
 
-## 📚 เอกสารหลัก
+---
+
+## เอกสารหลัก
 
 | เอกสาร | คำอธิบาย |
 |--------|----------|
@@ -11,41 +13,43 @@
 | [`../CHANGELOG.md`](../CHANGELOG.md) | ประวัติการเปลี่ยนแปลง |
 | [`../TODO.md`](../TODO.md) | แผนงานและงานที่ต้องทำ |
 
-## 📖 เอกสารเฉพาะทาง
+## เอกสารเฉพาะทาง
 
-### 🤖 AI Agent Architecture
-- **[Prompt Assembly](prompt-assembly.md)** - แนวคิดและการนำระบบประกอบ prompt ไปใช้ (ครบถ้วน)
-- **[Architecture](ARCHITECTURE.md)** - สถาปัตยกรรมระบบ, Dataflow และ Agent Skills Architecture
+### AI Agent Architecture
+- [`ARCHITECTURE.md`](ARCHITECTURE.md) - สถาปัตยกรรมระบบ, Dataflow และ Agent Skills Architecture
+- [`prompt-assembly.md`](prompt-assembly.md) - แนวคิดและการนำระบบประกอบ prompt ไปใช้
 
-### 📋 Project Documentation
+### Project Documentation
 - [`TOOL_MAPPING.md`](TOOL_MAPPING.md) - การ mapping ทุก tools (16 tools)
-- [`PROJECT_SUMMARY.md`](PROJECT_SUMMARY.md) - ประวัติโปรเจค (Phase 1 + 2)
+- [`PROJECT_SUMMARY.md`](PROJECT_SUMMARY.md) - ประวัติโปรเจคและสถานะปัจจุบัน
 
-### 🔧 Component Documentation
+### Component Documentation
 - [`TAURI-APP.md`](TAURI-APP.md) - Desktop app (Tauri) role and setup
 - [`GITHUB-SYNC.md`](GITHUB-SYNC.md) - GitHub webhook sync service
-- [`CRAFT-BLOG-CMS.md`](CRAFT-BLOG-CMS.md) - Orphaned CMS package
+- [`VERCEL_DEPLOYMENT.md`](VERCEL_DEPLOYMENT.md) - Vercel deployment guide
 
-### 📚 Learning & References
+### Learning & References
 - [`quick-start.md`](quick-start.md) - Quick start guide
 - [`INSTRUCTIONS_TH.md`](INSTRUCTIONS_TH.md) - คำแนะนำการพัฒนา (ภาษาไทย)
-- **[Reference Gallery](./reference/)** - คลังข้อมูลอ้างอิงทางเทคนิค
-    - [`mcp_best_practices.md`](./reference/mcp_best_practices.md) - แนวทางปฏิบัติที่ดีที่สุดสำหรับ MCP
-    - [`quality_checklist.md`](./reference/quality_checklist.md) - รายการตรวจสอบคุณภาพงาน
-    - [`evaluation.md`](./reference/evaluation.md) - เกณฑ์การประเมินผล
+- [`./reference/`](./reference/) - คลังข้อมูลอ้างอิงทางเทคนิค
+  - [`mcp_best_practices.md`](./reference/mcp_best_practices.md)
+  - [`quality_checklist.md`](./reference/quality_checklist.md)
+  - [`evaluation.md`](./reference/evaluation.md)
 
-## 🏗️ Development Structure
+## Development Structure
 
 ```
 bl1nk-visual-mcp/
 ├── packages/                 # Source code
-│   ├── bl1nk-core/          # MCP Server (16 tools)
-│   ├── bl1nk-desktop/       # Tauri Desktop App (Rust API)
-│   ├── bl1nk-ide/           # Next.js Web IDE
-│   └── bl1nk-sync/          # GitHub Sync Service
-├── docs/                     # Central Documentation
-│   └── reference/           # Technical references
-├── skills/                   # Centralized AI Skills (Source of Truth)
-├── commands/                 # CLI commands
-└── tests/                    # Integration tests
+│   ├── core/          # MCP Server (16 tools)
+│   ├── desktop/       # Tauri Desktop App
+│   ├── ai-ide/              # Web IDE (Vite + React)
+│   ├── ui/    # Unified React UI shell
+│   ├── book/          # Next.js book publishing app
+│   ├── sync/          # GitHub Sync Service
+│   └── support-agent/       # Next.js support chat app
+├── docs/                    # Central Documentation
+├── templates/               # Handlebars/Nunjucks templates
+├── commands/                # CLI commands
+└── tests/                   # Integration tests
 ```

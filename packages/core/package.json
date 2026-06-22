@@ -1,0 +1,24 @@
+{
+	"name": "@bl1nk/core",
+	"version": "3.0.0",
+	"type": "module",
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "npx esbuild src/index.ts --bundle --platform=node --format=esm --outdir=dist --external:@modelcontextprotocol/sdk",
+		"start": "node dist/index.js",
+		"dev": "npx esbuild src/index.ts --bundle --platform=node --format=esm --outdir=dist --external:@modelcontextprotocol/sdk --watch",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@modelcontextprotocol/sdk": "^1.29.0",
+		"@upstash/ratelimit": "^2.0.8",
+		"@upstash/redis": "^1.38.0",
+		"fs-extra": "^11.3.5",
+		"handlebars": "^4.7.9",
+		"jose": "^6.2.3",
+		"nunjucks": "^3.2.4",
+		"zod": "^4.4.3"
+	}
+}

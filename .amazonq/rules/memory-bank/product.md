@@ -11,7 +11,7 @@ A monorepo providing an AI-powered story analysis and organization system. It pa
 
 ## Key Features
 
-### MCP Server (`packages/bl1nk/`)
+### MCP Server (`packages/core/`)
 - 16 MCP tools total: 11 granular + 4 legacy + 1 search
 - `analyze_story` — core tool: text → StoryGraph JSON
 - Export tools: `export_mermaid`, `export_canvas`, `export_dashboard`, `export_markdown`, `export_mcp_ui_dashboard`
@@ -24,11 +24,11 @@ A monorepo providing an AI-powered story analysis and organization system. It pa
 - Vercel-deployable HTTP endpoint wrapping MCP tools
 - Enables web-based access to story analysis without MCP client
 
-### Desktop App (`packages/tauri-app/`)
+### Desktop App (`packages/desktop/`)
 - React + Vite + Tauri desktop application
 - StoryGraph visualization, character relationship graph, timeline view, Markdown preview
 
-### GitHub Sync (`packages/github-sync/`)
+### GitHub Sync (`packages/sync/`)
 - Webhook handler for GitHub push events
 - Syncs Markdown/CSV files to Notion databases automatically
 

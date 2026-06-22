@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🔧 Improvements
 
 - **Tool Registration Fixed** — Rewrote registration logic to properly match schemas with executors (was causing `undefined.shape` errors)
-- **Package Dependencies Linked** — Added `@bl1nk/visual-mcp: workspace:*` to tauri-app and github-sync packages
+- **Package Dependencies Linked** — Added `@bl1nk/core: workspace:*` to desktop and github-sync packages
 - **Version Alignment** — All packages aligned to v3.0.0 (was inconsistent: 1.0.0, 3.0.0, 0.1.0)
 - **Documentation Reorganized** — Moved all architecture docs to `docs/` directory for clarity
 - **Extension Configs Updated** — `gemini-extension.json` and `qwen-extension.json` now list all 15 tools with correct MCP paths

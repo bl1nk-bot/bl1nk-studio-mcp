@@ -9,7 +9,7 @@
 			"**/coverage/**",
 			"**/.next/**",
 			"templates/**",
-			"packages/bl1nk-core/templates/**",
+			"packages/core/templates/**",
 			"packages/craft-blog-cms/**",
 			".kilo/**"
 		],

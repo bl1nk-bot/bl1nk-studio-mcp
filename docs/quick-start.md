@@ -48,7 +48,7 @@ Ensure your project has this structure:
 
 ```
 visual-story-extension/
-├── packages/bl1nk/
+├── packages/core/
 │   ├── index.ts
 │   ├── src/index.ts
 │   ├── types.ts

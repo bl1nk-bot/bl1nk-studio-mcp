@@ -6,7 +6,7 @@
 ---
 
 ## 1. 💎 Single Source of Truth (Types)
-ทุกไฟล์ใน `bl1nk-core` ต้องใช้ Type จาก `src/types.ts` เท่านั้น **ห้ามประกาศ Type เองในไฟล์ย่อย**
+ทุกไฟล์ใน `core` ต้องใช้ Type จาก `src/types.ts` เท่านั้น **ห้ามประกาศ Type เองในไฟล์ย่อย**
 
 ### Core Graph Data
 - `StoryGraph`: ข้อมูลดิบที่ได้จากการ Analyze

@@ -43,11 +43,11 @@ pnpm test
 ```
 visual-story-extension/
 ├── packages/
-│   ├── bl1nk-core/        # MCP server (main package)
-│   ├── bl1nk-book/        # Craft API bookshelf app
-│   ├── bl1nk-desktop/     # Tauri desktop app
+│   ├── core/        # MCP server (main package)
+│   ├── book/        # Craft API book app
+│   ├── desktop/     # Tauri desktop app
 │   ├── bl1nk-ide/         # AI IDE app
-│   └── bl1nk-sync/        # GitHub sync service
+│   └── sync/        # GitHub sync service
 ├── skills/                # AI skills (source of truth)
 ├── commands/              # CLI commands (TOML)
 ├── hooks/                 # Event hooks

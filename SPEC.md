@@ -12,8 +12,8 @@ owner: dev-team
 
 UI layer และกฎเกณฑ์หลักสำหรับ `bl1nk-visual-mcp` monorepo — รวมถึง:
 
-- **bl1nk-core**: Node.js MCP Server สำหรับวิเคราะห์และจัดระเบียบเนื้อเรื่อง
-- **bl1nk-unified-ui**: Unified Desktop & Web UI (React 19 + Tauri 2) สำหรับเขียนและวิเคราะห์เรื่องราวแบบ Visual
+- **core**: Node.js MCP Server สำหรับวิเคราะห์และจัดระเบียบเนื้อเรื่อง
+- **ui**: Unified Desktop & Web UI (React 19 + Tauri 2) สำหรับเขียนและวิเคราะห์เรื่องราวแบบ Visual
 
 ระบบนี้รับ **StoryGraph JSON** ที่ได้จาก MCP tools แล้วแสดงผลเป็น interactive dashboards, visual diagrams และเอกสารวิเคราะห์
 
@@ -23,12 +23,12 @@ UI layer และกฎเกณฑ์หลักสำหรับ `bl1nk-vis
 
 ```
 bl1nk-visual-mcp Monorepo
-├── bl1nk-core/ (Node.js MCP Server)
+├── core/ (Node.js MCP Server)
 │   └── tools: analyze_story, export_mermaid, validate_story_structure, ...
 │        │
 │        │  StoryGraph JSON / Mermaid string / HTML / Canvas JSON
 │        ▼
-└── bl1nk-unified-ui/ (React 19 + Tauri 2)
+└── ui/ (React 19 + Tauri 2)
     ├── React Frontend (TypeScript + Tailwind 4)
     ├── Tauri Backend (Rust)
     ├── Story Writer (Obsidian-style Markdown Editor)
@@ -95,14 +95,14 @@ bl1nk-visual-mcp Monorepo
 
 ## 5. Tech Stack
 
-### bl1nk-core (MCP Server)
+### core (MCP Server)
 | Layer | Tech | Version |
 |-------|------|---------|
 | Runtime | Node.js | >=22 |
 | Language | TypeScript | 6.x |
 | Framework | MCP SDK | 1.29.x |
 
-### bl1nk-unified-ui (Unified UI)
+### ui (Unified UI)
 | Layer | Tech | Version |
 |-------|------|---------|
 | Framework | React | 19.x |

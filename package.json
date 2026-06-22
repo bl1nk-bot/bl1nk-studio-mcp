@@ -3,10 +3,11 @@
 	"version": "3.0.0",
 	"private": true,
 	"type": "module",
-	"packageManager": "pnpm@10.28.0",
 	"engines": {
-		"node": ">=22"
+		"node": ">=22",
+		"pnpm": ">=11.5.1"
 	},
+	"packageManager": "pnpm@11.8.0+sha512.c1f5e7c4cb241c8f174b743851d82f42b802324afc8b0f116b96adb15aa06664948dde36960a3ba1079ba5b4b29dd0140135b94b5b5f5263592249d68e555f26",
 	"scripts": {
 		"build": "pnpm -r run build",
 		"dev": "pnpm -r --parallel run dev",
@@ -26,36 +27,42 @@
 		"mcp:check": "node scripts/build.js check"
 	},
 	"dependencies": {
-		"@modelcontextprotocol/sdk": "^1.27.1",
+		"@modelcontextprotocol/sdk": "^1.29.0",
 		"@vercel/analytics": "^2.0.1",
 		"fs-extra": "^11.3.5",
 		"handlebars": "^4.7.9",
-		"zod": "^3.22.4"
+		"zod": "^4.4.3"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
-		"@playwright/test": "^1.48.0",
-		"@tailwindcss/vite": "^4.0.0",
-		"@tauri-apps/cli": "^2.0.0",
-		"@testing-library/jest-dom": "^6.6.3",
-		"@testing-library/react": "^16.1.0",
-		"@testing-library/user-event": "^14.5.2",
+		"@biomejs/biome": "2.4.16",
+		"@esbuild/android-arm64": "^0.28.0",
+		"@playwright/test": "^1.60.0",
+		"@tailwindcss/vite": "^4.3.0",
+		"@tauri-apps/cli": "^2.11.2",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.2",
+		"@testing-library/user-event": "^14.6.1",
 		"@types/fs-extra": "^11.0.4",
-		"@types/node": "^22.19.0",
-		"@types/react": "^19.2.0",
-		"@types/react-dom": "^19.2.0",
+		"@types/node": "^25.9.3",
+		"@types/react": "^19.2.17",
+		"@types/react-dom": "^19.2.3",
 		"@vitejs/plugin-react": "^6.0.2",
-		"autoprefixer": "^10.4.20",
-		"esbuild": "^0.28.0",
-		"jsdom": "^25.0.1",
-		"markdownlint-cli2": "^0.21.0",
-		"postcss": "^8.5.15",
-		"tailwindcss": "^4.0.0",
-		"typescript": "^5.6.3",
-		"vite": "^8.0.2",
-		"vitest": "^4.1.2"
+		"autoprefixer": "^10.5.0",
+		"esbuild": "0.27.7",
+		"jsdom": "^29.1.1",
+		"markdownlint-cli2": "^0.22.1",
+		"postcss": "8.5.15",
+		"tailwindcss": "^4.3.0",
+		"typescript": "^6.0.3",
+		"vite": "^8.0.16",
+		"vitest": "^4.1.8"
 	},
 	"overrides": {
-		"rollup": "^4.59.0"
+		"rollup": "^4.59.0",
+		"postcss": "8.5.15",
+		"@ai-sdk/provider-utils": "^3.0.98"
+	},
+	"resolutions": {
+		"postcss": "8.5.15"
 	}
 }
