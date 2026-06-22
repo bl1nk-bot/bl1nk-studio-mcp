@@ -13,7 +13,7 @@
 		"dev": "pnpm -r --parallel run dev",
 		"test": "pnpm -r run test",
 		"test:watch": "pnpm -r run test:watch",
-		"lint": "biome check . && markdownlint-cli2 \"**/*.md\"",
+		"lint": "biome check . && markdownlint-cli2 \"**/*.md\" \"!**/node_modules/**\" \"!**/dist/**\" \"!**/out/**\" \"!**/.next/**\" \"!**/coverage/**\"",
 		"lint:fix": "biome check --write . && markdownlint-cli2 --fix \"**/*.md\"",
 		"format": "biome format --write .",
 		"typecheck": "pnpm -r run typecheck",
