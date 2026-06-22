@@ -1,5 +1,5 @@
-import type { StoryGraph } from "../types.js";
 import { validateGraph } from "../core/validators.js";
+import type { StoryGraph } from "../types.js";
 
 export function toMarkdown(
 	graph: StoryGraph,

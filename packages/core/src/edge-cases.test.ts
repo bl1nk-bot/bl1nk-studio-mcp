@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { buildInitialGraph } from "./core/analyzer.js";
 import { extractStoryEntities } from "./core/parser.js";
+import { generateCSV } from "./exporters/csv-generator.js";
 import { toDashboard } from "./exporters/dashboard.js";
 import type { StoryGraph } from "./types.js";
-import { generateCSV } from "./exporters/csv-generator.js";
 
 // Minimal graph builder for edge case tests
 const createMinimalGraph = (events = 3): StoryGraph => {

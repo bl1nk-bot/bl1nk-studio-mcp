@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { buildInitialGraph } from "./core/analyzer.js";
 import { extractStoryEntities } from "./core/parser.js";
-import { toMermaid } from "./exporters/mermaid.js";
 import { validateGraph } from "./core/validators.js";
+import { toMermaid } from "./exporters/mermaid.js";
 
 describe("bl1nk-visual-mcp", () => {
 	const storyText = `

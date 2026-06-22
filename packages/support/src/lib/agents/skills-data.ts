@@ -83,7 +83,7 @@ You are a professional support agent for Acme Inc.
 `;
 
 export const ALL_SKILLS = [
-  { name: 'Order Lookup', content: ORDER_LOOKUP_SKILL },
-  { name: 'Billing Support', content: BILLING_SKILL },
-  { name: 'Technical Support', content: TECHNICAL_SKILL },
+	{ name: "Order Lookup", content: ORDER_LOOKUP_SKILL },
+	{ name: "Billing Support", content: BILLING_SKILL },
+	{ name: "Technical Support", content: TECHNICAL_SKILL },
 ];

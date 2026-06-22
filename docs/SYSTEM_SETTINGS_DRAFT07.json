@@ -1,118 +1,139 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://bl1nk.dev/schemas/complete-architect-contract.json",
-  "title": "bl1nk MASTER SYSTEM SETTINGS - DRAFT 07 (FINAL CONTRACT)",
-  "description": "มหาพิมพ์เขียวฉบับจบ: นิยาม Entry ชั้น 2, โครงสร้างพื้นที่ (Spatial), และ JSON Payload สำหรับเครื่องมือทุกตัว",
-  "type": "object",
-  "required": ["entry_layer_2", "tool_return_schemas", "spatial_scaling_engine"],
-  "properties": {
-    "entry_layer_2": {
-      "type": "object",
-      "description": "ระบบจัดกลุ่มระดับสูง (Collections & Factions): มัดรวม Object ย่อยเข้าสู่พื้นที่เดียวกัน",
-      "required": ["collection_types"],
-      "properties": {
-        "collection_types": {
-          "type": "object",
-          "properties": {
-            "clan_faction": {
-              "description": "พื้นที่ของตระกูล/กลุ่ม (Area Container)",
-              "schema": {
-                "id": { "type": "string" },
-                "member_ids": { "type": "array", "items": { "type": "string" } },
-                "shared_properties": { "type": "object", "description": "พร็อพเพอร์ตี้ที่ทุกคนในกลุ่มต้องมี" },
-                "hierarchy_level": { "type": "integer", "description": "ลำดับชั้นใน Collection" }
-              }
-            },
-            "power_domain": {
-              "description": "พื้นที่ของระบบพลัง (System Area)",
-              "schema": {
-                "system_name": { "type": "string" },
-                "user_ids": { "type": "array", "items": { "type": "string" } },
-                "universal_limits": { "type": "string" }
-              }
-            }
-          }
-        }
-      }
-    },
-    "tool_return_schemas": {
-      "type": "object",
-      "description": "โครงสร้าง JSON ที่เครื่องมือต้องส่งกลับมา (The Data Loop Payload)",
-      "properties": {
-        "object_finder_output": {
-          "type": "object",
-          "required": ["identity", "stats"],
-          "properties": {
-            "identity": { "id": "string", "name": "string", "aliases": "array" },
-            "stats": { "frequency": "number", "volume_density": "object" },
-            "next_search_queries": { "type": "array", "items": { "type": "string" }, "description": "คำค้นหาที่ส่งต่อให้ Tool อื่น" }
-          }
-        },
-        "property_delta_output": {
-          "type": "object",
-          "required": ["target_id", "changes"],
-          "properties": {
-            "target_id": { "type": "string" },
-            "changes": {
-              "type": "array",
-              "items": {
-                "field": "string",
-                "old_value": "string",
-                "new_value": "string",
-                "cause_event_id": "string",
-                "impact_pct": "number"
-              }
-            }
-          }
-        },
-        "relation_trace_output": {
-          "type": "object",
-          "required": ["links"],
-          "properties": {
-            "links": {
-              "type": "array",
-              "items": {
-                "source": "string",
-                "target": "string",
-                "type": "string",
-                "sentiment": "number",
-                "is_hidden": "boolean"
-              }
-            }
-          }
-        }
-      }
-    },
-    "spatial_scaling_engine": {
-      "type": "object",
-      "description": "ตรรกะการคำนวณพื้นที่ (Spatial Area Logic)",
-      "properties": {
-        "screen_normalization": {
-          "formula": "Value / Max(Set) * Scaling_Factor",
-          "viewport_rules": {
-            "circle_radius": { "min": "2%", "max": "15%" },
-            "graph_height": { "max": "25%" },
-            "impact_distance": { "scale": "logarithmic" }
-          }
-        },
-        "containment_draw": {
-          "description": "การวาดพื้นที่ครอบคลุม (Area Drawing)",
-          "style": {
-            "background_fill": "rgba(255,255,255,0.05)",
-            "border_type": "glow_box",
-            "label_position": "top_left"
-          }
-        }
-      }
-    },
-    "serialization_map": {
-      "type": "object",
-      "description": "การแปลงภาพกลับเป็นข้อมูล (Visual-to-Data Conversion)",
-      "properties": {
-        "node_to_json": { "path": "story.entities.objects" },
-        "edge_to_json": { "path": "story.logic.relationships" },
-        "area_to_json": { "path": "story.entities.collections" }
-      }
-    }
-  }
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "https://bl1nk.dev/schemas/complete-architect-contract.json",
+	"title": "bl1nk MASTER SYSTEM SETTINGS - DRAFT 07 (FINAL CONTRACT)",
+	"description": "มหาพิมพ์เขียวฉบับจบ: นิยาม Entry ชั้น 2, โครงสร้างพื้นที่ (Spatial), และ JSON Payload สำหรับเครื่องมือทุกตัว",
+	"type": "object",
+	"required": [
+		"entry_layer_2",
+		"tool_return_schemas",
+		"spatial_scaling_engine"
+	],
+	"properties": {
+		"entry_layer_2": {
+			"type": "object",
+			"description": "ระบบจัดกลุ่มระดับสูง (Collections & Factions): มัดรวม Object ย่อยเข้าสู่พื้นที่เดียวกัน",
+			"required": ["collection_types"],
+			"properties": {
+				"collection_types": {
+					"type": "object",
+					"properties": {
+						"clan_faction": {
+							"description": "พื้นที่ของตระกูล/กลุ่ม (Area Container)",
+							"schema": {
+								"id": { "type": "string" },
+								"member_ids": {
+									"type": "array",
+									"items": { "type": "string" }
+								},
+								"shared_properties": {
+									"type": "object",
+									"description": "พร็อพเพอร์ตี้ที่ทุกคนในกลุ่มต้องมี"
+								},
+								"hierarchy_level": {
+									"type": "integer",
+									"description": "ลำดับชั้นใน Collection"
+								}
+							}
+						},
+						"power_domain": {
+							"description": "พื้นที่ของระบบพลัง (System Area)",
+							"schema": {
+								"system_name": { "type": "string" },
+								"user_ids": { "type": "array", "items": { "type": "string" } },
+								"universal_limits": { "type": "string" }
+							}
+						}
+					}
+				}
+			}
+		},
+		"tool_return_schemas": {
+			"type": "object",
+			"description": "โครงสร้าง JSON ที่เครื่องมือต้องส่งกลับมา (The Data Loop Payload)",
+			"properties": {
+				"object_finder_output": {
+					"type": "object",
+					"required": ["identity", "stats"],
+					"properties": {
+						"identity": {
+							"id": "string",
+							"name": "string",
+							"aliases": "array"
+						},
+						"stats": { "frequency": "number", "volume_density": "object" },
+						"next_search_queries": {
+							"type": "array",
+							"items": { "type": "string" },
+							"description": "คำค้นหาที่ส่งต่อให้ Tool อื่น"
+						}
+					}
+				},
+				"property_delta_output": {
+					"type": "object",
+					"required": ["target_id", "changes"],
+					"properties": {
+						"target_id": { "type": "string" },
+						"changes": {
+							"type": "array",
+							"items": {
+								"field": "string",
+								"old_value": "string",
+								"new_value": "string",
+								"cause_event_id": "string",
+								"impact_pct": "number"
+							}
+						}
+					}
+				},
+				"relation_trace_output": {
+					"type": "object",
+					"required": ["links"],
+					"properties": {
+						"links": {
+							"type": "array",
+							"items": {
+								"source": "string",
+								"target": "string",
+								"type": "string",
+								"sentiment": "number",
+								"is_hidden": "boolean"
+							}
+						}
+					}
+				}
+			}
+		},
+		"spatial_scaling_engine": {
+			"type": "object",
+			"description": "ตรรกะการคำนวณพื้นที่ (Spatial Area Logic)",
+			"properties": {
+				"screen_normalization": {
+					"formula": "Value / Max(Set) * Scaling_Factor",
+					"viewport_rules": {
+						"circle_radius": { "min": "2%", "max": "15%" },
+						"graph_height": { "max": "25%" },
+						"impact_distance": { "scale": "logarithmic" }
+					}
+				},
+				"containment_draw": {
+					"description": "การวาดพื้นที่ครอบคลุม (Area Drawing)",
+					"style": {
+						"background_fill": "rgba(255,255,255,0.05)",
+						"border_type": "glow_box",
+						"label_position": "top_left"
+					}
+				}
+			}
+		},
+		"serialization_map": {
+			"type": "object",
+			"description": "การแปลงภาพกลับเป็นข้อมูล (Visual-to-Data Conversion)",
+			"properties": {
+				"node_to_json": { "path": "story.entities.objects" },
+				"edge_to_json": { "path": "story.logic.relationships" },
+				"area_to_json": { "path": "story.entities.collections" }
+			}
+		}
+	}
 }

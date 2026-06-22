@@ -17,4 +17,3 @@ export function initializeMcpServer(
 		exaApiKey: config.exaApiKey,
 	});
 }
-

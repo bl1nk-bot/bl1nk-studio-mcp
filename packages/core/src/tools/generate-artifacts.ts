@@ -11,11 +11,11 @@
 
 import { z } from "zod";
 import { toCanvasJSON } from "../exporters/canvas.js";
+import { generateCSV } from "../exporters/csv-generator.js";
 import { toDashboard } from "../exporters/dashboard.js";
 import { toMarkdown } from "../exporters/markdown.js";
 import { toMermaid } from "../exporters/mermaid.js";
 import type { StoryGraph } from "../types.js";
-import { generateCSV } from "../exporters/csv-generator.js";
 
 const GenerateArtifactsInputSchema = z.object({
 	graph: z.any().describe("StoryGraph JSON object"),

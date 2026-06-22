@@ -35,17 +35,11 @@ export function Sidebar({
 	);
 
 	return (
-		<div 
-			className="flex flex-col w-64 bg-[var(--bg-sidebar)] border-r border-[var(--border)] overflow-hidden shrink-0"
-		>
-			<div
-				className="flex items-center justify-between px-4 py-4 border-b border-[var(--border)] bg-[var(--bg-elevated)]"
-			>
+		<div className="flex flex-col w-64 bg-[var(--bg-sidebar)] border-r border-[var(--border)] overflow-hidden shrink-0">
+			<div className="flex items-center justify-between px-4 py-4 border-b border-[var(--border)] bg-[var(--bg-elevated)]">
 				<div className="flex items-center gap-2">
 					<FileText size={14} className="text-[var(--teal)]" />
-					<span
-						className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--text-secondary)]"
-					>
+					<span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--text-secondary)]">
 						Manuscript
 					</span>
 				</div>
@@ -57,12 +51,8 @@ export function Sidebar({
 				</button>
 			</div>
 
-			<div
-				className="px-3 py-3 border-b border-[var(--border)]"
-			>
-				<div
-					className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[rgba(255,255,255,0.02)] border border-[var(--border-light)] focus-within:border-[var(--teal)] transition-all"
-				>
+			<div className="px-3 py-3 border-b border-[var(--border)]">
+				<div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[rgba(255,255,255,0.02)] border border-[var(--border-light)] focus-within:border-[var(--teal)] transition-all">
 					<Search size={12} className="text-[var(--text-muted)]" />
 					<input
 						value={search}
@@ -105,7 +95,15 @@ export function Sidebar({
 							{activeNoteId === note.id && (
 								<div className="absolute left-0 top-2 bottom-2 w-0.5 bg-[var(--teal)] shadow-[0_0_10px_var(--teal)]" />
 							)}
-							<Hash size={12} className={cn("shrink-0", activeNoteId === note.id ? "opacity-100" : "opacity-30 group-hover:opacity-60")} />
+							<Hash
+								size={12}
+								className={cn(
+									"shrink-0",
+									activeNoteId === note.id
+										? "opacity-100"
+										: "opacity-30 group-hover:opacity-60",
+								)}
+							/>
 							<span className="text-xs truncate font-medium">{note.title}</span>
 						</button>
 					))}

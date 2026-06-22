@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { StoryGraph } from "./types.js";
 import { validateGraph } from "./core/validators.js";
+import type { StoryGraph } from "./types.js";
 
 describe("validateGraph", () => {
 	// Helper function to create a minimal valid graph
@@ -45,9 +45,39 @@ describe("validateGraph", () => {
 		],
 		relationships: [],
 		events: [
-			{ id: "e1", label: "Setup", description: "", act: 1, importance: "rising", sequenceInAct: 1, characterIds: [], conflictIds: [], emotionalTone: "neutral" },
-			{ id: "e2", label: "Rising action", description: "", act: 2, importance: "midpoint", sequenceInAct: 1, characterIds: [], conflictIds: [], emotionalTone: "neutral" },
-			{ id: "e3", label: "Final battle", description: "", act: 3, importance: "climax", sequenceInAct: 1, characterIds: [], conflictIds: [], emotionalTone: "neutral" },
+			{
+				id: "e1",
+				label: "Setup",
+				description: "",
+				act: 1,
+				importance: "rising",
+				sequenceInAct: 1,
+				characterIds: [],
+				conflictIds: [],
+				emotionalTone: "neutral",
+			},
+			{
+				id: "e2",
+				label: "Rising action",
+				description: "",
+				act: 2,
+				importance: "midpoint",
+				sequenceInAct: 1,
+				characterIds: [],
+				conflictIds: [],
+				emotionalTone: "neutral",
+			},
+			{
+				id: "e3",
+				label: "Final battle",
+				description: "",
+				act: 3,
+				importance: "climax",
+				sequenceInAct: 1,
+				characterIds: [],
+				conflictIds: [],
+				emotionalTone: "neutral",
+			},
 		],
 		tags: [],
 	});

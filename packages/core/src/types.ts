@@ -1,4 +1,4 @@
-import { z } from "zod";
+import type { z } from "zod";
 
 /**
  * @license bl1nk-visual-mcp
@@ -17,15 +17,33 @@ export interface StoryMeta {
 	genre?: string;
 }
 
-export type Character = z.infer<typeof import("./schemas/entities.js").CharacterSchema>;
-export type Relationship = z.infer<typeof import("./schemas/entities.js").RelationshipSchema>;
-export type EventNode = z.infer<typeof import("./schemas/backbone.js").EventNodeSchema>;
-export type Conflict = z.infer<typeof import("./schemas/logic.js").ConflictSchema>;
-export type Causality = z.infer<typeof import("./schemas/logic.js").CausalitySchema>;
-export type PlotThread = z.infer<typeof import("./schemas/logic.js").PlotThreadSchema>;
-export type Theme = z.infer<typeof import("./schemas/narrative.js").ThemeSchema>;
-export type Style = z.infer<typeof import("./schemas/narrative.js").StyleSchema>;
-export type Outline = z.infer<typeof import("./schemas/narrative.js").OutlineSchema>;
+export type Character = z.infer<
+	typeof import("./schemas/entities.js").CharacterSchema
+>;
+export type Relationship = z.infer<
+	typeof import("./schemas/entities.js").RelationshipSchema
+>;
+export type EventNode = z.infer<
+	typeof import("./schemas/backbone.js").EventNodeSchema
+>;
+export type Conflict = z.infer<
+	typeof import("./schemas/logic.js").ConflictSchema
+>;
+export type Causality = z.infer<
+	typeof import("./schemas/logic.js").CausalitySchema
+>;
+export type PlotThread = z.infer<
+	typeof import("./schemas/logic.js").PlotThreadSchema
+>;
+export type Theme = z.infer<
+	typeof import("./schemas/narrative.js").ThemeSchema
+>;
+export type Style = z.infer<
+	typeof import("./schemas/narrative.js").StyleSchema
+>;
+export type Outline = z.infer<
+	typeof import("./schemas/narrative.js").OutlineSchema
+>;
 
 export interface StoryGraph {
 	meta: StoryMeta;

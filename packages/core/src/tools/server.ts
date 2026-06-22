@@ -1,21 +1,22 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
+import { searchEntriesTool } from "../features/search-entries.js";
 import { Schemas } from "../schemas.js";
 import {
 	BL1NK_VISUAL_TOOLS,
-	GRANULAR_TOOLS,
 	executeGranularTool,
 	executeStoryTool,
+	GRANULAR_TOOLS,
 } from "./index.js";
-import { searchEntriesTool } from "../features/search-entries.js";
 
 export function registerBl1nkTools(
 	server: McpServer,
 	options?: { enabledTools?: string[]; exaApiKey?: string },
 ): void {
-	const enabled = options?.enabledTools !== undefined
-		? new Set(options.enabledTools)
-		: undefined;
+	const enabled =
+		options?.enabledTools !== undefined
+			? new Set(options.enabledTools)
+			: undefined;
 	const apiKey = options?.exaApiKey;
 
 	try {
@@ -35,10 +36,15 @@ export function registerBl1nkTools(
 		}
 
 		const legacySchemas: Record<string, Record<string, z.ZodTypeAny>> = {
-			search_entries: { text: z.string().describe("Story text to extract entities from") },
+			search_entries: {
+				text: z.string().describe("Story text to extract entities from"),
+			},
 			validate_story: { graph: z.any().describe("StoryGraph JSON object") },
 			generate_artifacts: { graph: z.any().describe("StoryGraph JSON object") },
-			sync_github: { graph: z.any().describe("StoryGraph JSON object"), repo: z.string().optional().describe("GitHub repository name") },
+			sync_github: {
+				graph: z.any().describe("StoryGraph JSON object"),
+				repo: z.string().optional().describe("GitHub repository name"),
+			},
 		};
 
 		for (const tool of BL1NK_VISUAL_TOOLS) {
@@ -58,14 +64,14 @@ export function registerBl1nkTools(
 				searchEntriesTool.name,
 				searchEntriesTool.description,
 				searchEntriesTool.inputSchema.shape,
-				async (args) =>
-					searchEntriesTool.execute(
-						args as any,
-					),
+				async (args) => searchEntriesTool.execute(args as any),
 			);
 		}
 	} catch (error: unknown) {
-		if (error instanceof Error && error.message.includes("already registered")) {
+		if (
+			error instanceof Error &&
+			error.message.includes("already registered")
+		) {
 			return;
 		}
 		throw error;
@@ -83,4 +89,3 @@ export function createBl1nkServer(options?: {
 	registerBl1nkTools(server, options);
 	return server;
 }
-

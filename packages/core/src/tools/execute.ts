@@ -7,11 +7,16 @@
  */
 
 import { buildInitialGraph } from "../core/analyzer.js";
-import { formatSearchResults, searchStoryReferences } from "../features/exa-search.js";
+import { validateGraph } from "../core/validators.js";
 import { toCanvasJSON } from "../exporters/canvas.js";
 import { toDashboard, toMcpUiDashboard } from "../exporters/dashboard.js";
 import { toMarkdown } from "../exporters/markdown.js";
 import { toMermaid } from "../exporters/mermaid.js";
+import {
+	formatSearchResults,
+	searchStoryReferences,
+} from "../features/exa-search.js";
+import { searchEntriesTool } from "../features/search-entries.js";
 import type {
 	Character,
 	CharacterExtractionResult,
@@ -22,9 +27,7 @@ import type {
 	ToolResult,
 } from "../types.js";
 import { formatToolError } from "../utils/error-handler.js";
-import { validateGraph } from "../core/validators.js";
 import { generateArtifactsTool } from "./generate-artifacts.js";
-import { searchEntriesTool } from "../features/search-entries.js";
 
 function formatErrorResult(toolName: string, error: unknown) {
 	return formatToolError(error, toolName);

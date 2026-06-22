@@ -1,8 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 import { useStorageLocation } from "../runtime/StorageLocationContext";
 import type { LayoutProps } from "../templates/LayoutRenderer";
 
@@ -53,7 +53,10 @@ function StarRating({ rating }: { rating: number }) {
 function BookCoverPlaceholder({
 	title,
 	genre,
-}: { title: string; genre?: string }) {
+}: {
+	title: string;
+	genre?: string;
+}) {
 	const colors: Record<string, string> = {
 		Fiction: "from-violet-500 to-purple-700",
 		"Non-Fiction": "from-slate-500 to-slate-700",

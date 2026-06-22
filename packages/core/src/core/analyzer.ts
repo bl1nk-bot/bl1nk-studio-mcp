@@ -1,4 +1,4 @@
-import type { StoryGraph, Character, EventNode, Conflict } from "../types.js";
+import type { Character, Conflict, EventNode, StoryGraph } from "../types.js";
 import { extractStoryEntities, STORY_PATTERNS } from "./parser.js";
 
 // Fixed act boundary indices (4-5-N distribution)
