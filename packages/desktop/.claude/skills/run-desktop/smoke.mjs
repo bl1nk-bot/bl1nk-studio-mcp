@@ -3,7 +3,7 @@ import { mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
 /**
  * Smoke driver for packages/desktop
- * Usage: node smoke.mjs [--url http://localhost:5173] [--out /tmp/screenshots]
+ * Usage: node smoke.mjs [--url=http://localhost:5173] [--out=/tmp/screenshots]
  *
  * Launches a headless Chromium, navigates the app, takes screenshots of all 4
  * views, and exits 0 on success or 1 on any failure.
@@ -41,18 +41,22 @@ try {
 
 	// Graph view
 	await page.click("button:has-text('Graph')");
+	await page.waitForSelector("div:has-text('Graph View')", { timeout: 3_000 });
 	await page.screenshot({ path: resolve(outDir, "graph.png") });
 	console.log(`✓ graph → ${outDir}/graph.png`);
 
 	// Timeline view
 	await page.click("button:has-text('Timeline')");
+	await page.waitForSelector("div:has-text('Timeline View')", {
+		timeout: 3_000,
+	});
 	await page.screenshot({ path: resolve(outDir, "timeline.png") });
 	console.log(`✓ timeline → ${outDir}/timeline.png`);
 
 	// Insights view
 	await page.click("button:has-text('Insights')");
-	await page.waitForSelector("h2", { timeout: 3_000 });
-	const insightsHeading = await page.textContent("h2");
+	await page.waitForSelector("h2:has-text('Insights')", { timeout: 3_000 });
+	const insightsHeading = await page.textContent("h2:has-text('Insights')");
 	console.log(`Insights heading: ${insightsHeading}`);
 	await page.screenshot({ path: resolve(outDir, "insights.png") });
 	console.log(`✓ insights → ${outDir}/insights.png`);

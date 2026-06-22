@@ -21,7 +21,7 @@ pnpm add -w playwright-core
 
 System Chromium path (already present in this container):
 
-```
+```text
 /opt/pw-browsers/chromium-1194/chrome-linux/chrome
 ```
 
@@ -62,7 +62,8 @@ Screenshots land at:
 - `.claude/skills/run-desktop/insights.png`
 
 Expected output on success:
-```
+
+```text
 Title: Visual Story Planner
 ✓ editor → ...
 ✓ graph → ...

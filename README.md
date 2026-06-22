@@ -40,7 +40,7 @@ pnpm -r run typecheck
 
 ## Project Structure
 
-```
+```text
 bl1nk-studio-mcp/
 ├── packages/
 │   ├── core/        # MCP Server & Story Analysis Engine

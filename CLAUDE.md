@@ -54,7 +54,7 @@ pnpm monorepo (`packages/*`), all ESM (`"type": "module"`), TypeScript 6, Node �
 
 Central type is `StoryGraph` (defined in `src/types.ts`), built from modular Zod schemas:
 
-```
+```text
 src/schemas/
   entities.ts   → Character, Relationship
   backbone.ts   → EventNode
