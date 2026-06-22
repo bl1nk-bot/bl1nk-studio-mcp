@@ -3,7 +3,12 @@ import { z } from "zod";
 export const ProjectSchema = z.object({
 	id: z.string().uuid(),
 	name: z.string().min(1),
-	status: z.enum(["active", "archived", "draft", "stabilizing"]),
+	status: z
+		.preprocess(
+			(v) => (v === "stablizing" ? "stabilizing" : v),
+			z.enum(["active", "archived", "draft", "stabilizing"]),
+		)
+		.describe("Current lifecycle status of the project"),
 	createdAt: z.string().datetime(),
 	updatedAt: z.string().datetime(),
 });

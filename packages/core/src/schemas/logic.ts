@@ -36,5 +36,9 @@ export const ConflictSchema = z.object({
 		)
 		.default([]),
 	resolution: z.string().optional(),
-	actIntroduced: z.number().int().min(1),
+	actIntroduced: z
+		.number()
+		.int()
+		.min(1)
+		.describe("Act number (1-based) in which this conflict is introduced"),
 });

@@ -13,25 +13,33 @@ tags: [{% for tag in tags %}"{{tag}}"{% if not loop.last %}, {% endif %}{% endfo
 # {{title}}
 
 ## Location
+
 [[locations/{{location}}]]
 
 ## Characters Present
+
 {% for char in characters %}
+
 - [[characters/{{char}}]]
 {% endfor %}
 
 ## Summary
+
 {{summary}}
 
 ## Key Events
+
 {% for event in keyEvents %}
+
 - {{event}}
 {% endfor %}
 
 ## Emotional Arc
+
 {{emotionalArc}}
 
 ## Conflict
+
 {{conflict}}
 
 ---

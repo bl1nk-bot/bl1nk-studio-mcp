@@ -41,25 +41,33 @@ bl1nk-visual-mcp Monorepo
 ## 3. Core Principles
 
 ### 3.1 Structured Analysis
+
 ต้องแปลง Narrative input ให้เป็น structured **StoryGraph JSON** เสมอ โดยมี:
+
 - การแยกองค์ประกอบเรื่องราวที่ชัดเจน (Characters, Conflicts, Events)
 - ID ที่สอดคล้องกันสำหรับทุกองค์ประกอบ
 - การติดตามความสัมพันธ์ระหว่างส่วนประกอบทั้งหมด
 
 ### 3.2 Three-Act Structure
+
 บังคับใช้โครงสร้างเรื่อง 3 องก์:
+
 - **Act 1 (Setup):** 25% ของเหตุการณ์ - แนะนำโลก, ตัวละคร, Inciting Incident
 - **Act 2 (Confrontation):** 50% ของเหตุการณ์ - Rising action, Complications, Midpoint
 - **Act 3 (Resolution):** 25% ของเหตุการณ์ - Climax, Resolution, Denouement
 
 ### 3.3 Character Development
+
 ตัวละครทุกตัวต้องมี:
+
 - Clear arc: จุดเริ่ม → Midpoint → จุดจบ → การเปลี่ยนแปลง (Transformation)
 - แรงจูงใจ (Motivations), ความกลัว (Fears), และความลับ (Secrets) ที่ชัดเจน
 - ความสัมพันธ์ที่พัฒนาไปตามเนื้อเรื่อง
 
 ### 3.4 Conflict Management
+
 ความขัดแย้งต้องมี:
+
 - หลายมิติ (Internal, External, Emotional, Philosophical, Relational)
 - การไล่ระดับความรุนแรง (Escalation) ที่ชัดเจน (ระดับ 3→6→9)
 - การคลี่คลายที่น่าพึงพอใจและเชื่อมโยงกับการพัฒนาตัวละคร
@@ -69,6 +77,7 @@ bl1nk-visual-mcp Monorepo
 ## 4. Validation Rules
 
 ### 4.1 Error Level (ต้องแก้ไข)
+
 - ไม่มีชื่อเรื่อง (No story title)
 - ไม่มีตัวละคร (No characters)
 - ขาดองก์ใดองก์หนึ่ง (1, 2, หรือ 3)
@@ -78,6 +87,7 @@ bl1nk-visual-mcp Monorepo
 - คำอธิบายความขัดแย้งว่างเปล่า
 
 ### 4.2 Warning Level (ควรแก้ไข)
+
 - ไม่มีเหตุการณ์จุดสุดยอด (No climax event)
 - ไม่มีจุดกึ่งกลางเรื่อง (No midpoint event)
 - ไม่มีความขัดแย้ง (No conflicts)
@@ -87,6 +97,7 @@ bl1nk-visual-mcp Monorepo
 - การกระจายองก์ไม่สมดุล (Unbalanced act distribution)
 
 ### 4.3 Info Level (ข้อเสนอแนะ)
+
 - จังหวะดำเนินเรื่องช้า (Slow pacing)
 - จำนวนตัวละครน้อยเกินไป
 - โครงสร้างเรื่องอ่อน (Weak structure)
@@ -96,6 +107,7 @@ bl1nk-visual-mcp Monorepo
 ## 5. Tech Stack
 
 ### core (MCP Server)
+
 | Layer | Tech | Version |
 |-------|------|---------|
 | Runtime | Node.js | >=22 |
@@ -103,6 +115,7 @@ bl1nk-visual-mcp Monorepo
 | Framework | MCP SDK | 1.29.x |
 
 ### ui (Unified UI)
+
 | Layer | Tech | Version |
 |-------|------|---------|
 | Framework | React | 19.x |
@@ -116,6 +129,7 @@ bl1nk-visual-mcp Monorepo
 ## 6. Success Metrics
 
 การวิเคราะห์เนื้อเรื่องที่สำเร็จต้องมี:
+
 - ✅ ครบ 3 องก์ พร้อมการกระจายเหตุการณ์ที่สมดุล (25%-50%-25%)
 - ✅ ตัวละครหลักทุกคนมี Arc ที่ชัดเจน
 - ✅ ทุกความขัดแย้งมีการ Escalation และ Resolution

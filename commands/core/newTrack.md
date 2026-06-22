@@ -71,7 +71,7 @@ Resolve these via the **Universal File Resolution Protocol**.
 Defining new track
 ```
 
-2. Ask the user using the `ask_user` tool (do not repeat the question in the chat):
+1. Ask the user using the `ask_user` tool (do not repeat the question in the chat):
 
 ```yaml
 questions:
@@ -81,7 +81,7 @@ questions:
     placeholder: "e.g., Implement user authentication"
 ```
 
-3. Await the user's response and use it as the track description
+1. Await the user's response and use it as the track description
 
 **If `{{args}}` contains a description:**
 

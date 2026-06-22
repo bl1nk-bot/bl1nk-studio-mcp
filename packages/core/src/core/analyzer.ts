@@ -69,9 +69,15 @@ export function buildInitialGraph(text: string = ""): StoryGraph {
 		const act = i < ACT2_START ? 1 : i < ACT3_START ? 2 : 3;
 		actSeq[act] = (actSeq[act] ?? 0) + 1;
 
+		const eventText = e.name.toLowerCase();
 		const characterIds: string[] = [];
 		for (const [lowerName, id] of charById) {
-			if (e.name.toLowerCase().includes(lowerName)) characterIds.push(id);
+			const escaped = lowerName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+			const boundaryPattern = new RegExp(
+				`(^|[^\\p{L}\\p{N}_])${escaped}([^\\p{L}\\p{N}_]|$)`,
+				"iu",
+			);
+			if (boundaryPattern.test(eventText)) characterIds.push(id);
 		}
 
 		return {

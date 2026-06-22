@@ -112,8 +112,8 @@ packages/support/ # Support chat app (Next.js)
    - **MUST** list all items and ask for confirmation "one by one" before taking action.
 4. **AI Memory Management**: AI has no persistent memory - context is the brain.
 
-4. **Prevent Recurrence**: Record all errors, solutions, and learnings in this file or siblings.
-5. **No Long-Term Memory**: All decisions based on documented learnings, not implicit knowledge.
+5. **Prevent Recurrence**: Record all errors, solutions, and learnings in this file or siblings.
+6. **No Long-Term Memory**: All decisions based on documented learnings, not implicit knowledge.
 
 ---
 

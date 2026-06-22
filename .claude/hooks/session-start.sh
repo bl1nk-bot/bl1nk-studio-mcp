@@ -19,8 +19,20 @@ fi
 
 # ── pnpm bootstrap ──────────────────────────────────────────────────────────
 # Use corepack so the exact version in packageManager field is respected
-corepack enable pnpm 2>/dev/null || true
-corepack prepare pnpm@11.8.0 --activate 2>/dev/null || npm install -g pnpm@11.8.0 2>/dev/null || true
+if ! corepack enable pnpm >/dev/null 2>&1; then
+  echo "[session-start] WARN: corepack enable failed; trying fallback installer" >&2
+fi
+
+if ! corepack prepare pnpm@11.8.0 --activate >/dev/null 2>&1 \
+  && ! npm install -g pnpm@11.8.0 >/dev/null 2>&1; then
+  echo "[session-start] ERROR: unable to bootstrap pnpm@11.8.0 via corepack or npm" >&2
+  exit 1
+fi
+
+if ! command -v pnpm >/dev/null 2>&1; then
+  echo "[session-start] ERROR: pnpm is not available after bootstrap" >&2
+  exit 1
+fi
 
 # ── Install workspace dependencies ──────────────────────────────────────────
 # --prefer-offline avoids redundant network requests on cached layers

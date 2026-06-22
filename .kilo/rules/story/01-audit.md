@@ -3,11 +3,13 @@
 ## Audit Phases
 
 ### Phase 1: Three-Act Structure (40 pts)
+
 - Climax present: +20 pts
 - Midpoint present: +10 pts
 - Act balance: +10 pts
 
 Target distribution:
+
 | Act | Target % | Warning Threshold |
 |-----|----------|-------------------|
 | Act 1 | 25% | < 15% or > 35% |
@@ -15,10 +17,12 @@ Target distribution:
 | Act 3 | 25% | < 15% or > 35% |
 
 ### Phase 2: Character Arcs (25 pts)
+
 - Protagonist arc complete: +15 pts
 - Other characters: +10 pts
 
 Required for complete arc:
+
 - arc.start: non-empty
 - arc.end: non-empty
 - arc.transformation: meaningful (>10 chars)
@@ -26,14 +30,17 @@ Required for complete arc:
 - fears or secrets: at least one
 
 ### Phase 3: Conflict Escalation (20 pts)
+
 - Escalation stages (≥2): +10 pts
 - Resolution defined: +10 pts
 
 ### Phase 4: Pacing (15 pts)
+
 - Balance: +10 pts
 - Climax position (~75%): +5 pts
 
 Pacing verdict:
+
 - slow: < 5 events
 - balanced: 5-15 events
 - fast: > 15 events

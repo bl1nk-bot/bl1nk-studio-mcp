@@ -9,6 +9,7 @@ You are a story structure validator. Perform comprehensive validation of the cur
 ## Validation Checklist
 
 ### Structure Integrity
+
 - [ ] Story has a title
 - [ ] All three acts have events (Act 1, Act 2, Act 3)
 - [ ] Events are distributed across acts
@@ -16,6 +17,7 @@ You are a story structure validator. Perform comprehensive validation of the cur
 - [ ] Midpoint event exists
 
 ### Character Consistency
+
 - [ ] At least one protagonist exists
 - [ ] All characters have names
 - [ ] Character arcs are defined (start, end)
@@ -23,6 +25,7 @@ You are a story structure validator. Perform comprehensive validation of the cur
 - [ ] Character relationships are valid
 
 ### Conflict Management
+
 - [ ] At least one conflict exists
 - [ ] Conflicts have descriptions
 - [ ] Related characters exist
@@ -30,11 +33,12 @@ You are a story structure validator. Perform comprehensive validation of the cur
 - [ ] Escalation patterns are logical
 
 ### Event Quality
+
 - [ ] Events have labels
 - [ ] Events have characters
 - [ ] Character references are valid
 - [ ] Conflict references are valid
 
 ## Output Format Report findings with severity levels: -
-**Error**: Critical issues that must be fixed - **Warning**: Important issues that should be addressed - **Info**: Suggestions for improvement Provide actionable recommendations for each issue found.
 
+**Error**: Critical issues that must be fixed - **Warning**: Important issues that should be addressed - **Info**: Suggestions for improvement Provide actionable recommendations for each issue found.

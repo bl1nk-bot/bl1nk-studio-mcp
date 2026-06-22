@@ -1,6 +1,7 @@
 # Project Structure — bl1nk-visual-mcp
 
 ## Root Layout
+
 ```
 visual-story-extension/
 ├── src/                    # Root-level source (shared types, analyzers, validators)
@@ -29,6 +30,7 @@ visual-story-extension/
 ```
 
 ## Core Package: `packages/core/`
+
 ```
 packages/core/
 ├── src/index.ts            # MCP server entry point — registers all tools
@@ -64,6 +66,7 @@ packages/core/
 ## Key Architectural Patterns
 
 ### Data Flow
+
 ```
 Story Text Input
     ↓
@@ -77,18 +80,22 @@ exporters/* ──→ Mermaid / Canvas / HTML / Markdown / JSON
 ```
 
 ### Tool Registration Pattern
+
 - `GRANULAR_TOOLS` array in `tools/index.ts` = source of truth for 11 active tools
 - `BL1NK_VISUAL_TOOLS` array = 4 legacy tools kept for backward compatibility
 - `executeGranularTool()` dispatches by tool name to specific exporter/analyzer functions
 - MCP server in `src/index.ts` registers both arrays at startup
 
 ### Dual Source Structure
+
 Root `src/` mirrors `packages/core/` for some files — root versions appear to be the canonical/shared source while `packages/core/` contains the deployed package versions.
 
 ### API Layer
+
 `api/mcp.ts` wraps the same tool logic as an HTTP endpoint deployable to Vercel, enabling web access without an MCP client.
 
 ## Sub-Package Relationships
+
 - `packages/core/` — standalone, no dependency on other packages
 - `packages/sync/` — standalone webhook service
 - `packages/desktop/` — desktop UI, may consume StoryGraph JSON from bl1nk

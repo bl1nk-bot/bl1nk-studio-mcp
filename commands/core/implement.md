@@ -170,7 +170,7 @@ State that you will now execute the tasks from the track's **Implementation Plan
 
 You MUST now loop through each task in the track's **Implementation Plan** one by one.
 
-#### c. For Each Task, You MUST:
+#### c. For Each Task, You MUST
 
 **i. Defer to Workflow**
 

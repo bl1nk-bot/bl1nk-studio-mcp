@@ -100,6 +100,7 @@ pnpm dev
 ### Agent Modes
 
 สลับโหมดเอเจนต์ด้วยปุ่ม ← → หรือใช้ Shortcut:
+
 - **Support Agent** - จัดการคำถามลูกค้า
 - **Code Assistant** - ช่วยเหลือการเขียนโค้ด
 - **Task Planner** - วางแผนและจัดการงาน
@@ -108,6 +109,7 @@ pnpm dev
 ### Skills System
 
 Skills ถูกเก็บเป็นไฟล์ Markdown ใน Sandbox:
+
 - Order Lookup - จัดการสถานะคำสั่งซื้อ
 - Billing Support - การชำระเงินและใบแจ้งหนี้
 - Technical Support - ปัญหาทางเทคนิค
@@ -143,6 +145,7 @@ Skills ถูกเก็บเป็นไฟล์ Markdown ใน Sandbox:
 ส่งข้อความแชทและรับ response แบบ streaming
 
 **Request Body:**
+
 ```json
 {
   "messages": [

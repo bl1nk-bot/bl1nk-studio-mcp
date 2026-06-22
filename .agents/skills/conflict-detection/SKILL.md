@@ -37,11 +37,13 @@ Aim for: ≥ 1 internal + ≥ 1 external per protagonist. All-external stories l
 ## Analysis Dimensions
 
 ### 1. Conflict Identification
+
 - Extract explicit conflicts from `graph.conflicts`
 - Infer implicit conflicts from event labels and character relationships
 - Note missing conflict types
 
 ### 2. Escalation Health
+
 - Stages present: `escalations.length`
 - Intensity curve: check each `intensity` value rises (3 → 6 → 9 ideal)
 - Peak before climax? Escalation should peak at or just before the climax event
@@ -49,21 +51,27 @@ Aim for: ≥ 1 internal + ≥ 1 external per protagonist. All-external stories l
 Escalation health score = clamp((stages_count × intensity_slope_avg) / 10, 0.0, 1.0)
 
 ### 3. Interconnection Map
+
 Show how conflicts relate to each other:
+
 ```
 [External: Aria vs Shadow King] ──feeds──> [Internal: Aria's self-doubt]
                                  └──affects──> [Relational: Aria & Kael tension]
 ```
 
 ### 4. Impact Assessment
+
 Rate each conflict:
+
 - **Importance** (1–10): How central to the main plot
 - **Character involvement**: Which characters are affected
 - **Story consequence**: What happens if unresolved
 - **Resolution quality**: satisfying | abrupt | unresolved
 
 ### 5. Optimization Suggestions
+
 For each gap found, provide a ranked suggestion:
+
 - Priority: High / Medium / Low
 - What to add/change
 - Which act to introduce it in

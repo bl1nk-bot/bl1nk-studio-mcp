@@ -6,6 +6,7 @@
 ---
 
 ## 🌳 Level 0: The Root (Project & Specs)
+
 | Entity | Fields | Description |
 | :--- | :--- | :--- |
 | **Project** | `id`, `name`, `status`, `createdAt`, `updatedAt` | รากฐานของโปรเจกต์ |
@@ -14,6 +15,7 @@
 ---
 
 ## 🌿 Level 1: Narrative & Aesthetic Branch (กิ่งแก่นเรื่อง)
+
 | Entity | Fields | Description |
 | :--- | :--- | :--- |
 | **Theme** | `coreTheme`, `motifs[]`, `symbolism[]` | แก่นเรื่องและสัญลักษณ์ |
@@ -23,6 +25,7 @@
 ---
 
 ## 🎭 Level 2: Entity & Power Branch (กิ่งตัวละครและพลัง)
+
 | Entity | Fields | Description |
 | :--- | :--- | :--- |
 | **Character**| `id`, `name`, `role`, `archetype`, `traits[]`, `motivations[]`, `fears[]`, `secretsOrLies[]`, `tags[]` | ข้อมูลตัวละคร (คืนค่าเดิมมาครบ) |
@@ -33,6 +36,7 @@
 ---
 
 ## ⏱️ Level 3: Structural Backbone (กิ่งกาลเวลา)
+
 | Entity | Fields | Description |
 | :--- | :--- | :--- |
 | **Timeline** | `era`, `absoluteTime`, `relativeOrder` | เส้นเวลาใหญ่ |
@@ -43,6 +47,7 @@
 ---
 
 ## 🧠 Level 4: Logic & Causality (กิ่งตรรกะ)
+
 | Entity | Fields | Description |
 | :--- | :--- | :--- |
 | **Cause** | `triggerId`, `effectId`, `logicType`, `isInevitable` | เหตุและผล (Causality Chain) |
@@ -51,6 +56,7 @@
 ---
 
 ## 🛠️ ยุทธศาสตร์การซ่อม (No-Deletion Strategy)
+
 1. **กู้คืน Zod:** ผมจะแก้ `schemas.ts` ให้มี Field เดิมครบถ้วน + เพิ่ม Field ใหม่
 2. **กู้คืน Types:** `types.ts` จะต้องพ่น Interface ที่มี Property เดิมครบ เพื่อให้เทสที่ "คืนชีพ" มาแล้วไม่พัง
 3. **Refactor Analyzer:** ปรับให้ใส่ค่า Default ให้ครบทุกกิ่ง ไม่ปล่อยให้ว่างจน Error
