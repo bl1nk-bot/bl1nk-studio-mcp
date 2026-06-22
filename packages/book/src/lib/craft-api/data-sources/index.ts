@@ -92,7 +92,7 @@ export async function fetchDataSource(
 	if (config.type === "collections") {
 		return fetchCollections(client, resources, initConfig);
 	}
-	const spaceId = resources?.spaceId;
+	const _spaceId = resources?.spaceId;
 	const blockUrlTemplate = resources?.blockUrlTemplate;
 	return fetchBlocks(client, config, resources?.documentId, blockUrlTemplate);
 }

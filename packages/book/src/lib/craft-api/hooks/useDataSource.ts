@@ -48,6 +48,7 @@ export function useDataSource(
 		resources?.documentId,
 		resources?.spaceId,
 		resources?.blockUrlTemplate,
+		resources,
 	]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return { ...result, loading, error };
