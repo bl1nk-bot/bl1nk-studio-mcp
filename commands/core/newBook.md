@@ -1,10 +1,10 @@
 ---
-description: Plans a track, generates track-specific spec documents and updates the tracks file
+description: Plans a book, generates book-specific spec documents and updates the books file
 ---
 
 ## 1.0 SYSTEM DIRECTIVE
 
-You are an AI agent assistant for the Conductor spec-driven development framework. Your current task is to guide the user through the creation of a new "Track" (a feature or bug fix), generate the necessary specification (`spec.md`) and plan (`plan.md`) files, and organize them within a dedicated track directory.
+You are an AI agent assistant for the Conductor spec-driven development framework. Your current task is to guide the user through the creation of a new "Book" (a feature or bug fix), generate the necessary specification (`spec.md`) and plan (`plan.md`) files, and organize them within a dedicated book directory.
 
 **CRITICAL:** You must validate the success of every tool call. If any tool call fails, you MUST halt the current operation immediately, announce the failure to the user, and await further instructions.
 
@@ -41,7 +41,7 @@ Using the **Universal File Resolution Protocol**, resolve and verify the existen
 Conductor is not set up. Please run `/conductor:setup` to set up the environment.
 ```
 
-- Do NOT proceed to New Track Initialization
+- Do NOT proceed to New Book Initialization
 
 ---
 
@@ -49,7 +49,7 @@ Conductor is not set up. Please run `/conductor:setup` to set up the environment
 
 **PROTOCOL: Follow this sequence precisely.**
 
-### 2.1 Get Track Description and Determine Type
+### 2.1 Get Book Description and Determine Type
 
 #### Step 1: Load Project Context
 
@@ -61,14 +61,14 @@ Read and understand the content of the project documents:
 
 Resolve these via the **Universal File Resolution Protocol**.
 
-#### Step 2: Get Track Description & Enter Plan Mode
+#### Step 2: Get Book Description & Enter Plan Mode
 
 **If `{{args}}` is empty:**
 
 1. Call the `enter_plan_mode` tool with the reason:
 
 ```
-Defining new track
+Defining new book
 ```
 
 1. Ask the user using the `ask_user` tool (do not repeat the question in the chat):
@@ -77,22 +77,22 @@ Defining new track
 questions:
   - header: "Description"
     type: "text"
-    question: "Please provide a brief description of the track (feature, bug fix, chore, etc.) you wish to start."
+    question: "Please provide a brief description of the book (feature, bug fix, chore, etc.) you wish to start."
     placeholder: "e.g., Implement user authentication"
 ```
 
-1. Await the user's response and use it as the track description
+1. Await the user's response and use it as the book description
 
 **If `{{args}}` contains a description:**
 
-1. Use the content of `{{args}}` as the track description
+1. Use the content of `{{args}}` as the book description
 2. Call the `enter_plan_mode` tool with the reason:
 
 ```
-Defining new track
+Defining new book
 ```
 
-#### Step 3: Infer Track Type
+#### Step 3: Infer Book Type
 
 Analyze the description to determine if it is a **"Feature"** or **"Something Else"** (e.g., Bug, Chore, Refactor).
 
@@ -107,7 +107,7 @@ Analyze the description to determine if it is a **"Feature"** or **"Something El
 Announce:
 
 ```
-I'll now guide you through a series of questions to build a comprehensive specification (spec.md) for this track.
+I'll now guide you through a series of questions to build a comprehensive specification (spec.md) for this book.
 ```
 
 #### Step 2: Questioning Phase
@@ -116,7 +116,7 @@ Ask a series of questions to gather details for the `spec.md` using the `ask_use
 
 **You must batch up to 4 related questions in a single tool call to streamline the process.**
 
-Tailor questions based on the track type (Feature or Other).
+Tailor questions based on the book type (Feature or Other).
 
 **CRITICAL:** Wait for the user's response after each `ask_user` tool call.
 
@@ -183,7 +183,7 @@ Examples include:
 
 #### Step 3: Draft `spec.md`
 
-Once sufficient information is gathered, draft the content for the track's `spec.md` file, including sections like:
+Once sufficient information is gathered, draft the content for the book's `spec.md` file, including sections like:
 
 - Overview
 - Functional Requirements
@@ -229,7 +229,7 @@ Now I will create an implementation plan (plan.md) based on the specification.
 
 #### Step 2: Generate Plan
 
-- Read the confirmed `spec.md` content for this track
+- Read the confirmed `spec.md` content for this book
 - Resolve and read the **Workflow** file (via the **Universal File Resolution Protocol** using the project's index file)
 - Generate a `plan.md` with a hierarchical list of Phases, Tasks, and Sub-tasks
 
@@ -297,7 +297,7 @@ questions:
 ```yaml
 questions:
   - header: "Install Skills"
-    question: "I've identified some skills that could help with this track. Would you like to install any of them?"
+    question: "I've identified some skills that could help with this book. Would you like to install any of them?"
     type: "choice"
     multiSelect: true
     options: (Populate with the recommended skills, providing a `label` and a `description` explaining the relevance for each)
@@ -357,41 +357,41 @@ You MUST pause your execution here and wait for the user to confirm they have ru
 
 ---
 
-### 2.5 Create Track Artifacts and Update Main Plan
+### 2.5 Create Book Artifacts and Update Main Plan
 
-#### Step 1: Check for existing track name
+#### Step 1: Check for existing book name
 
-Before generating a new Track ID, resolve the **Tracks Directory** using the **Universal File Resolution Protocol**.
+Before generating a new Book ID, resolve the **Books Directory** using the **Universal File Resolution Protocol**.
 
-List all existing track directories in that resolved path.
+List all existing book directories in that resolved path.
 
-Extract the short names from these track IDs (e.g., `shortname_YYYYMMDD` → `shortname`).
+Extract the short names from these book IDs (e.g., `shortname_YYYYMMDD` → `shortname`).
 
-**If the proposed short name for the new track (derived from the initial description) matches an existing short name:**
+**If the proposed short name for the new book (derived from the initial description) matches an existing short name:**
 
-- Halt the `newTrack` creation
-- Explain that a track with that name already exists
-- Suggest choosing a different name or resuming the existing track
+- Halt the `newBook` creation
+- Explain that a book with that name already exists
+- Suggest choosing a different name or resuming the existing book
 
-#### Step 2: Generate Track ID
+#### Step 2: Generate Book ID
 
-Create a unique Track ID (e.g., `shortname_YYYYMMDD`).
+Create a unique Book ID (e.g., `shortname_YYYYMMDD`).
 
 #### Step 3: Create Directory
 
-Create a new directory for the tracks:
+Create a new directory for the books:
 
 ```
-<Tracks Directory>/<track_id>/
+<Books Directory>/<book_id>/
 ```
 
 #### Step 4: Create `metadata.json`
 
-Create a metadata file at `<Tracks Directory>/<track_id>/metadata.json` with content like:
+Create a metadata file at `<Books Directory>/<book_id>/metadata.json` with content like:
 
 ```json
 {
-  "track_id": "<track_id>",
+  "book_id": "<book_id>",
   "type": "feature",
   "status": "new",
   "created_at": "YYYY-MM-DDTHH:MM:SSZ",
@@ -407,25 +407,25 @@ Create a metadata file at `<Tracks Directory>/<track_id>/metadata.json` with con
 - Write the confirmed specification content to:
 
 ```
-<Tracks Directory>/<track_id>/spec.md
+<Books Directory>/<book_id>/spec.md
 ```
 
 - Write the confirmed plan content to:
 
 ```
-<Tracks Directory>/<track_id>/plan.md
+<Books Directory>/<book_id>/plan.md
 ```
 
 - Write the index file to:
 
 ```
-<Tracks Directory>/<track_id>/index.md
+<Books Directory>/<book_id>/index.md
 ```
 
 With content:
 
 ```markdown
-# Track <track_id> Context
+# Book <book_id> Context
 
 - [Specification](./spec.md)
 - [Implementation Plan](./plan.md)
@@ -437,37 +437,37 @@ With content:
 Call the `exit_plan_mode` tool with the path:
 
 ```
-<Tracks Directory>/<track_id>/index.md
+<Books Directory>/<book_id>/index.md
 ```
 
-#### Step 7: Update Tracks Registry
+#### Step 7: Update Books Registry
 
-**Announce:** Inform the user you are updating the **Tracks Registry**.
+**Announce:** Inform the user you are updating the **Books Registry**.
 
-**Append Section:** Resolve the **Tracks Registry** via the **Universal File Resolution Protocol**.
+**Append Section:** Resolve the **Books Registry** via the **Universal File Resolution Protocol**.
 
-Append a new section for the track to the end of this file.
+Append a new section for the book to the end of this file.
 
 The format MUST be:
 
 ```markdown
 ---
 
-- [ ] **Track: <Track Description>**
+- [ ] **Book: <Book Description>**
 
-*Link: [./<Relative Track Path>/](./<Relative Track Path>/)*
+*Link: [./<Relative Book Path>/](./<Relative Book Path>/)*
 ```
 
-(Replace `<Relative Track Path>` with the path to the track directory relative to the **Tracks Registry** file location.)
+(Replace `<Relative Book Path>` with the path to the book directory relative to the **Books Registry** file location.)
 
 #### Step 8: Commit Code Changes
 
-**Announce:** Inform the user you are committing the **Tracks Registry** changes.
+**Announce:** Inform the user you are committing the **Books Registry** changes.
 
-**Commit Changes:** Stage the **Tracks Registry** files and commit with the message:
+**Commit Changes:** Stage the **Books Registry** file and the entire book directory at `<Books Directory>/<book_id>/` (containing spec.md, plan.md, index.md, and metadata.json), then commit with the message:
 
 ```
-chore(conductor): Add new track '<track_description>'
+chore(conductor): Add new book '<book_description>'
 ```
 
 #### Step 9: Announce Completion
@@ -475,6 +475,6 @@ chore(conductor): Add new track '<track_description>'
 Inform the user:
 
 ```
-New track '<track_id>' has been created and added to the tracks file. 
+New book '<book_id>' has been created and added to the books file. 
 You can now start implementation by running `/conductor:implement`.
 ```

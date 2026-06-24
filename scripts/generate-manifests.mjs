@@ -64,6 +64,8 @@ const geminiManifest = {
 	name: source.name,
 	version: source.version,
 	contextFileName: source.contextFiles.gemini,
+	commands: "commands",
+	skills: "skills",
 	settings: source.settings,
 	mcpServers: createMcpServerConfig("${extensionPath}"),
 	tools: source.tools,

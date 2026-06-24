@@ -1,7 +1,7 @@
 {
 	"name": "bl1nk-visual-mcp",
 	"version": "3.0.0",
-	"contextFileName": "GEMINI.md",
+	"contextFileName": "QWEN.md",
 	"commands": "commands",
 	"skills": "skills",
 	"settings": [
@@ -75,10 +75,6 @@
 		{
 			"name": "generate_artifacts",
 			"description": "Generate ALL formats at once (legacy)"
-		},
-		{
-			"name": "sync_github",
-			"description": "Push generated files to GitHub repository (not implemented)"
 		}
 	]
 }
