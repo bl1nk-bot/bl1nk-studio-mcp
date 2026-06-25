@@ -92,13 +92,22 @@ packages/support/ # Support chat app (Next.js)
 
 ## 📋 Code Style & Standards
 
-- **ESM imports**: Use \`.js\` extension: \`import { x } from './module.js'\`
-- **Type-only imports**: \`import type { x } from './types.js'\`
-- **Formatting**: Biome handles everything — run \`npm run check\`
-- **TypeScript**: \`strict: true\`, no \`any\`, prefer \`unknown\`
+- **ESM imports**: Use `.js` extension: `import { x } from './module.js'`
+- **Type-only imports**: `import type { x } from './types.js'`
+- **Formatting**: Biome handles everything — run `npm run check`
+- **TypeScript**: `strict: true`, no `any`, prefer `unknown`
 - **Naming**: camelCase variables, PascalCase types, UPPER_SNAKE constants
-- **Error handling**: \`unknown\` + \`instanceof Error\`, never swallow exceptions
-- **Zod schemas**: Use \`.describe()\` on input fields, \`.default()\` for optional
+- **Error handling**: `unknown` + `instanceof Error`, never swallow exceptions
+- **Zod schemas**: Use `.describe()` on input fields, `.default()` for optional
+
+## 🔧 Monorepo Tooling Learnings
+
+- `pnpm-workspace.yaml` is YAML, not JSON — scripts must parse it with line-by-line regex or a YAML parser, never `JSON.parse`
+- `.mcp.json` and `mcp.json` use different variable conventions (`${extensionRoot}` vs `${extensionPath}`); normalize before comparison or tool generation
+- `manifest-source.json` + `gemini-extension.json` + `qwen-extension.json` define the canonical tool list; they intentionally overlap, so listing scripts must deduplicate by `source:name`
+- Root `package.json` name `bl1nk-visual-mcp-monorepo` is intentionally unscoped; scripts checking for `@bl1nk/*` scope should warn, not fail
+- `findPackageJsons()` must gracefully handle directories without `package.json` rather than crashing on undefined version fields
+- `packages/ui` was an empty directory with no `package.json`; orphan package dirs should be surfaced as warnings or cleaned up, not silently included in version audits
 
 ---
 

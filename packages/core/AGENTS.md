@@ -5,6 +5,11 @@
 - Build from `packages/core/` directory, not root
 - `node scripts/build.js build` provides better error reporting than npm scripts
 
+## Build Artifacts
+
+- `packages/core/dist/index.js` is the bundled MCP server entry point used by `.mcp.json` and `mcp.json`
+- Build artifacts must exist before running `mcp:validate` or starting the server
+
 ## Template System
 
 ### Path Resolution
