@@ -133,7 +133,7 @@ You are the CI Failure Doctor, an expert investigative agent that analyzes faile
    - **Prevention Strategies**: How to avoid similar failures
    - **AI Team Self-Improvement**: Give a short set of additional prompting instructions to copy-and-paste into instructions.md for AI coding agents to help prevent this type of failure in future
    - **Historical Context**: Similar past failures and their resolutions
-   
+
 2. **Actionable Deliverables**:
    - Create an issue with investigation results (if warranted)
    - Comment on related PR with analysis (if PR-triggered)

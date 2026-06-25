@@ -3,10 +3,12 @@
 ## Server Configuration
 
 ### Connection Type
+
 - **stdio**: Local process communication via stdin/stdout
 - **HTTP/SSE**: Remote server communication
 
 ### Server Metadata
+
 ```json
 {
   "name": "visual-story-planner",
@@ -20,6 +22,7 @@
 ## Tool Naming Conventions
 
 ### Pattern: `resource_action`
+
 - `analyze_story` - Parse story text to StoryGraph
 - `validate_story_structure` - Check story validity
 - `export_mermaid` - Generate Mermaid diagram
@@ -30,6 +33,7 @@
 - `build_relationship_graph` - Map character relationships
 
 ### Tool Annotations
+
 | Annotation | Use |
 |------------|-----|
 | `readOnlyHint` | true for read operations (analyze, extract) |
@@ -42,16 +46,19 @@
 ## Response Format Guidelines
 
 ### JSON Response
+
 - Always valid, parseable JSON
 - Include metadata when requested
 - Truncate large arrays appropriately (max 1000 items)
 
 ### Markdown Response
+
 - Use artifact format wrapping
 - Include proper code blocks
 - Escape special characters
 
 ### Error Response
+
 ```json
 {
   "error": true,
@@ -65,11 +72,13 @@
 ## Pagination Guidelines
 
 ### For Large Results
+
 - Default page size: 20 items
 - Maximum page size: 100 items
 - Include pagination metadata
 
 ### Truncation Strategy
+
 - Events: Limit to 100 per response, add "truncated" flag
 - Characters: Return all (usually <50)
 - Relationships: Limit to 100, add continuation token
@@ -90,11 +99,13 @@
 ## Security Guidelines
 
 ### Input Validation
+
 - Validate all required parameters
 - Sanitize special characters in user input
 - Limit string lengths (title: 200 chars, descriptions: 5000 chars)
 
 ### Error Handling
+
 - Never expose internal error details to user
 - Log errors internally for debugging
 - Return actionable error messages
@@ -104,10 +115,12 @@
 ## Performance Considerations
 
 ### Caching
+
 - Cache StoryGraph after `analyze_story`
 - Invalidate cache on new analysis
 
 ### Async Operations
+
 - Use async/await for all I/O
 - Implement timeouts (default: 30s)
 - Handle rate limiting gracefully

@@ -48,7 +48,7 @@ Listens to GitHub webhook events and syncs exported story files to Notion databa
 
 ### Optional
 
-- `@bl1nk/visual-mcp` — If consuming exports directly (not currently implemented)
+- `@bl1nk/core` — If consuming exports directly (not currently implemented)
 
 ---
 
@@ -77,12 +77,12 @@ Listens to GitHub webhook events and syncs exported story files to Notion databa
 
 ---
 
-## Integration with @bl1nk/visual-mcp
+## Integration with @bl1nk/core
 
 Currently, github-sync operates independently by consuming files from GitHub.
 Future integration could:
 
-- Import types from `@bl1nk/visual-mcp` for type-safe parsing
+- Import types from `@bl1nk/core` for type-safe parsing
 - Use validation functions to verify StoryGraph integrity
 - Direct MCP server calls instead of file-based sync
 

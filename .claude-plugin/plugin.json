@@ -1,6 +1,15 @@
 {
 	"name": "bl1nk-visual-mcp",
-	"description": "Story analysis and visualization MCP server",
-	"version": "3.0.0",
-	"author": "bl1nk team"
+	"description": "Story analysis and visualization MCP server — converts narrative text into structured StoryGraph JSON with 16 tools for Mermaid, Canvas, Dashboard, and Markdown exports.",
+	"version": "3.0.6",
+	"author": "bl1nk team",
+	"commands": "commands",
+	"skills": "skills",
+	"mcpServers": {
+		"bl1nkVisualServer": {
+			"command": "node",
+			"args": ["${extensionPath}/packages/core/dist/index.js"],
+			"cwd": "${extensionPath}"
+		}
+	}
 }

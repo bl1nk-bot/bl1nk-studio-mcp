@@ -1,15 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { buildInitialGraph } from "../packages/bl1nk-core/src/analyzer.js";
-import { toCanvasJSON } from "../packages/bl1nk-core/src/exporters/canvas.js";
-import { toDashboard } from "../packages/bl1nk-core/src/exporters/dashboard.js";
-import { toMermaid } from "../packages/bl1nk-core/src/exporters/mermaid.js";
-import { executeStoryTool } from "../packages/bl1nk-core/src/index.js";
+import { buildInitialGraph } from "../packages/core/src/analyzer.js";
+import { toCanvasJSON } from "../packages/core/src/exporters/canvas.js";
+import { toDashboard } from "../packages/core/src/exporters/dashboard.js";
+import { toMermaid } from "../packages/core/src/exporters/mermaid.js";
+import { executeStoryTool } from "../packages/core/src/index.js";
 import type {
 	CanvasEdge,
 	CanvasNode,
 	StoryGraph,
-} from "../packages/bl1nk-core/src/types.js";
-import { validateGraph } from "../packages/bl1nk-core/src/validators.js";
+} from "../packages/core/src/types.js";
+import { validateGraph } from "../packages/core/src/validators.js";
 
 describe("bl1nk-visual-mcp Core Logic", () => {
 	const storyText = `

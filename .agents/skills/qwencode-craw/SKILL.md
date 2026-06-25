@@ -80,7 +80,7 @@ To use acpx:
    See the [ACPX Reference](#acpx-reference) section below for details
 
 4. **For complete CLI reference with all options and examples**:
-   https://raw.githubusercontent.com/openclaw/acpx/main/docs/CLI.md
+   <https://raw.githubusercontent.com/openclaw/acpx/main/docs/CLI.md>
 
 From now on, when you need to delegate work to Qwen Code, use `acpx` instead of spawning raw terminal sessions. For example:
 
@@ -163,7 +163,7 @@ If every permission request is denied/cancelled and none are approved, `acpx` ex
 | `/auth`     | Configure authentication        |
 | `/exit`     | Exit Qwen Code                  |
 
-Full reference: https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/features/commands.md
+Full reference: <https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/features/commands.md>
 
 ### Configuration
 
@@ -178,30 +178,30 @@ Key settings:
 | `permissions.allow/ask/deny` | Tool permission rules                     |
 | `mcpServers.*`               | MCP server configurations                 |
 
-Full reference: https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/configuration/settings.md
+Full reference: <https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/configuration/settings.md>
 
 ### Authentication
 
 Supports Qwen OAuth (browser-based, 1000 free requests/day) and OpenAI-compatible API keys.
 
-Full reference: https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/configuration/auth.md
+Full reference: <https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/configuration/auth.md>
 
 ### Model Providers
 
 Configure custom model providers via `modelProviders` in settings or environment variables (`OPENAI_API_KEY`, `OPENAI_BASE_URL`, `OPENAI_MODEL`).
 
-Full reference: https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/configuration/model-providers.md
+Full reference: <https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/configuration/model-providers.md>
 
 ### Key Features
 
 | Feature       | Description                               | Docs                                                                                                    |
 | ------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| Approval Mode | Control tool execution permissions        | https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/features/approval-mode.md |
-| MCP           | Model Context Protocol server integration | https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/features/mcp.md           |
-| Skills        | Reusable skill system via `/skill`        | https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/features/skills.md        |
-| Sub-agents    | Delegate tasks to specialized agents      | https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/features/sub-agents.md    |
-| Sandbox       | Secure code execution environment         | https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/features/sandbox.md       |
-| Headless      | Non-interactive / CI mode                 | https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/features/headless.md      |
+| Approval Mode | Control tool execution permissions        | <https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/features/approval-mode.md> |
+| MCP           | Model Context Protocol server integration | <https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/features/mcp.md>           |
+| Skills        | Reusable skill system via `/skill`        | <https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/features/skills.md>        |
+| Sub-agents    | Delegate tasks to specialized agents      | <https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/features/sub-agents.md>    |
+| Sandbox       | Secure code execution environment         | <https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/features/sandbox.md>       |
+| Headless      | Non-interactive / CI mode                 | <https://raw.githubusercontent.com/QwenLM/qwen-code/refs/heads/main/docs/users/features/headless.md>      |
 
 ## ACPX Reference
 

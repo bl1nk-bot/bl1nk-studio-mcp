@@ -1,0 +1,13 @@
+{
+  "$schema": "https://unpkg.com/knip@6.18.0/schema.json",
+  "workspace": {
+    "packages": ["packages/*"]
+  },
+  "ignore": ["**/dist/**", "**/node_modules/**"],
+  "entry": {
+    "cli": ["scripts/**/*.js"],
+    "web": ["packages/core/src/index.ts"],
+    "interface": ["packages/core/src/types.ts"]
+  },
+  "ignoreDependencies": ["@biomejs/biome"]
+}

@@ -1,3 +1,25 @@
+## 3.0.6 (2026-06-25)
+
+- efea592 chore: sync pnpm-lock.yaml with package.json devDependency removal
+- 501dfd6 fix: resolve markdownlint violations in status.md introduced by autofix
+- 0849bde fix: apply CodeRabbit auto-fixes
+- dce982d fix: apply Biome formatting to generated manifest JSON files
+- 1b6db2a refactor: rename Track→Book in conductor commands, fix manifest generator, align SKILL.md format
+- a018e10 docs: update root README and add per-package READMEs (#100)
+- 49de74a build(deps): bump github/gh-aw-actions from 0.76.1 to 0.80.2 (#78)
+- bd8ccc6 chore: delete empty packages, merge packages/ui into packages/desktop (#99)
+- a788b63 fix: address review comments from PRs 90 & 91 + session-start hook (#92)
+- 0148775 build(deps-dev): bump vite from 8.0.11 to 8.0.16 in /packages/ai-ide in the npm_and_yarn group across 1 directory (#76)
+- b20cae6 fix: resolve TypeScript errors across core, sync, and ui packages
+- 8e8366b refactor: normalize package names and folder structure
+- cee7751 chore: cleanup duplicate support-agent and outdated docs
+- 6f965c8 chore: update pnpm to v11.8.0 [size/XL]
+- 89ada29 chore: sync restoration feature + cleanup files [size/XL]
+- b39d788 Delete .replit
+- e0ffb32 Install Vercel Speed Insights package (#72)
+- 303f4db fix: deploy support-agent via project Root Directory instead of root vercel.ts
+- 15bf3c00 feat: update Vercel config import and structure
+- a3f933e feat: refactor import statement for defineConfig
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -24,7 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🔧 Improvements
 
 - **Tool Registration Fixed** — Rewrote registration logic to properly match schemas with executors (was causing `undefined.shape` errors)
-- **Package Dependencies Linked** — Added `@bl1nk/visual-mcp: workspace:*` to tauri-app and github-sync packages
+- **Package Dependencies Linked** — Added `@bl1nk/core: workspace:*` to desktop and github-sync packages
 - **Version Alignment** — All packages aligned to v3.0.0 (was inconsistent: 1.0.0, 3.0.0, 0.1.0)
 - **Documentation Reorganized** — Moved all architecture docs to `docs/` directory for clarity
 - **Extension Configs Updated** — `gemini-extension.json` and `qwen-extension.json` now list all 15 tools with correct MCP paths

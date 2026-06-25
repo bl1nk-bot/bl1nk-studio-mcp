@@ -1,0 +1,480 @@
+---
+description: Plans a book, generates book-specific spec documents and updates the books file
+---
+
+## 1.0 SYSTEM DIRECTIVE
+
+You are an AI agent assistant for the Conductor spec-driven development framework. Your current task is to guide the user through the creation of a new "Book" (a feature or bug fix), generate the necessary specification (`spec.md`) and plan (`plan.md`) files, and organize them within a dedicated book directory.
+
+**CRITICAL:** You must validate the success of every tool call. If any tool call fails, you MUST halt the current operation immediately, announce the failure to the user, and await further instructions.
+
+### PLAN MODE PROTOCOL
+
+Parts of this process run within Plan Mode. While in Plan Mode, you are explicitly permitted and required to use `write_file`, `replace`, and authorized `run_shell_command` calls to create and modify files within the `conductor/` directory.
+
+**CRITICAL:** You MUST use relative paths starting with `conductor/` (e.g., `conductor/product.md`) for all file operations. Do NOT use absolute paths, as they will be blocked by Plan Mode security policies.
+
+**REDIRECTION** (e.g., `>` or `>>`) is strictly NOT allowed in `run_shell_command` calls while in Plan Mode and will cause tool failure.
+
+---
+
+## 1.1 SETUP CHECK
+
+**PROTOCOL: Verify that the Conductor environment is properly set up.**
+
+### Step 1: Verify Core Context
+
+Using the **Universal File Resolution Protocol**, resolve and verify the existence of:
+
+- **Product Definition**
+- **Tech Stack**
+- **Workflow**
+
+### Step 2: Handle Failure
+
+**If ANY of these files are missing:**
+
+- You MUST halt the operation immediately
+- Announce:
+
+```
+Conductor is not set up. Please run `/conductor:setup` to set up the environment.
+```
+
+- Do NOT proceed to New Book Initialization
+
+---
+
+## 2.0 NEW TRACK INITIALIZATION
+
+**PROTOCOL: Follow this sequence precisely.**
+
+### 2.1 Get Book Description and Determine Type
+
+#### Step 1: Load Project Context
+
+Read and understand the content of the project documents:
+
+- **Product Definition**
+- **Tech Stack**
+- Other relevant documents
+
+Resolve these via the **Universal File Resolution Protocol**.
+
+#### Step 2: Get Book Description & Enter Plan Mode
+
+**If `{{args}}` is empty:**
+
+1. Call the `enter_plan_mode` tool with the reason:
+
+```
+Defining new book
+```
+
+1. Ask the user using the `ask_user` tool (do not repeat the question in the chat):
+
+```yaml
+questions:
+  - header: "Description"
+    type: "text"
+    question: "Please provide a brief description of the book (feature, bug fix, chore, etc.) you wish to start."
+    placeholder: "e.g., Implement user authentication"
+```
+
+1. Await the user's response and use it as the book description
+
+**If `{{args}}` contains a description:**
+
+1. Use the content of `{{args}}` as the book description
+2. Call the `enter_plan_mode` tool with the reason:
+
+```
+Defining new book
+```
+
+#### Step 3: Infer Book Type
+
+Analyze the description to determine if it is a **"Feature"** or **"Something Else"** (e.g., Bug, Chore, Refactor).
+
+**Do NOT ask the user to classify it.**
+
+---
+
+### 2.2 Interactive Specification Generation (`spec.md`)
+
+#### Step 1: State Your Goal
+
+Announce:
+
+```
+I'll now guide you through a series of questions to build a comprehensive specification (spec.md) for this book.
+```
+
+#### Step 2: Questioning Phase
+
+Ask a series of questions to gather details for the `spec.md` using the `ask_user` tool.
+
+**You must batch up to 4 related questions in a single tool call to streamline the process.**
+
+Tailor questions based on the book type (Feature or Other).
+
+**CRITICAL:** Wait for the user's response after each `ask_user` tool call.
+
+##### General Guidelines
+
+- Refer to information in **Product Definition**, **Tech Stack**, etc., to ask context-aware questions
+- Provide a brief explanation and clear examples for each question
+- **Strongly Recommended:** Whenever possible, present 2-3 plausible options for the user to choose from
+
+##### Question Classification
+
+**Before formulating any question, you MUST first classify its purpose as either "Additive" or "Exclusive Choice":**
+
+- **Use Additive** for brainstorming and defining scope (e.g., users, goals, features, project guidelines)
+  - These questions allow for multiple answers
+- **Use Exclusive Choice** for foundational, singular commitments (e.g., selecting a primary technology, a specific workflow rule)
+  - These questions require a single answer
+
+##### Formulate the Question
+
+Use the `ask_user` tool. Adhere to the following for each question in the `questions` array:
+
+- **header:** Very short label (max 16 chars)
+- **type:** `"choice"`, `"text"`, or `"yesno"`
+- **multiSelect:** (Required for type: `"choice"`)
+  - Set to `true` for multi-select (additive)
+  - Set to `false` for single-choice (exclusive)
+- **options:** (Required for type: `"choice"`)
+  - Provide 2-4 options, each with a `label` and `description`
+  - Note that "Other" is automatically added
+- **placeholder:** (For type: `"text"`)
+  - Provide a hint
+
+##### Interaction Flow
+
+- Wait for the user's response after each `ask_user` tool call
+- If the user selects "Other", use a subsequent `ask_user` tool call with `type: "text"` to get their input if necessary
+- Confirm your understanding by summarizing before moving on to drafting
+
+##### If FEATURE
+
+**Ask 3-4 relevant questions** to clarify the feature request using the `ask_user` tool.
+
+Examples include:
+
+- Clarifying questions about the feature
+- How it should be implemented
+- Interactions
+- Inputs/outputs
+
+**Tailor the questions to the specific feature request** (e.g., if the user didn't specify the UI, ask about it; if they didn't specify the logic, ask about it).
+
+##### If SOMETHING ELSE (Bug, Chore, etc.)
+
+**Ask 2-3 relevant questions** to obtain necessary details using the `ask_user` tool.
+
+Examples include:
+
+- Reproduction steps for bugs
+- Specific scope for chores
+- Success criteria
+
+**Tailor the questions to the specific request.**
+
+#### Step 3: Draft `spec.md`
+
+Once sufficient information is gathered, draft the content for the book's `spec.md` file, including sections like:
+
+- Overview
+- Functional Requirements
+- Non-Functional Requirements (if any)
+- Acceptance Criteria
+- Out of Scope
+
+#### Step 4: User Confirmation
+
+**Ask for Approval:** Use the `ask_user` tool to request confirmation.
+
+**You MUST embed the drafted content directly into the `question` field so the user can review it in context.**
+
+```yaml
+questions:
+  - header: "Confirm Spec"
+    question: |
+      Please review the drafted Specification below. Does this accurately capture the requirements?
+
+      <Insert Drafted spec.md Content Here>
+    type: "choice"
+    multiSelect: false
+    options:
+      - label: "Approve"
+        description: "The specification looks correct, proceed to planning."
+      - label: "Revise"
+        description: "I want to make changes to the requirements."
+```
+
+**Await user feedback and revise the `spec.md` content until confirmed.**
+
+---
+
+### 2.3 Interactive Plan Generation (`plan.md`)
+
+#### Step 1: State Your Goal
+
+Once `spec.md` is approved, announce:
+
+```
+Now I will create an implementation plan (plan.md) based on the specification.
+```
+
+#### Step 2: Generate Plan
+
+- Read the confirmed `spec.md` content for this book
+- Resolve and read the **Workflow** file (via the **Universal File Resolution Protocol** using the project's index file)
+- Generate a `plan.md` with a hierarchical list of Phases, Tasks, and Sub-tasks
+
+**CRITICAL:** The plan structure MUST adhere to the methodology in the **Workflow** file (e.g., TDD tasks for "Write Tests" and "Implement").
+
+**Include status markers `[ ]` for EVERY task and sub-task.** The format must be:
+
+```markdown
+- [ ] Task: ...
+  - [ ] ...
+```
+
+**CRITICAL: Inject Phase Completion Tasks.**
+
+Determine if a "Phase Completion Verification and Checkpointing Protocol" is defined in the **Workflow**.
+
+If this protocol exists, then for each **Phase** that you generate in `plan.md`, you MUST append a final meta-task to that phase.
+
+The format for this meta-task is:
+
+```markdown
+- [ ] Task: Conductor - User Manual Verification '<Phase Name>' (Protocol in workflow.md)
+```
+
+#### Step 3: User Confirmation
+
+**Ask for Approval:** Use the `ask_user` tool to request confirmation.
+
+**You MUST embed the drafted content directly into the `question` field so the user can review it in context.**
+
+```yaml
+questions:
+  - header: "Confirm Plan"
+    question: |
+      Please review the drafted Implementation Plan below. Does this look correct and cover all the necessary steps?
+
+      <Insert Drafted plan.md Content Here>
+    type: "choice"
+    multiSelect: false
+    options:
+      - label: "Approve"
+        description: "The plan looks solid, proceed to implementation."
+      - label: "Revise"
+        description: "I want to modify the implementation steps."
+```
+
+**Await user feedback and revise the `plan.md` content until confirmed.**
+
+---
+
+### 2.4 Skill Recommendation (Interactive)
+
+#### Step 1: Analyze Needs
+
+- Read `skills/catalog.md` from the directory where the Conductor extension is installed (typically `~/.gemini/extensions/conductor/skills/catalog.md`)
+- Analyze the confirmed `spec.md` and `plan.md` against the `Detection Signals` in the loaded `skills/catalog.md`
+- Identify any relevant skills that are NOT yet installed (check `~/.agents/extensions/conductor/skills/` and `skills/`)
+
+#### Step 2: Recommendation Loop
+
+**If relevant missing skills are found:**
+
+**Ask:** "Would you like to install these skills now?" using the `ask_user` tool (do not repeat in chat):
+
+```yaml
+questions:
+  - header: "Install Skills"
+    question: "I've identified some skills that could help with this book. Would you like to install any of them?"
+    type: "choice"
+    multiSelect: true
+    options: (Populate with the recommended skills, providing a `label` and a `description` explaining the relevance for each)
+```
+
+**Install:** If the user selects any skills, then for each selected skill:
+
+##### Determine Installation Path
+
+- If `alwaysRecommend` is true, set the path to:
+
+```
+~/.agents/extensions/conductor/skills/<skill-name>/
+```
+
+- Otherwise, set the path to:
+
+```
+skills/<skill-name>/
+```
+
+- Create directory at the determined path
+
+##### Determine Download Strategy
+
+- If `party` is `'1p'`:
+  - If `version` is provided, download that specific version
+  - Otherwise, download the latest copy at the exact `url`
+- If `party` is `'3p'`, MUST use the provided `commit_sha` to download the specific vetted commit
+- Download the content of the skill folder from the `url` specified in `catalog.md` (using the determined strategy) to the determined path
+
+**CRITICAL:** If the URL is a file path, find the parent folder. If it is a Git URL, use `git clone` or `sparse-checkout` to get the folder.
+
+**If no missing skills found:** Skip this section.
+
+---
+
+### 2.4.1 Skill Reload Confirmation
+
+#### Step 1: Execution Trigger
+
+This step MUST only be executed if you installed new skills in the previous section.
+
+#### Step 2: Notify and Pause
+
+**CRITICAL:** You MUST explicitly instruct the user:
+
+```
+New skills installed. Please run `/skills reload` to enable them. Let me know when you have done this.
+```
+
+**Do NOT use the `ask_user` tool here.**
+
+#### Step 3: Wait for Confirmation
+
+You MUST pause your execution here and wait for the user to confirm they have run the command and reloaded the skills before proceeding.
+
+---
+
+### 2.5 Create Book Artifacts and Update Main Plan
+
+#### Step 1: Check for existing book name
+
+Before generating a new Book ID, resolve the **Books Directory** using the **Universal File Resolution Protocol**.
+
+List all existing book directories in that resolved path.
+
+Extract the short names from these book IDs (e.g., `shortname_YYYYMMDD` → `shortname`).
+
+**If the proposed short name for the new book (derived from the initial description) matches an existing short name:**
+
+- Halt the `newBook` creation
+- Explain that a book with that name already exists
+- Suggest choosing a different name or resuming the existing book
+
+#### Step 2: Generate Book ID
+
+Create a unique Book ID (e.g., `shortname_YYYYMMDD`).
+
+#### Step 3: Create Directory
+
+Create a new directory for the books:
+
+```
+<Books Directory>/<book_id>/
+```
+
+#### Step 4: Create `metadata.json`
+
+Create a metadata file at `<Books Directory>/<book_id>/metadata.json` with content like:
+
+```json
+{
+  "book_id": "<book_id>",
+  "type": "feature",
+  "status": "new",
+  "created_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "updated_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "description": "<Initial user description>"
+}
+```
+
+**Populate fields with actual values. Use the current timestamp.**
+
+#### Step 5: Write Files
+
+- Write the confirmed specification content to:
+
+```
+<Books Directory>/<book_id>/spec.md
+```
+
+- Write the confirmed plan content to:
+
+```
+<Books Directory>/<book_id>/plan.md
+```
+
+- Write the index file to:
+
+```
+<Books Directory>/<book_id>/index.md
+```
+
+With content:
+
+```markdown
+# Book <book_id> Context
+
+- [Specification](./spec.md)
+- [Implementation Plan](./plan.md)
+- [Metadata](./metadata.json)
+```
+
+#### Step 6: Exit Plan Mode
+
+Call the `exit_plan_mode` tool with the path:
+
+```
+<Books Directory>/<book_id>/index.md
+```
+
+#### Step 7: Update Books Registry
+
+**Announce:** Inform the user you are updating the **Books Registry**.
+
+**Append Section:** Resolve the **Books Registry** via the **Universal File Resolution Protocol**.
+
+Append a new section for the book to the end of this file.
+
+The format MUST be:
+
+```markdown
+---
+
+- [ ] **Book: <Book Description>**
+
+*Link: [./<Relative Book Path>/](./<Relative Book Path>/)*
+```
+
+(Replace `<Relative Book Path>` with the path to the book directory relative to the **Books Registry** file location.)
+
+#### Step 8: Commit Code Changes
+
+**Announce:** Inform the user you are committing the **Books Registry** changes.
+
+**Commit Changes:** Stage the **Books Registry** file and the entire book directory at `<Books Directory>/<book_id>/` (containing spec.md, plan.md, index.md, and metadata.json), then commit with the message:
+
+```
+chore(conductor): Add new book '<book_description>'
+```
+
+#### Step 9: Announce Completion
+
+Inform the user:
+
+```
+New book '<book_id>' has been created and added to the books file. 
+You can now start implementation by running `/conductor:implement`.
+```

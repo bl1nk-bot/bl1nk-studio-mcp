@@ -12,11 +12,13 @@
 We take the security of bl1nk-visual-mcp seriously. If you discover a security vulnerability, please follow these steps:
 
 ### Do NOT
+
 - Open a public GitHub issue
 - Discuss the vulnerability in public forums or Discord
 - Share exploit details with anyone outside the security response team
 
 ### Do
+
 1. **Email us privately** at the project maintainers' contact
 2. Include the following in your report:
    - Type of vulnerability (e.g., XSS, RCE, path traversal, credential leak)
@@ -27,6 +29,7 @@ We take the security of bl1nk-visual-mcp seriously. If you discover a security v
 3. **Allow 72 hours** for initial response
 
 ### Response Timeline
+
 | Stage | Timeframe |
 |-------|-----------|
 | Initial acknowledgment | 72 hours |
@@ -37,6 +40,7 @@ We take the security of bl1nk-visual-mcp seriously. If you discover a security v
 ### Scope
 
 #### In Scope
+
 - MCP server tool endpoints and input validation
 - File system operations (path traversal, arbitrary file write)
 - OAuth/JWT authentication flows
@@ -46,6 +50,7 @@ We take the security of bl1nk-visual-mcp seriously. If you discover a security v
 - Dependency vulnerabilities
 
 #### Out of Scope
+
 - Dependencies we don't control (e.g., `@modelcontextprotocol/sdk`, `zod`)
 - Social engineering attacks
 - DoS/DDoS attacks

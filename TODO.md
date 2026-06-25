@@ -1,41 +1,40 @@
 # TODO.md — bl1nk-visual-mcp Monorepo
 
-> **Status:** Active development | **Last Updated:** 2026-05-14
+> **Status:** TECHNICAL RESTORATION (Active) | **Last Updated:** 2026-05-17
+
+---
+
+## 🚨 EMERGENCY: Technical Debt & Restoration
+
+- [x] **Restore System-wide Integrity:** Fixed broken `types.ts` and re-synchronized property names (`meta`, `tags`).
+- [ ] `fix: [label:emergency][size/XL]` **Rebuild Test Suite:** Fixing type errors in restored tests (`validators.test.ts` fixed, others pending).
+- [ ] `fix: [label:emergency][size/XL]` **Resolve Dependency Hell:** Fix `mcp-handler` module resolution.
 
 ---
 
 ## 🔴 Critical & High Priority
 
-- [ ] \`type:feat\` \`label:high-priority\` Add startup validation for Exa API key in bl1nk-core
-- [ ] \`type:fix\` \`label:high-priority\` Resolve Vercel deployment issues (failed recently)
-- [ ] \`type:fix\` \`label:high-priority\` Address 17 actionable comments from CodeRabbit in closed PR #48 (refactoring into smaller PRs)
+- [ ] `type:feat` `label:high-priority` Add startup validation for Exa API key in core
+- [ ] `type:fix` `label:high-priority` Resolve Vercel deployment issues
 
 ---
 
 ## 🟡 Core Development (VSP3)
 
-- [ ] \`type:feat\` \`label:core\` Implement live MCP connection for bl1nk-desktop/bl1nk-ide
-- [ ] \`type:feat\` \`label:core\` Add persistent storage for StoryGraph JSON
-- [ ] \`type:fix\` \`label:core\` Standardize Node.js versions across all CI/CD pipelines (currently mixed 20/22/24)
-- [ ] \`type:fix\` \`label:core\` Fix hardcoded act distribution in \`src/analyzer.ts\` (use 25-50-25 rule)
+- [x] **Actual Implementation:** Corrected 25-50-25 Act Distribution logic in `analyzer.ts`.
+- [x] **Actual Implementation:** Fixed Character Deduplication in `analyzer.ts`.
+- [ ] `type:feat` `label:core` Implement live MCP connection for desktop/ai-ide
+- [ ] `type:feat` `label:core` Add persistent storage for StoryGraph JSON
 
 ---
 
-## 🟢 Maintenance & Improvements
+## ✅ Recently Completed (Verified)
 
-- [ ] \`type:fix\` \`label:low-priority\` Archive or move \`packages/craft-blog-cms\` (Orphaned)
-- [ ] \`type:feat\` \`label:low-priority\` Add XSS validation for Markdown exporter
-- [ ] \`type:style\` \`label:low-priority\` Standardize Tailwind CSS versions across packages (mixed 3.4 and 4.0)
-
----
-
-## ✅ Recently Completed
-
-- [x] **Fix 4 Critical Bugs** (Character duplication, Act distribution 25-50-25, Mermaid export, Node.js types)
-- [x] **Restore Trae Agent & Unified UI Structure** (Consolidated packages into bl1nk-unified-ui)
-- [x] **Purge Corrupted Thai Filenames** (Completely cleaned Git history and test outputs)
-- [x] **Sync dev branch to main** (Fully merged and synchronized state)
-- [x] Consolidate agent documentation into `AGENTS.md` and symlink `GEMINI.md`, `QWEN.md`, `CLAUDE.md`
-- [x] Update `README.md` and `docs/TOOL_MAPPING.md` to reflect actual state
-- [x] Merged dependency update for `postcss` security fix
-- [x] Cleared backlog of conflicting or problematic PRs
+- [x] **Package Rename:** Renamed all packages to consistent `@bl1nk/<name>` scope with short folder names: `core`, `desktop`, `ide`, `ui`, `book`, `sync`, `support`.
+- [x] **Architecture Cleanup:** Removed duplicate `support-agent/` root directory, deleted orphaned `docs/CRAFT-BLOG-CMS.md`, rewrote `docs/TOOL_MAPPING.md`, and updated README/docs index to match current packages.
+- [x] **Self-Management Lockdown:** Created `.gemini/setting.json` and updated `GEMINI.md` with strict operational protocols.
+- [x] **Fidelity Restoration:** Reverted unauthorized property name changes (`metadata` back to `meta`).
+- [x] **Test Recovery:** Restored deleted test files from Git history.
+- [x] **Restore Trae Agent & Unified UI Structure**
+- [x] **Purge Corrupted Thai Filenames**
+- [x] **Sync dev branch to main**

@@ -1,4 +1,4 @@
-# bl1nk-visual-mcp Monorepo
+# bl1nk-studio-mcp
 
 ระบบวิเคราะห์และจัดระเบียบเรื่องราว (Story Analysis & Organization System)
 
@@ -6,147 +6,57 @@
 
 ---
 
-## 📦 Packages
+## Packages
 
-### 1. **@bl1nk-core/visual-mcp** (\`packages/bl1nk-core/\`)
-
-Core MCP Server สำหรับวิเคราะห์ story text และสร้าง StoryGraph JSON
-
-**Tools (16 total):**
-
-#### Granular Tools (11 tools — recommended)
-
-| Category | Tool | Description |
-|----------|------|-------------|
-| Analysis | \`analyze_story\` | Parse story text → StoryGraph JSON |
-| Export | \`export_mermaid\` | Mermaid diagram markdown |
-| Export | \`export_canvas\` | Canvas JSON (Obsidian/React Flow) |
-| Export | \`export_dashboard\` | HTML dashboard (Chart.js + Tailwind) |
-| Export | \`export_markdown\` | Structured Markdown document |
-| Export | \`export_mcp_ui_dashboard\` | MCP-UI compatible HTML dashboard |
-| Validation | \`validate_story_structure\` | 3-act structure validation |
-| Extract | \`extract_characters\` | Character data from StoryGraph |
-| Extract | \`extract_conflicts\` | Conflict data from StoryGraph |
-| Extract | \`build_relationship_graph\` | Relationship graph |
-| Search | \`exa_search_story\` | External story research (Exa AI) |
-
-#### Legacy & Standalone Tools (5 tools)
-
-| Tool | Description |
-|------|-------------|
-| \`search_entries\` | Extract entities from story text (Standalone/Legacy) |
-| \`validate_story\` | Quick validation from text input (Legacy) |
-| \`generate_artifacts\` | Generate ALL formats at once (Legacy) |
-| \`sync_github\` | Push files to GitHub (Not implemented) |
-
-**Usage:**
-\`\`\`bash
-cd packages/bl1nk-core
-npm run build
-npm run start
-\`\`\`
-
-### 2. **bl1nk-desktop** (\`packages/bl1nk-desktop/\`)
-
-Desktop Application (React + Tauri) สำหรับดูและจัดการ story entities
-
-**Features:**
-
-- StoryGraph visualization (Mermaid)
-- Character & Conflict management
-- Timeline view
-- Insights dashboard (Act distribution, Health checks)
-
-**Usage:**
-\`\`\`bash
-cd packages/bl1nk-desktop
-npm run tauri:dev
-\`\`\`
-
-### 3. **bl1nk-ide** (\`packages/bl1nk-ide/\`)
-
-Web IDE สำหรับ story writing และ analysis (Vite + React)
-
-**Features:**
-
-- Editor พร้อม real-time visualization
-- Canvas view
-- Markdown preview
-- Task tracking
-
-**Usage:**
-\`\`\`bash
-cd packages/bl1nk-ide
-npm run dev
-\`\`\`
-
-### 4. **@bl1nk/github-sync** (\`packages/bl1nk-sync/\`)
-
-GitHub App สำหรับ sync markdown/CSV files ไป Notion อัตโนมัติ
-
-**Usage:**
-\`\`\`bash
-cd packages/bl1nk-sync
-npm run build
-npm run start
-\`\`\`
+| Package | Path | Description |
+|---------|------|-------------|
+| [`@bl1nk/core`](packages/core/) | `packages/core/` | MCP Server — story analysis engine |
+| [`@bl1nk/desktop`](packages/desktop/) | `packages/desktop/` | Desktop app (React + Tauri) |
+| [`@bl1nk/ide`](packages/ide/) | `packages/ide/` | Web IDE for story writing |
+| [`@bl1nk/book`](packages/book/) | `packages/book/` | Article workspace (Next.js + Craft API) |
+| [`@bl1nk/support`](packages/support/) | `packages/support/` | Support agent (Next.js + Vercel AI SDK) |
+| [`@bl1nk/sync`](packages/sync/) | `packages/sync/` | GitHub → Notion sync webhook |
 
 ---
 
-## 🚀 Development
+## Development
 
-### Install Dependencies
-
-\`\`\`bash
+```bash
+# Install all dependencies
 pnpm install
-\`\`\`
 
-### Build All
+# Build all packages
+pnpm -r run build
 
-\`\`\`bash
-pnpm run build
-\`\`\`
+# Run tests across all packages
+pnpm -r run test
 
-### Test All
-
-\`\`\`bash
-pnpm run test
-\`\`\`
+# Lint and typecheck
+pnpm run lint
+pnpm -r run typecheck
+```
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
-\`\`\`
-visual-story-extension/
+```text
+bl1nk-studio-mcp/
 ├── packages/
-│   ├── bl1nk-core/               # Core MCP Server & Story Analysis
-│   ├── bl1nk-desktop/            # Desktop UI (Tauri + React)
-│   ├── bl1nk-ide/                # Web IDE (Vite + React)
-│   ├── bl1nk-sync/               # GitHub → Notion sync
-│   └── bl1nk-book/               # Book publishing platform (dev)
-│
-├── docs/                         # Documentation
-├── AGENTS.md                     # Centralized AI Agent reference
-├── TODO.md                       # Project roadmap
-├── SPEC.md                       # UI Layer Specification
-└── package.json                  # Root package (v3.0.0)
-\`\`\`
+│   ├── core/        # MCP Server & Story Analysis Engine
+│   ├── desktop/     # Desktop UI (Tauri 2 + React 19)
+│   ├── ide/         # Web IDE (Vite + React 18)
+│   ├── book/        # Article Workspace (Next.js + Craft API)
+│   ├── support/     # Support Agent (Next.js + Vercel AI SDK)
+│   └── sync/        # GitHub → Notion Sync Service
+├── .claude/         # Claude Code hooks & settings
+├── biome.json       # Linter & formatter config
+├── pnpm-workspace.yaml
+└── package.json     # Root workspace (v3.0.0)
+```
 
 ---
 
-## 📚 Documentation
+## License
 
-| Document | Purpose |
-|----------|---------|
-| [AGENTS.md](AGENTS.md) | **[Main]** Core reference for all AI agents |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | System architecture & dataflow |
-| [docs/TOOL_MAPPING.md](docs/TOOL_MAPPING.md) | Detailed tool parameters & outputs |
-| [SPEC.md](SPEC.md) | UI implementation details |
-| [TODO.md](TODO.md) | Current tasks & priorities |
-
----
-
-## ⚖️ License
-
-Apache-2.0 © 2026 bl1nk-visual-mcp
+Apache-2.0 © 2026 bl1nk-studio-mcp

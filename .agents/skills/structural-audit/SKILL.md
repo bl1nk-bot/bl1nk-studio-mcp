@@ -17,6 +17,8 @@ description: >
   seemingly simple structure questions.
 ---
 
+# Structural Audit
+
 ## Pre-Export Validation Gate
 
 **Before any export tool is called**, this skill must:
@@ -41,8 +43,6 @@ If the user types `ACCEPT RISK`, proceed with the export and prepend a notice to
 
 ---
 
-
-
 ## Phase 1 — Three-Act Structure
 
 Check each act against the 25%-50%-25% target:
@@ -54,6 +54,7 @@ Check each act against the 25%-50%-25% target:
 | Act 3 | 25% | < 15% or > 35% | 3–5 |
 
 Check for presence and quality of:
+
 - **Inciting incident** (Act 1 — importance: `inciting`)
 - **Midpoint** (Act 2 — importance: `midpoint`)
 - **Climax** (Act 3 — importance: `climax`) ← error if missing
@@ -66,6 +67,7 @@ Status: `good` | `needs_work` | `critical`
 ## Phase 2 — Character Arcs
 
 For each character with role `protagonist` or `antagonist`:
+
 - Arc defined? (`arc.start`, `arc.midpoint`, `arc.end` non-empty)
 - Transformation meaningful? (`arc.transformation` non-empty)
 - Motivations defined? (`motivations` array non-empty)
@@ -78,6 +80,7 @@ Flag any character missing 2+ of these as `needs_work`.
 ## Phase 3 — Conflict Escalation
 
 For each conflict:
+
 - Has escalation stages? (`escalations.length >= 2`)
 - Intensity rises? (each stage > previous by ≥ 1)
 - Resolution defined? (`resolution` non-empty)
@@ -123,6 +126,7 @@ Always output in this exact structure:
 ```
 
 Health score formula:
+
 - Structure: 40 pts (climax present: 20, midpoint: 10, act balance: 10)
 - Characters: 25 pts (protagonist arc: 15, others: 10)
 - Conflicts: 20 pts (escalation: 10, resolution: 10)

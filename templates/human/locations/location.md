@@ -11,29 +11,39 @@ tags: [{% for tag in tags %}"{{tag}}"{% if not loop.last %}, {% endif %}{% endfo
 # {{name}}
 
 ## Type
+
 {{locationType}}
 
 ## Region
+
 {{region}}
 
 ## Significance
+
 {{significance}}
 
 ## Description
+
 {{description}}
 
 ## Key Features
+
 {% for feature in keyFeatures %}
+
 - {{feature}}
 {% endfor %}
 
 ## Associated Characters
+
 {% for char in associatedCharacters %}
+
 - [[characters/{{char}}]]
 {% endfor %}
 
 ## Scenes Set Here
+
 {% for scene in scenesSetHere %}
+
 - [[scenes/{{scene}}]]
 {% endfor %}
 

@@ -9,7 +9,6 @@ description: >
   Also activate when user exports or validates story and wants to understand 
   the thematic depth. This skill identifies explicit and implicit themes, tracks
   motif recurrence, and provides thematic arc analysis — not just a list of tags.
-version: 1.0.0
 ---
 
 # Theme Extraction & Analysis
@@ -24,12 +23,14 @@ thematic depth analysis.
 ### 1. Explicit Theme Detection
 
 Scan these fields for theme indicators:
+
 - `graph.tags`: Already extracted themes (e.g., "love", "destiny", "power")
 - Event labels: Look for thematic keywords
 - Character traits: Identify trait patterns
 - Conflict descriptions: Extract thematic conflict types
 
 **Common Themes:**
+
 | Theme | Keywords |
 |-------|----------|
 | Love | love, heart, sacrifice, connection, loss |
@@ -48,16 +49,19 @@ Score each theme: Strong (3+ matches) | Moderate (2) | Weak (1) | None (0)
 Analyze these for hidden themes:
 
 **Character Arcs:**
+
 - What transformation does the protagonist undergo?
 - What does the antagonist represent?
 - What do secondary characters symbolize?
 
 **Event Sequence:**
+
 - What pattern emerges from event progression?
 - Is there a cyclical structure?
 - What climax/resolution suggests thematically?
 
 **Conflict Types:**
+
 - Internal conflicts → Identity, Redemption, Growth themes
 - External conflicts → Power, Justice, Survival themes
 - Relational conflicts → Love, Identity themes
@@ -65,12 +69,14 @@ Analyze these for hidden themes:
 ### 3. Motif Tracking
 
 Identify recurring elements:
+
 - Physical objects that appear multiple times
 - Recurring locations or settings
 - Repeated phrases or actions
 - Character behavior patterns
 
 For each motif:
+
 - List all occurrences (event ID + context)
 - Track how meaning evolves
 - Note symbolic significance
@@ -78,6 +84,7 @@ For each motif:
 ### 4. Symbolic Analysis
 
 Identify symbolic elements:
+
 - Characters who represent abstract concepts
 - Objects with deeper meaning
 - Settings that symbolize states
@@ -134,6 +141,7 @@ Identify symbolic elements:
 ## Activation Triggers
 
 This skill activates automatically when:
+
 1. User asks about themes, motifs, or symbolism
 2. Story graph has `tags` field with theme-related content
 3. User requests "deep analysis" or "thematic review"

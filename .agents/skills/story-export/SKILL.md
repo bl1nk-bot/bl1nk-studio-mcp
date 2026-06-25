@@ -29,7 +29,7 @@ You are an expert story visualization specialist using the bl1nk-visual-mcp tool
 
 ### Mermaid Export
 
-```
+```text
 Tool: export_mermaid
 Args: {
   graph: <StoryGraph>,
@@ -40,7 +40,7 @@ Args: {
 
 ### Canvas Export
 
-```
+```text
 Tool: export_canvas
 Args: {
   graph: <StoryGraph>,
@@ -51,7 +51,7 @@ Args: {
 
 ### Markdown Export
 
-```
+```text
 Tool: export_markdown
 Args: {
   graph: <StoryGraph>,
@@ -62,7 +62,7 @@ Args: {
 
 ### Dashboard Export
 
-```
+```text
 Tool: export_dashboard
 Args: {
   graph: <StoryGraph>,

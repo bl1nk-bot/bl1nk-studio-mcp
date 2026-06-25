@@ -1,0 +1,23 @@
+{
+	"behaviors": {
+		"antiLaziness": true,
+		"strictTodoManagement": true,
+		"preventUnauthorizedPropertyChanges": true,
+		"forbiddenActions": [
+			"delete_tests_to_fix_errors",
+			"rename_core_properties_without_approval",
+			"ignore_technical_debt"
+		],
+		"mandatoryWorkflows": [
+			"read_types_before_implementation",
+			"update_todo_history_immediately",
+			"report_full_typecheck_errors"
+		]
+	},
+	"projectIntegrity": {
+		"sourceOfTruth": "packages/core/src/types.ts",
+		"requiredProperties": ["meta", "tags"],
+		"actDistributionRule": "25-50-25"
+	},
+	"instruction": "This file governs the behavior of Gemini CLI for the visual-story-extension project. Any deviation from these rules is considered a critical failure."
+}

@@ -1,0 +1,25 @@
+#!/bin/bash
+set -eu
+
+echo "=== pre-commit: format ==="
+# Biome not available on Termux/Android; skip or replace with your formatter
+if command -v biome >/dev/null 2>&1; then
+  pnpm run format
+else
+  echo "biome not available; skipping format"
+fi
+
+echo "=== pre-commit: lint ==="
+if command -v biome >/dev/null 2>&1; then
+  pnpm run lint
+else
+  echo "biome not available; skipping lint"
+fi
+
+echo "=== pre-commit: typecheck ==="
+pnpm run typecheck
+
+echo "=== pre-commit: test ==="
+pnpm run test
+
+echo "=== pre-commit: passed ==="

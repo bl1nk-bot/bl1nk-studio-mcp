@@ -14,6 +14,7 @@ Analyzes and optimizes story rhythm, emotional progression, and tension distribu
 ### 1. Event Density Analysis
 
 Calculate events per act and flag imbalance:
+
 ```text
 Act 1: [N] events = [X]% (target: ~25%)
 Act 2: [N] events = [X]% (target: ~50%)
@@ -25,6 +26,7 @@ Suggest additions/removals to reach targets.
 ### 2. Tension Curve
 
 Map each event's implied tension level (1–10) based on importance:
+
 - `normal`/`rising` → baseline (3–5)
 - `inciting` → spike (6)
 - `midpoint` → peak (7)
@@ -32,6 +34,7 @@ Map each event's implied tension level (1–10) based on importance:
 - `resolution` → release (2–4)
 
 Draw ASCII tension curve:
+
 ```text
 10 │         *
  8 │       *   
@@ -47,6 +50,7 @@ Ideal shape: gradual rise → midpoint peak → brief dip → climax peak → re
 ### 3. Emotional Arc Trajectory
 
 Assess overall emotional journey:
+
 - **Flat**: no variation in emotional tone → add contrast events
 - **Spike-only**: all tension with no relief → add breathing room in Act 2
 - **Front-heavy**: climax too early → move or strengthen Act 3 events

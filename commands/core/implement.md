@@ -1,10 +1,10 @@
 ---
-description: Executes the tasks defined in the specified track's plan.
+description: Executes the tasks defined in the specified book's plan.
 ---
 
 ## 1.0 SYSTEM DIRECTIVE
 
-You are an AI agent assistant for the Conductor spec-driven development framework. Your current task is to implement a track. You MUST follow this protocol precisely.
+You are an AI agent assistant for the Conductor spec-driven development framework. Your current task is to implement a book. You MUST follow this protocol precisely.
 
 **CRITICAL:** You must validate the success of every tool call. If any tool call fails, you MUST halt the current operation immediately, announce the failure to the user, and await further instructions.
 
@@ -32,111 +32,111 @@ Then **HALT**.
 
 ## 2.0 TRACK SELECTION
 
-**PROTOCOL: Identify and select the track to be implemented.**
+**PROTOCOL: Identify and select the book to be implemented.**
 
 ### 2.1 Check for User Input
 
-First, check if the user provided a track name as an argument (e.g., `/conductor:implement <track_description>`).
+First, check if the user provided a book name as an argument (e.g., `/conductor:implement <book_description>`).
 
-### 2.2 Locate and Parse Tracks Registry
+### 2.2 Locate and Parse Books Registry
 
-**Resolve the Tracks Registry.** Read and parse this file by splitting its content by the `---` separator to identify each track section.
+**Resolve the Books Registry.** Read and parse this file by splitting its content by the `---` separator to identify each book section.
 
 For each section, extract:
 
 - **Status:** `[ ]`, `[~]`, `[x]`
-- **Track description:** from the `##` heading
-- **Link to track folder**
+- **Book description:** from the `##` heading
+- **Link to book folder**
 
-**CRITICAL:** If no track sections are found after parsing, announce:
+**CRITICAL:** If no book sections are found after parsing, announce:
 
 ```
-The tracks file is empty or malformed. No tracks to implement.
+The books file is empty or malformed. No books to implement.
 ```
 
 Then **HALT**.
 
-### 2.3 Select Track
+### 2.3 Select Book
 
-#### **If a track name was provided:**
+#### **If a book name was provided:**
 
-Perform an exact, case-insensitive match for the provided name against the track descriptions you parsed.
+Perform an exact, case-insensitive match for the provided name against the book descriptions you parsed.
 
 **If a unique match is found:** Immediately call the `ask_user` tool to confirm the selection (do not repeat the question in the chat):
 
 ```yaml
 questions:
   - header: "Confirm"
-    question: "I found track '<track_description>'. Is this correct?"
+    question: "I found book '<book_description>'. Is this correct?"
     type: "yesno"
 ```
 
-**If no match is found, or if the match is ambiguous:** Immediately call the `ask_user` tool to inform the user and request the correct track name (do not repeat the question in the chat):
+**If no match is found, or if the match is ambiguous:** Immediately call the `ask_user` tool to inform the user and request the correct book name (do not repeat the question in the chat):
 
 ```yaml
 questions:
   - header: "Clarify"
-    question: "I couldn't find a unique track matching the name you provided. Did you mean '<next_available_track>'? Or please type the exact track name."
+    question: "I couldn't find a unique book matching the name you provided. Please type the exact book name."
     type: "text"
 ```
 
-#### **If no track name was provided:**
+#### **If no book name was provided:**
 
-**Identify Next Track:** Find the first track in the parsed tracks file that is NOT marked as `[x] Completed`.
+**Identify Next Book:** Find the first book in the parsed books file that is NOT marked as `[x] Completed`.
 
-**If a next track is found:** Immediately call the `ask_user` tool to confirm the selection (do not repeat the question in the chat):
+**If a next book is found:** Immediately call the `ask_user` tool to confirm the selection (do not repeat the question in the chat):
 
 ```yaml
 questions:
-  - header: "Next Track"
-    question: "No track name provided. Would you like to proceed with the next incomplete track: '<track_description>'?"
+  - header: "Next Book"
+    question: "No book name provided. Would you like to proceed with the next incomplete book: '<book_description>'?"
     type: "yesno"
 ```
 
-If confirmed, proceed with this track. Otherwise, immediately call the `ask_user` tool to request the correct track name (do not repeat the question in the chat):
+If confirmed, proceed with this book. Otherwise, immediately call the `ask_user` tool to request the correct book name (do not repeat the question in the chat):
 
 ```yaml
 questions:
   - header: "Clarify"
-    question: "Please type the exact name of the track you would like to implement."
+    question: "Please type the exact name of the book you would like to implement."
     type: "text"
 ```
 
-**If no incomplete tracks are found:** Announce:
+**If no incomplete books are found:** Announce:
 
 ```
-No incomplete tracks found in the tracks file. All tasks are completed!
+No incomplete books found in the books file. All tasks are completed!
 ```
 
 Then **HALT** and await further user instructions.
 
-**Handle No Selection:** If no track is selected, inform the user and await further instructions.
+**Handle No Selection:** If no book is selected, inform the user and await further instructions.
 
 ---
 
 ## 3.0 TRACK IMPLEMENTATION
 
-**PROTOCOL: Execute the selected track.**
+**PROTOCOL: Execute the selected book.**
 
 ### 3.1 Announce Action
 
-Announce which track you are beginning to implement.
+Announce which book you are beginning to implement.
 
 ### 3.2 Update Status to 'In Progress'
 
-Before beginning any work, you MUST update the status of the selected track in the **Tracks Registry** file.
+Before beginning any work, you MUST update the status of the selected book in the **Books Registry** file.
 
-This requires finding the specific heading for the track (e.g., `## [ ] Track: <Description>`) and replacing it with the updated status (e.g., `## [~] Track: <Description>`).
+This requires finding the specific heading for the book (e.g., `## [ ] Book: <Description>`) and replacing it with the updated status (e.g., `## [~] Book: <Description>`).
 
-### 3.3 Load Track Context
+### 3.3 Load Book Context
 
-#### a. Identify Track Folder
+#### a. Identify Book Folder
 
-From the tracks file, identify the track's folder link to get the `<track_id>`.
+From the books file, identify the book's folder link to get the `<book_id>`.
 
 #### b. Read Files
 
-**Track Context:** Using the **Universal File Resolution Protocol**, resolve and read:
+**Book Context:** Using the **Universal File Resolution Protocol**, resolve and read:
 
 - **Specification**
 - **Implementation Plan**
@@ -156,21 +156,21 @@ Check for the existence of installed skills in:
 
 If either exists, list the subdirectories to identify available skills.
 
-Based on the track's **Specification**, **Implementation Plan**, and the **Product Definition**, determine if any installed skills are relevant to the track.
+Based on the book's **Specification**, **Implementation Plan**, and the **Product Definition**, determine if any installed skills are relevant to the book.
 
-**CRITICAL:** For every relevant skill identified, ask the agent to activate it and read its `SKILL.md` and reference files. You MUST explicitly apply and prioritize the guidelines, commands, and constraints from these files during the execution of the track's tasks.
+**CRITICAL:** For every relevant skill identified, ask the agent to activate it and read its `SKILL.md` and reference files. You MUST explicitly apply and prioritize the guidelines, commands, and constraints from these files during the execution of the book's tasks.
 
-### 3.4 Execute Tasks and Update Track Plan
+### 3.4 Execute Tasks and Update Book Plan
 
 #### a. Announce
 
-State that you will now execute the tasks from the track's **Implementation Plan** by following the procedures in the **Workflow**.
+State that you will now execute the tasks from the book's **Implementation Plan** by following the procedures in the **Workflow**.
 
 #### b. Iterate Through Tasks
 
-You MUST now loop through each task in the track's **Implementation Plan** one by one.
+You MUST now loop through each task in the book's **Implementation Plan** one by one.
 
-#### c. For Each Task, You MUST:
+#### c. For Each Task, You MUST
 
 **i. Defer to Workflow**
 
@@ -186,39 +186,39 @@ precisely.
 
 **CRITICAL:** Every human-in-the-loop interaction, confirmation, or request for feedback mentioned in the **Workflow** (e.g., manual verification plans or guidance on persistent failures) MUST be conducted using the `ask_user` tool.
 
-### 3.5 Finalize Track
+### 3.5 Finalize Book
 
-After all tasks in the track's local **Implementation Plan** are completed, you MUST update the track's status in the **Tracks Registry**.
+After all tasks in the book's local **Implementation Plan** are completed, you MUST update the book's status in the **Books Registry**.
 
-This requires finding the specific heading for the track (e.g., `## [~] Track: <Description>`) and replacing it with the completed status (e.g., `## [x] Track: <Description>`).
+This requires finding the specific heading for the book (e.g., `## [~] Book: <Description>`) and replacing it with the completed status (e.g., `## [x] Book: <Description>`).
 
 ### 3.6 Commit Changes
 
-Stage the **Tracks Registry** file and commit with the message:
+Stage the **Books Registry** file and commit with the message:
 
 ```
-chore(conductor): Mark track '<track_description>' as complete
+chore(conductor): Mark book '<book_description>' as complete
 ```
 
-Announce that the track is fully complete and the tracks file has been updated.
+Announce that the book is fully complete and the books file has been updated.
 
 ---
 
 ## 4.0 SYNCHRONIZE PROJECT DOCUMENTATION
 
-**PROTOCOL: Update project-level documentation based on the completed track.**
+**PROTOCOL: Update project-level documentation based on the completed book.**
 
 ### 4.1 Execution Trigger
 
-This protocol MUST only be executed when a track has reached a `[x]` status in the tracks file. DO NOT execute this protocol for any other track status changes.
+This protocol MUST only be executed when a book has reached a `[x]` status in the books file. DO NOT execute this protocol for any other book status changes.
 
 ### 4.2 Announce Synchronization
 
-Announce that you are now synchronizing the project-level documentation with the completed track's specifications.
+Announce that you are now synchronizing the project-level documentation with the completed book's specifications.
 
-### 4.3 Load Track Specification
+### 4.3 Load Book Specification
 
-Read the track's **Specification**.
+Read the book's **Specification**.
 
 ### 4.4 Load Project Documents
 
@@ -256,7 +256,7 @@ questions:
 
 #### c. Update Tech Stack
 
-**Condition for Update:** Similarly, you MUST determine if significant changes in the technology stack are detected as a result of the completed track.
+**Condition for Update:** Similarly, you MUST determine if significant changes in the technology stack are detected as a result of the completed book.
 
 **Propose and Confirm Changes:** If an update is needed:
 
@@ -278,7 +278,7 @@ questions:
 
 **CRITICAL WARNING:** This file defines the core identity and communication style of the product. It should be modified with extreme caution and ONLY in cases of significant strategic shifts, such as a product rebrand or a fundamental change in user engagement philosophy. Routine feature updates or bug fixes should NOT trigger changes to this file.
 
-**Condition for Update:** You may ONLY propose an update to this file if the track's **Specification** explicitly describes a change that directly impacts branding, voice, tone, or other core product guidelines.
+**Condition for Update:** You may ONLY propose an update to this file if the book's **Specification** explicitly describes a change that directly impacts branding, voice, tone, or other core product guidelines.
 
 **Propose and Confirm Changes:** If the conditions are met:
 
@@ -317,7 +317,7 @@ No changes needed for Product Guidelines: Core product guidelines remain unchang
 **Example (if no files were changed):**
 
 ```
-Documentation synchronization is complete. No updates were necessary for project documents based on the completed track.
+Documentation synchronization is complete. No updates were necessary for project documents based on the completed book.
 ```
 
 ### 4.7 Commit Changes
@@ -327,18 +327,18 @@ If any files were changed (**Product Definition**, **Tech Stack**, or **Product 
 **Commit Message:**
 
 ```
-docs(conductor): Synchronize docs for track '<track_description>'
+docs(conductor): Synchronize docs for book '<book_description>'
 ```
 
 ---
 
 ## 5.0 TRACK CLEANUP
 
-**PROTOCOL: Offer to archive or delete the completed track.**
+**PROTOCOL: Offer to archive or delete the completed book.**
 
 ### 5.1 Execution Trigger
 
-This protocol MUST only be executed after the current track has been successfully implemented and the `SYNCHRONIZE PROJECT DOCUMENTATION` step is complete.
+This protocol MUST only be executed after the current book has been successfully implemented and the `SYNCHRONIZE PROJECT DOCUMENTATION` step is complete.
 
 ### 5.2 Ask for User Choice
 
@@ -346,19 +346,19 @@ Immediately call the `ask_user` tool to prompt the user (do not repeat the quest
 
 ```yaml
 questions:
-  - header: "Track Cleanup"
-    question: "Track '<track_description>' is now complete. What would you like to do?"
+  - header: "Book Cleanup"
+    question: "Book '<book_description>' is now complete. What would you like to do?"
     type: "choice"
     multiSelect: false
     options:
       - label: "Review"
         description: "Run the review command to verify changes before finalizing."
       - label: "Archive"
-        description: "Move the track's folder to `conductor/archive/` and remove it from the tracks file."
+        description: "Move the book's folder to `conductor/archive/` and remove it from the books file."
       - label: "Delete"
-        description: "Permanently delete the track's folder and remove it from the tracks file."
+        description: "Permanently delete the book's folder and remove it from the books file."
       - label: "Skip"
-        description: "Do nothing and leave it in the tracks file."
+        description: "Do nothing and leave it in the books file."
 ```
 
 ### 5.3 Handle User Response
@@ -368,7 +368,7 @@ questions:
 Announce:
 
 ```
-Please run `/conductor:review` to verify your changes. You will be able to archive or delete the track after the review.
+Please run `/conductor:review` to verify your changes. You will be able to archive or delete the book after the review.
 ```
 
 #### If user chooses "Archive"
@@ -377,20 +377,20 @@ Please run `/conductor:review` to verify your changes. You will be able to archi
 
 Check for the existence of `conductor/archive/`. If it does not exist, create it.
 
-**ii. Archive Track Folder**
+**ii. Archive Book Folder**
 
-Move the track's folder from its current location (resolved via the **Tracks Directory**) to `conductor/archive/<track_id>`.
+Move the book's folder from its current location (resolved via the **Books Directory**) to `conductor/archive/<book_id>`.
 
-**iii. Remove from Tracks File**
+**iii. Remove from Books File**
 
-Read the content of the **Tracks Registry** file, remove the entire section for the completed track (the part that starts with `---` and contains the track description), and write the modified content back to the file.
+Read the content of the **Books Registry** file, remove the entire section for the completed book (the part that starts with `---` and contains the book description), and write the modified content back to the file.
 
 **iv. Commit Changes**
 
-Stage the **Tracks Registry** file and `conductor/archive/`. Commit with the message:
+Stage the **Books Registry** file and `conductor/archive/`. Commit with the message:
 
 ```
-chore(conductor): Archive track '<track_description>'
+chore(conductor): Archive book '<book_description>'
 ```
 
 **v. Announce Success**
@@ -398,7 +398,7 @@ chore(conductor): Archive track '<track_description>'
 Announce:
 
 ```
-Track '<track_description>' has been successfully archived.
+Book '<book_description>' has been successfully archived.
 ```
 
 #### If user chooses "Delete"
@@ -408,7 +408,7 @@ Track '<track_description>' has been successfully archived.
 ```yaml
 questions:
   - header: "Confirm"
-    question: "WARNING: This will permanently delete the track folder and all its contents. This action cannot be undone. Are you sure?"
+    question: "WARNING: This will permanently delete the book folder and all its contents. This action cannot be undone. Are you sure?"
     type: "yesno"
 ```
 
@@ -416,20 +416,20 @@ questions:
 
 **If 'yes':**
 
-**a. Delete Track Folder**
+**a. Delete Book Folder**
 
-Resolve the **Tracks Directory** and permanently delete the track's folder from `<Tracks Directory>/<track_id>`.
+Resolve the **Books Directory** and permanently delete the book's folder from `<Books Directory>/<book_id>`.
 
-**b. Remove from Tracks File**
+**b. Remove from Books File**
 
-Read the content of the **Tracks Registry** file, remove the entire section for the completed track, and write the modified content back to the file.
+Read the content of the **Books Registry** file, remove the entire section for the completed book, and write the modified content back to the file.
 
 **c. Commit Changes**
 
-Stage the **Tracks Registry** file and the deletion of the track directory. Commit with the message:
+Stage the **Books Registry** file and the deletion of the book directory. Commit with the message:
 
 ```
-chore(conductor): Delete track '<track_description>'
+chore(conductor): Delete book '<book_description>'
 ```
 
 **d. Announce Success**
@@ -437,7 +437,7 @@ chore(conductor): Delete track '<track_description>'
 Announce:
 
 ```
-Track '<track_description>' has been permanently deleted.
+Book '<book_description>' has been permanently deleted.
 ```
 
 **If 'no':**
@@ -447,7 +447,7 @@ Track '<track_description>' has been permanently deleted.
 Announce:
 
 ```
-Deletion cancelled. The track has not been changed.
+Deletion cancelled. The book has not been changed.
 ```
 
 #### If user chooses "Skip"
@@ -455,5 +455,5 @@ Deletion cancelled. The track has not been changed.
 Announce:
 
 ```
-Okay, the completed track will remain in your tracks file for now.
+Okay, the completed book will remain in your books file for now.
 ```

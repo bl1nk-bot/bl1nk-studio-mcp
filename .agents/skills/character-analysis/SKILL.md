@@ -25,6 +25,7 @@ consistency across the story.
 Check these fields and score:
 
 **Core arc (60 pts):**
+
 - `arc.start` non-empty: 12 pts
 - `arc.midpoint` non-empty: 12 pts
 - `arc.end` non-empty: 12 pts
@@ -32,6 +33,7 @@ Check these fields and score:
 - `arc.emotionalJourney` has ≥ 3 entries: 12 pts
 
 **Character depth (40 pts):**
+
 - `motivations` non-empty (≥ 1 entry): 10 pts
 - `fears` meaningful (≥ 1 entry, each > 10 chars, not duplicate of secrets): 10 pts
 - `secretsOrLies` meaningful (≥ 1 entry, each > 10 chars): 10 pts
@@ -40,6 +42,7 @@ Check these fields and score:
 **Arc Score** = sum / 100
 
 Interpretation:
+
 - 80–100: Strong, well-defined arc
 - 50–79: Needs development
 - 0–49: Character is underdeveloped — flag as critical
@@ -58,6 +61,7 @@ Rate: **Clear** | **Vague** | **Missing**
 ### 3. Consistency Check
 
 Walk through events where the character appears (`event.characters` includes their ID):
+
 - Do actions align with their role and arc stage?
 - Flag events where character behavior seems inconsistent with their `traits`
 - Flag act jumps (character disappears from Act 2 entirely)
@@ -65,11 +69,13 @@ Walk through events where the character appears (`event.characters` includes the
 ### 4. Relationship Map
 
 For each relationship in `graph.relationships` involving this character:
+
 ```text
 [Character A] ──[type]──> [Character B]  strength: [N]/10
 ```
 
 Assess:
+
 - Relationships that lack conflict: suggest adding tension
 - Relationships that evolve: flag as strength
 - Isolated characters (no relationships): flag as concern
@@ -78,6 +84,7 @@ Assess:
 ### 5. Per-Character Writing Suggestions
 
 Give 2–3 concrete suggestions per underdeveloped character:
+
 - "Add a scene where [character] confronts [fear]"
 - "Show [character]'s midpoint transformation in Act 2, event 3"
 - "Give [character] a goal that conflicts with [other character]'s motivation"

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { buildInitialGraph } from "../packages/bl1nk-core/src/analyzer.js";
-import { toCanvasJSON } from "../packages/bl1nk-core/src/exporters/canvas.js";
-import { toMarkdown } from "../packages/bl1nk-core/src/exporters/markdown.js";
+import { buildInitialGraph } from "../packages/core/src/analyzer.js";
+import { toCanvasJSON } from "../packages/core/src/exporters/canvas.js";
+import { toMarkdown } from "../packages/core/src/exporters/markdown.js";
 
 describe("Markdown Exporter", () => {
 	const storyText = `

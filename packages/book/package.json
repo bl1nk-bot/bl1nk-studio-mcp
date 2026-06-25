@@ -1,0 +1,33 @@
+{
+  "name": "@bl1nk/book",
+  "version": "3.0.6",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev -p 3000 -H 0.0.0.0",
+    "build": "next build",
+    "start": "next start -p 5000 -H 0.0.0.0",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0",
+    "@radix-ui/react-slot": "^1.2.5",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "js-cookie": "^3.0.8",
+    "lucide-react": "^1.17.0",
+    "next": "^16.2.9",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.0",
+    "@types/js-cookie": "^3.0.6",
+    "@types/node": "^25.9.3",
+    "@types/react": "^19.2.17",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^6.0.3"
+  }
+}

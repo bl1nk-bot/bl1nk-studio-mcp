@@ -39,7 +39,7 @@
 2. ให้แยก component ตามหน้าจอเล็กก่อน แล้วค่อยปรับขนาดขึ้นสำหรับ tablet/desktop
 3. ใช้ระบบ responsive class ของ Tailwind หรือ utility class ของ `shadcn`
 4. ให้คำนึงถึงความเร็วในการโหลดบนมือถือ: images, fonts, และ asset ต้องเรียกใช้น้อยที่สุด
-5. ตรวจสอบ `packages/tauri-app` ถ้ามี UI ด้านหน้า ให้ปรับให้รองรับ viewport แบบมือถือด้วย
+5. ตรวจสอบ `packages/desktop` ถ้ามี UI ด้านหน้า ให้ปรับให้รองรับ viewport แบบมือถือด้วย
 
 ## 4. การใช้ `shadcn`
 

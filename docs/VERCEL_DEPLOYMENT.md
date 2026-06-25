@@ -31,15 +31,18 @@ vercel link
 Set the following environment variables in Vercel:
 
 #### Required
+
 - `EXA_API_KEY` - Your Exa AI API key
 
 #### Rate Limiting (Recommended)
+
 - `KV_REST_API_URL` - Upstash Redis REST URL
 - `KV_REST_API_TOKEN` - Upstash Redis REST token
 - `RATE_LIMIT_QPS` - Queries per second (default: 2)
 - `RATE_LIMIT_DAILY` - Daily quota (default: 50)
 
 #### OAuth (Optional - for production)
+
 - `OAUTH_ISSUER` - OAuth issuer URL
 - `OAUTH_AUDIENCE` - OAuth audience
 - `OAUTH_JWKS_URI` - JWKS endpoint URL
@@ -113,6 +116,7 @@ visual-story-extension/
 ### Authentication
 
 Priority order:
+
 1. `x-api-key` header
 2. OAuth JWT in `Authorization: Bearer` header
 3. Plain API key in `Authorization: Bearer` header
@@ -164,6 +168,7 @@ claude mcp add visual-story https://your-project.vercel.app/mcp \
 ### Cursor IDE
 
 Add to MCP settings:
+
 ```json
 {
   "mcpServers": {
@@ -216,6 +221,7 @@ The `maxDuration` is set to 60 seconds in `vercel.json`. Monitor your function e
 ## Support
 
 For issues or questions:
+
 1. Check [README.md](../README.md)
 2. Review [Vercel documentation](https://vercel.com/docs)
 3. Contact support

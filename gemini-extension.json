@@ -1,12 +1,9 @@
 {
 	"name": "bl1nk-visual-mcp",
 	"version": "3.0.0",
-	"contextFiles": [
-		"AGENTS.md",
-		"SPEC.md",
-		"TODO.md",
-		"PLAN.md"
-	],
+	"contextFileName": "GEMINI.md",
+	"commands": "commands",
+	"skills": "skills",
 	"settings": [
 		{
 			"name": "Default Mode",
@@ -18,7 +15,7 @@
 	"mcpServers": {
 		"bl1nkVisualServer": {
 			"command": "node",
-			"args": ["${extensionPath}${/}packages${/}bl1nk-core${/}dist${/}index.js"],
+			"args": ["${extensionPath}/packages${/}core${/}dist${/}index.js"],
 			"cwd": "${extensionPath}"
 		}
 	},

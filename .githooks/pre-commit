@@ -1,8 +1,5 @@
 #!/usr/bin/env sh
 set -e
 
-# Run lint
-printf "Running pre-commit hook: lint check (skipped due to existing project errors)\n"
-# npm run lint || { printf "\x1b[31mLint failed. Please fix issues before committing.\x1b[0m\n"; exit 1; }
-
-printf "\x1b[32mPre-commit checks passed.\x1b[0m\n"
+echo "=== pre-commit: quality gate ==="
+bash scripts/pre-commit

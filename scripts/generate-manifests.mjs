@@ -35,7 +35,7 @@ function createMcpServerConfig(pathVariable = "${extensionPath}") {
 	return {
 		[SERVER_NAME]: {
 			command: source.mcpServer.command,
-			args: [`${pathVariable}${/}${entryPoint}`],
+			args: [`${pathVariable}/${entryPoint}`],
 			cwd: pathVariable,
 		},
 	};
@@ -64,6 +64,8 @@ const geminiManifest = {
 	name: source.name,
 	version: source.version,
 	contextFileName: source.contextFiles.gemini,
+	commands: "commands",
+	skills: "skills",
 	settings: source.settings,
 	mcpServers: createMcpServerConfig("${extensionPath}"),
 	tools: source.tools,

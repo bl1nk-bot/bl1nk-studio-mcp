@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
-import { buildInitialGraph } from "../packages/bl1nk/analyzer.js";
-import { toMcpUiDashboard } from "../packages/bl1nk/exporters/dashboard.js";
-import { toMermaid } from "../packages/bl1nk/exporters/mermaid.js";
+import { buildInitialGraph } from "../packages/core/analyzer.js";
+import { toMcpUiDashboard } from "../packages/core/exporters/dashboard.js";
+import { toMermaid } from "../packages/core/exporters/mermaid.js";
 
 // Sample story text for testing
 const storyText = `
