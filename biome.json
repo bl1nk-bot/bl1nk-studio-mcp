@@ -1,15 +1,18 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.4.16/schema.json",
 	"files": {
-		"ignore": [
-			"**/dist/**",
-			"**/node_modules/**",
-			"**/out/**",
-			"**/target/**",
-			"packages/craft-blog-cms/**",
-			"packages/bl1nk-sync/**",
-			"packages/bl1nk-desktop/**",
-			"packages/bl1nk-book/**"
+		"includes": [
+			"**",
+			"!**/dist",
+			"!**/node_modules",
+			"!**/out",
+			"!**/target",
+			"!**/coverage",
+			"!**/.next",
+			"!templates",
+			"!packages/core/templates",
+			"!packages/craft-blog-cms",
+			"!.kilo"
 		],
 		"maxSize": 2097152
 	},
@@ -26,7 +29,44 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"recommended": true,
+			"a11y": {
+				"noAutofocus": { "level": "warn" },
+				"noSvgWithoutTitle": { "level": "warn" },
+				"useButtonType": { "level": "warn" },
+				"useKeyWithClickEvents": { "level": "warn" }
+			},
+			"complexity": {
+				"noImportantStyles": { "level": "warn" },
+				"useLiteralKeys": { "level": "warn" },
+				"useOptionalChain": { "level": "warn" }
+			},
+			"correctness": {
+				"noUnusedFunctionParameters": { "level": "warn" },
+				"noUnusedImports": { "level": "warn" },
+				"noUnusedVariables": { "level": "warn" },
+				"useExhaustiveDependencies": { "level": "warn" },
+				"useHookAtTopLevel": { "level": "warn" },
+				"useParseIntRadix": { "level": "warn" }
+			},
+			"performance": {
+				"noImgElement": { "level": "warn" }
+			},
+			"style": {
+				"noNonNullAssertion": { "level": "warn" },
+				"useNodejsImportProtocol": { "level": "warn" },
+				"useTemplate": { "level": "warn" }
+			},
+			"suspicious": {
+				"noArrayIndexKey": { "level": "warn" },
+				"noAssignInExpressions": { "level": "warn" },
+				"noControlCharactersInRegex": { "level": "warn" },
+				"noExplicitAny": { "level": "warn" },
+				"noImplicitAnyLet": { "level": "warn" },
+				"noTemplateCurlyInString": { "level": "warn" },
+				"noUnknownAtRules": { "level": "warn" },
+				"useIterableCallbackReturn": { "level": "warn" }
+			}
 		}
 	}
 }

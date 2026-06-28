@@ -5,7 +5,7 @@
 	"author": "bl1nk team",
 	"mcpServer": {
 		"command": "node",
-		"entryPoint": "packages/bl1nk/dist/index.js"
+		"entryPoint": "packages/core/dist/index.js"
 	},
 	"tools": [
 		{

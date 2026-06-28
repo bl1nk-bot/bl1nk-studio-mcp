@@ -1,40 +1,30 @@
-# .agents/skills — Central Skill Repository
+# skills — Central Skill Repository
 
 This directory is the **single source of truth** for all AI agent skills.
 
 ## Structure
 
 ```
-.agents/skills/
-├── defuddle/
-├── json-canvas/
-├── qwencode-craw/
-├── story-analysis/
-├── story-export/
+skills/
+├── arc-optimization/
 ├── character-analysis/
 ├── character-voice/
+├── ckm-banner-design/
 ├── conflict-detection/
-├── structural-audit/
-├── arc-optimization/
-├── theme-extraction/
+├── creat-specifications/
+├── defuddle/
+├── json-canvas/
 ├── mermaid/
 ├── obsidian-cli/
 ├── obsidian-markdown/
-├── ckm-banner-design/
-├── creat-specifications/
-└── agents-reflection-skills/
+├── qwencode-craw/
+├── story-analysis/
+├── story-export/
+├── structural-audit/
+├── theme-extraction/
+└── README.md
 ```
 
-## Sync
+## Management
 
-Run after adding/modifying skills:
-
-```powershell
-.\scripts\sync-skills.ps1
-```
-
-This copies all skills to:
-- `.qwen/skills/` — Qwen Code
-- `.claude/skills/` — Claude Code
-- `skills/` — Gemini CLI (auto-discover)
-- `.kilo/skills/` — Kilo Code
+Skills are managed directly in this directory. Hidden directory versions (e.g., `.agents/skills`, `.claude/skills`) are deprecated and should not be used.

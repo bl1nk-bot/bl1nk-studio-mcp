@@ -40,11 +40,13 @@ Before writing dialogue, define each character's voice profile:
 ### 1. Subtext Over Directness
 
 ❌ On-the-nose:
+
 ```text
 "ฉันโกรธคุณนะ เพราะคุณโกหกฉัน"
 ```
 
 ✅ Subtext:
+
 ```text
 "การประชุมเมื่อคืนเป็นยังไงบ้าง?"
 "ก็ดี"
@@ -52,6 +54,7 @@ Before writing dialogue, define each character's voice profile:
 ```
 
 Subtext layers:
+
 1. **Surface**: literal meaning
 2. **Emotional**: what they're actually feeling
 3. **Relational**: power/intimacy shift
@@ -60,12 +63,14 @@ Subtext layers:
 ### 2. Interruptions & Overlap
 
 Use em-dash (—) for interruptions:
+
 ```text
 "ฟังนะ ฉันรู้ว่าคุณ—"
 "คุณไม่รู้อะไรเลยเกี่ยวกับฉัน"
 ```
 
 When to interrupt:
+
 - Emotional peaks (anger, panic)
 - Power struggles
 - Character avoiding a truth
@@ -73,6 +78,7 @@ When to interrupt:
 ### 3. Action Beats (Not Just Talking Heads)
 
 Every 3–4 lines of dialogue, add a physical beat:
+
 ```text
 "มันไม่ใช่สิ่งที่ฉันต้องการ" หล่อนดันแก้วออก
 เขาเดินไปมาในห้อง "งั้นคุณต้องการอะไร?"
@@ -85,6 +91,7 @@ Every 3–4 lines of dialogue, add a physical beat:
 "คุณรักฉันไหม?"
 เขาก้มลงมองรองเท้า
 ```
+
 Silence communicates what words cannot.
 
 ---
@@ -92,18 +99,21 @@ Silence communicates what words cannot.
 ## Scene-Specific Patterns
 
 ### Conflict/Argument Scene
+
 - Short exchanges, rapid back-and-forth
 - Interrupt frequently
 - Words escalate in sharpness
 - One character says something they regret
 
 ### Romantic/Intimate Scene
+
 - Incomplete sentences (overwhelmed by emotion)
 - Physical proximity described
 - Deep subtext — what they *don't* say matters most
 - Vulnerability exposed
 
 ### Thriller/Tension Scene
+
 - Whispers or clipped speech
 - External sounds interrupt
 - Sentences trail off
@@ -126,6 +136,7 @@ Silence communicates what words cannot.
 ## Dialogue Checklist
 
 Before finalizing any dialogue scene:
+
 - [ ] Each character sounds distinct (cover-name test)
 - [ ] Subtext present — not just surface meaning
 - [ ] Action beats every 3–4 lines
@@ -139,6 +150,7 @@ Before finalizing any dialogue scene:
 ## Writing Exercise
 
 For any character in the StoryGraph, generate a sample dialogue scene by:
+
 1. Reading their `traits`, `motivations`, and `arc.start`
 2. Defining their Voice Sheet
 3. Writing a 6–8 line exchange with a contrasting character

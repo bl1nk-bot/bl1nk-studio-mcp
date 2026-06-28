@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 set -e
-printf "Running pre-commit hook: lint check\n"
-pnpm lint
-printf "pre-commit lint passed.\n"
+
+echo "=== pre-commit: quality gate ==="
+bash scripts/pre-commit

@@ -43,12 +43,6 @@
 			"type": "promptString",
 			"description": "Netdata Cloud API token (create at app.netdata.cloud > User Settings > API Tokens with scope:mcp)",
 			"password": true
-		},
-		{
-			"id": "CONTEXT7_API_KEY",
-			"type": "promptString",
-			"description": "API key for authentication",
-			"password": true
 		}
 	]
 }

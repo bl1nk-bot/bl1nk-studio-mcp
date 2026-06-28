@@ -1,23 +1,56 @@
-node_modules
-dist
-build
-coverage
-.env
+# OS files
 .DS_Store
+Thumbs.db
+db.sqlite3
+
+# Dependencies
+node_modules/
+dist/
+build/
+.next/
+out/
+.vercel
+.turbo
+.agents/tmp/
+.gemini/tmp/
+
+# Logs
 *.log
-.idea
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment & Secrets
+.env
+.env.local
+.env.*
+.envrc
+*.secret
+
+# IDEs
+.vscode/*
+!.vscode/settings.json
+!.vscode/mcp.json
+.idea/
+*.swp
+*.swo
+
+# Project Specific
 outputs/
 *-output.*
+tests/test-output/
 test-exports.js
 skill-lock.json
 tsconfig.tsbuildinfo
-plugins
-.next
 package-lock.json
-# Secrets
-*.secret
-.env.local
-.env.*.local
-# Kilo config (may contain API keys)
+
+# Kilo & Agent Config
 .kilo/kilo.json
 kilo.json
+.amazonq/
+.qwen/
+.trae/
+.claude-plugin/
+.cursor/
+.jules/

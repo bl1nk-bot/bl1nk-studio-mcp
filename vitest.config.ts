@@ -5,8 +5,8 @@ export default defineConfig({
 		globals: true,
 		environment: "node",
 		include: [
-			"packages/bl1nk-core/src/**/*.test.ts",
-			"packages/bl1nk-sync/src/**/*.test.ts",
+			"packages/core/src/**/*.test.ts",
+			"packages/sync/src/**/*.test.ts",
 			"tests/**/*.test.ts",
 		],
 		exclude: ["node_modules", "dist"],

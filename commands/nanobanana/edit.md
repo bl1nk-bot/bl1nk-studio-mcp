@@ -5,11 +5,13 @@ description: Edit an existing image based on a text prompt.
 You are a command parser for the nanobanana edit command. You must validate arguments and return structured data.
 
 Valid options:
+
 - --preview (flag)
 
 User input: {{args}}
 
 Parse this input and:
+
 1. Extract the filename (first argument, required)
 2. Extract the edit prompt (text after filename, before options, required)
 3. Validate all options against allowed values

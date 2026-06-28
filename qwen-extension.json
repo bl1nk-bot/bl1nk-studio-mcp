@@ -15,7 +15,7 @@
 	"mcpServers": {
 		"bl1nkVisualServer": {
 			"command": "node",
-			"args": ["${extensionPath}${/}packages${/}bl1nk${/}dist${/}index.js"],
+			"args": ["${extensionPath}/packages${/}core${/}dist${/}index.js"],
 			"cwd": "${extensionPath}"
 		}
 	},
@@ -75,10 +75,6 @@
 		{
 			"name": "generate_artifacts",
 			"description": "Generate ALL formats at once (legacy)"
-		},
-		{
-			"name": "sync_github",
-			"description": "Push generated files to GitHub repository (not implemented)"
 		}
 	]
 }

@@ -3,21 +3,19 @@
  * Generate all agent manifests from manifest-source.json
  *
  * Usage: node scripts/generate-manifests.mjs
- *
- * Reads manifest-source.json and generates:
- * - qwen-extension.json
- * - gemini-extension.json
- * - .claude-plugin/plugin.json
- * - .kilo/kilo.jsonc
  */
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const root = join(__dirname, "..");
+
+// Constants
+const SERVER_NAME = "bl1nkVisualServer";
+const INDENT = "\t";
 
 // Read source of truth
 const source = JSON.parse(
@@ -26,9 +24,24 @@ const source = JSON.parse(
 
 const entryPoint = source.mcpServer.entryPoint.replace(/\//g, "${/}");
 
-// ============================================================================
+// Helper function to reduce repetition
+function writeManifest(filePath, manifest, description) {
+	writeFileSync(filePath, JSON.stringify(manifest, null, INDENT) + "\n");
+	console.log(`✅ ${description}`);
+}
+
+// Shared MCP server configuration factory
+function createMcpServerConfig(pathVariable = "${extensionPath}") {
+	return {
+		[SERVER_NAME]: {
+			command: source.mcpServer.command,
+			args: [`${pathVariable}/${entryPoint}`],
+			cwd: pathVariable,
+		},
+	};
+}
+
 // 1. Qwen Extension Manifest
-// ============================================================================
 const qwenManifest = {
 	name: source.name,
 	version: source.version,
@@ -36,52 +49,36 @@ const qwenManifest = {
 	commands: "commands",
 	skills: "skills",
 	settings: source.settings,
-	mcpServers: {
-		bl1nkVisualServer: {
-			command: source.mcpServer.command,
-			args: ["${extensionPath}${/}" + entryPoint],
-			cwd: "${extensionPath}",
-		},
-	},
+	mcpServers: createMcpServerConfig("${extensionPath}"),
 	tools: source.tools,
 };
 
-writeFileSync(
+writeManifest(
 	join(root, "qwen-extension.json"),
-	JSON.stringify(qwenManifest, null, "\t") + "\n",
+	qwenManifest,
+	"qwen-extension.json",
 );
-console.log("✅ qwen-extension.json");
 
-// ============================================================================
 // 2. Gemini Extension Manifest
-// ============================================================================
 const geminiManifest = {
 	name: source.name,
 	version: source.version,
 	contextFileName: source.contextFiles.gemini,
+	commands: "commands",
+	skills: "skills",
 	settings: source.settings,
-	mcpServers: {
-		bl1nkVisualServer: {
-			command: source.mcpServer.command,
-			args: ["${extensionPath}${/}" + entryPoint],
-			cwd: "${extensionPath}",
-		},
-	},
+	mcpServers: createMcpServerConfig("${extensionPath}"),
 	tools: source.tools,
 };
 
-writeFileSync(
+writeManifest(
 	join(root, "gemini-extension.json"),
-	JSON.stringify(geminiManifest, null, "\t") + "\n",
+	geminiManifest,
+	"gemini-extension.json",
 );
-console.log("✅ gemini-extension.json");
 
-// ============================================================================
 // 3. Claude Plugin Manifest
-// ============================================================================
-if (!existsSync(join(root, ".claude-plugin"))) {
-	mkdirSync(join(root, ".claude-plugin"), { recursive: true });
-}
+mkdirSync(join(root, ".claude-plugin"), { recursive: true });
 
 const claudeManifest = {
 	name: source.name,
@@ -90,32 +87,20 @@ const claudeManifest = {
 	author: source.author,
 };
 
-writeFileSync(
+writeManifest(
 	join(root, ".claude-plugin", "plugin.json"),
-	JSON.stringify(claudeManifest, null, "\t") + "\n",
+	claudeManifest,
+	".claude-plugin/plugin.json",
 );
-console.log("✅ .claude-plugin/plugin.json");
 
-// ============================================================================
-// 4. Claude .mcp.json (updated with correct path)
-// ============================================================================
-const claudeMcp = {
-	bl1nkVisualServer: {
-		command: source.mcpServer.command,
-		args: ["${extensionRoot}/" + source.mcpServer.entryPoint],
-		cwd: "${extensionRoot}",
-	},
-};
+// 4. Claude .mcp.json
+const claudeMcp = createMcpServerConfig("${extensionRoot}");
 
-writeFileSync(
-	join(root, ".mcp.json"),
-	JSON.stringify(claudeMcp, null, "\t") + "\n",
-);
-console.log("✅ .mcp.json");
+writeManifest(join(root, ".mcp.json"), claudeMcp, ".mcp.json");
 
-// ============================================================================
-// 5. Kilo Code config (kilo.jsonc)
-// ============================================================================
+// 5. Kilo Code config
+mkdirSync(join(root, ".kilo"), { recursive: true });
+
 const kiloConfig = {
 	agent: {
 		"story-analyzer": {
@@ -136,16 +121,9 @@ const kiloConfig = {
 	},
 };
 
-// Write as JSON (comment out if you want true JSONC with comments)
-writeFileSync(
-	join(root, ".kilo/kilo.jsonc"),
-	JSON.stringify(kiloConfig, null, "\t") + "\n",
-);
-console.log("✅ kilo.jsonc");
+writeManifest(join(root, ".kilo/kilo.jsonc"), kiloConfig, "kilo.jsonc");
 
-// ============================================================================
 // Summary
-// ============================================================================
 console.log(
 	`\n📋 Generated ${Object.keys(source.tools).length} tools across all manifests`,
 );

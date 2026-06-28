@@ -1,0 +1,39 @@
+name: Auto Label PR
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  label:
+    name: Label PR
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Label PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          LABELS=""
+          if echo "$PR_TITLE" | grep -qiE '^feat(\([^)]+\))?:'; then
+            LABELS="enhancement"
+          elif echo "$PR_TITLE" | grep -qiE '^fix(\([^)]+\))?:'; then
+            LABELS="bugfix"
+          elif echo "$PR_TITLE" | grep -qiE '^docs(\([^)]+\))?:'; then
+            LABELS="documentation"
+          elif echo "$PR_TITLE" | grep -qiE '^chore(\([^)]+\))?:'; then
+            LABELS="maintenance"
+          elif echo "$PR_TITLE" | grep -qiE '^refactor(\([^)]+\))?:'; then
+            LABELS="refactor"
+          elif echo "$PR_TITLE" | grep -qiE '^test(\([^)]+\))?:'; then
+            LABELS="testing"
+          elif echo "$PR_TITLE" | grep -qiE '^(ci|devop)(\([^)]+\))?:'; then
+            LABELS="devops"
+          fi
+          if [ -n "$LABELS" ]; then
+            gh pr edit ${{ github.event.pull_request.number }} --add-label "$LABELS"
+          fi
