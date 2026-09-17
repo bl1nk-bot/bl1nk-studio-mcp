@@ -65,18 +65,18 @@
     "knip": "^6.18.0",
     "markdownlint-cli2": "^0.22.1",
     "playwright-core": "^1.61.0",
-    "postcss": "8.5.16",
+    "postcss": "8.5.23",
     "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3",
     "vite": "^8.0.16",
-    "vitest": "^4.1.8"
+    "vitest": "^5.0.1"
   },
   "overrides": {
     "rollup": "^4.59.0",
-    "postcss": "8.5.16",
+    "postcss": "8.5.23",
     "@ai-sdk/provider-utils": "^3.0.98"
   },
   "resolutions": {
-    "postcss": "8.5.16"
+    "postcss": "8.5.23"
   }
 }
