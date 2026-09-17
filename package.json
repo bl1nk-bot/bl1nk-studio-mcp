@@ -60,12 +60,12 @@
     "@types/node": "^25.9.3",
     "@vitejs/plugin-react": "^6.0.2",
     "autoprefixer": "^10.5.0",
-    "esbuild": "0.27.7",
+    "esbuild": "0.28.1",
     "jsdom": "^29.1.1",
     "knip": "^6.18.0",
     "markdownlint-cli2": "^0.22.1",
     "playwright-core": "^1.61.0",
-    "postcss": "8.5.15",
+    "postcss": "8.5.16",
     "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3",
     "vite": "^8.0.16",
@@ -73,10 +73,10 @@
   },
   "overrides": {
     "rollup": "^4.59.0",
-    "postcss": "8.5.15",
+    "postcss": "8.5.16",
     "@ai-sdk/provider-utils": "^3.0.98"
   },
   "resolutions": {
-    "postcss": "8.5.15"
+    "postcss": "8.5.16"
   }
 }
