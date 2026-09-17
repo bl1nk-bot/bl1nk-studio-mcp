@@ -13,7 +13,7 @@
     "@bl1nk/core": "workspace:*",
     "@notionhq/client": "^5.22.0",
     "@octokit/webhooks": "^14.2.0",
-    "csv-parse": "^6.2.1",
+    "csv-parse": "^7.0.2",
     "gray-matter": "^4.0.3"
   }
 }
